@@ -1,0 +1,50 @@
+* [33mcommit 62baa3c82b2aedc940ef036678cdd9a584be6a8b[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmatching[m[33m)[m
+[31m|[m Author: moyashi170607 <96937973+moyashi170607@users.noreply.github.com>
+[31m|[m Date:   Thu Jun 18 01:11:06 2026 +0900
+[31m|[m 
+[31m|[m     style:placeholderの追加
+[31m|[m 
+* [33mcommit 100d93c08181c1676dcc70d37cf9f1929845ea14[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m
+[31m|[m Author: moyashi170607 <96937973+moyashi170607@users.noreply.github.com>
+[31m|[m Date:   Thu Jun 18 08:48:47 2026 +0900
+[31m|[m 
+[31m|[m     remove leftover ~*.dll temp files
+[31m|[m     
+[31m|[m     WebRTC DLL置換時にできたWindowsの一時/バックアップファイル
+[31m|[m     (~RF*.TMP)が誤ってコミットされていたため削除。
+[31m|[m     .gitignoreの~*は追跡済みファイルには効かないため git rm --cached で除去。
+[31m|[m     
+[31m|[m     Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>
+[31m|[m 
+* [33mcommit de6ff081fc688516b2c01e0aa147e00b55bcdb14[m
+[31m|[m Author: moyashi170607 <96937973+moyashi170607@users.noreply.github.com>
+[31m|[m Date:   Thu Jun 18 08:45:54 2026 +0900
+[31m|[m 
+[31m|[m     ignoreを追加
+[31m|[m 
+* [33mcommit cedc73e3019df6b22e920d305b8a474b4bc57763[m
+[31m|[m Author: moyashi170607 <96937973+moyashi170607@users.noreply.github.com>
+[31m|[m Date:   Thu Jun 18 01:08:40 2026 +0900
+[31m|[m 
+[31m|[m     style:ディレクトリ構成の設定
+[31m|[m   
+*   [33mcommit a8bbc2500347fec8e78f56b412e05cd88022972b[m
+[32m|[m[33m\[m  Merge: d35a286 2d67f12
+[32m|[m [33m|[m Author: こつ子 <96937973+moyashi170607@users.noreply.github.com>
+[32m|[m [33m|[m Date:   Thu Jun 18 00:50:58 2026 +0900
+[32m|[m [33m|[m 
+[32m|[m [33m|[m     Merge pull request #1 from prapro-ou/okada
+[32m|[m [33m|[m     
+[32m|[m [33m|[m     WebRTC用のGDExtension
+[32m|[m [33m|[m 
+[32m|[m * [33mcommit 2d67f1220c6174279a19c7e81d5fabb59d02d16f[m[33m ([m[1;31morigin/okada[m[33m, [m[1;32mokada[m[33m)[m
+[32m|[m[32m/[m  Author: moyashi170607 <96937973+moyashi170607@users.noreply.github.com>
+[32m|[m   Date:   Thu Jun 18 00:49:00 2026 +0900
+[32m|[m   
+[32m|[m       WebRTC用のGDExtension
+[32m|[m 
+* [33mcommit d35a28656a049a389e185a2590bcec113e8a4e3f[m
+  Author: moyashi170607 <96937973+moyashi170607@users.noreply.github.com>
+  Date:   Wed Jun 17 15:15:44 2026 +0900
+  
+      init
