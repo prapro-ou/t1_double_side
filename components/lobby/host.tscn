@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://clg4pgp74vk4m"]
+
+[ext_resource type="Script" uid="uid://dtsugrfah2tir" path="res://script/lobby/host.gd" id="1_44siu"]
+[ext_resource type="Theme" uid="uid://d1vexbsw5gkt7" path="res://style/mathing_theme.tres" id="2_d32vm"]
+
+[node name="Host" type="Control" unique_id=572982460]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_44siu")
+
+[node name="BuildRoom" type="Control" parent="." unique_id=328319870]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NameEdit" type="LineEdit" parent="BuildRoom" unique_id=1656386690]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_top = 0.35
+anchor_right = 0.6
+anchor_bottom = 0.45
+placeholder_text = "あなたの名前"
+
+[node name="TextEdit" type="LineEdit" parent="BuildRoom" unique_id=1533495068]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_top = 0.5
+anchor_right = 0.6
+anchor_bottom = 0.6
+placeholder_text = "キーワード"
+
+[node name="Button" type="Button" parent="BuildRoom" unique_id=395361187]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.35
+anchor_top = 0.7
+anchor_right = 0.65
+anchor_bottom = 0.8
+theme = ExtResource("2_d32vm")
+theme_override_font_sizes/font_size = 40
+text = "決定"
+
+[node name="Matching" type="Control" parent="." unique_id=1048745695]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

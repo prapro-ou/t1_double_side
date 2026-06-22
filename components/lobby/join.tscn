@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://co14cnfad3e4u"]
+
+[ext_resource type="Theme" uid="uid://d1vexbsw5gkt7" path="res://style/mathing_theme.tres" id="1_lquhe"]
+
+[node name="Join" type="Control" unique_id=1036284993]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="JoinRoom" type="Control" parent="." unique_id=67077077]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NameEdit" type="LineEdit" parent="JoinRoom" unique_id=1198688908]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_top = 0.35
+anchor_right = 0.6
+anchor_bottom = 0.45
+placeholder_text = "あなたの名前"
+
+[node name="TextEdit" type="LineEdit" parent="JoinRoom" unique_id=302049466]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_top = 0.5
+anchor_right = 0.6
+anchor_bottom = 0.6
+placeholder_text = "キーワード"
+
+[node name="Button" type="Button" parent="JoinRoom" unique_id=447249041]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.35
+anchor_top = 0.7
+anchor_right = 0.65
+anchor_bottom = 0.8
+theme = ExtResource("1_lquhe")
+theme_override_font_sizes/font_size = 40
+text = "決定"
+
+[node name="Matching" type="Control" parent="." unique_id=671739575]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://bge3217rr2mei"]
+
+[ext_resource type="Script" uid="uid://dj87dh2ynac5o" path="res://script/lobby/lobby.gd" id="1_hmohn"]
+[ext_resource type="PackedScene" uid="uid://clg4pgp74vk4m" path="res://components/lobby/host.tscn" id="2_ofneh"]
+[ext_resource type="PackedScene" uid="uid://co14cnfad3e4u" path="res://components/lobby/join.tscn" id="3_kfmeg"]
+
+[node name="Lobby" type="Node2D" unique_id=1085624355]
+script = ExtResource("1_hmohn")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1699894378]
+
+[node name="Host" parent="CanvasLayer" unique_id=572982460 instance=ExtResource("2_ofneh")]
+visible = false
+
+[node name="Join" parent="CanvasLayer" unique_id=1036284993 instance=ExtResource("3_kfmeg")]
+visible = false
