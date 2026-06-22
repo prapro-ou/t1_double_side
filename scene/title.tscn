@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://bo3lcrb7jpjqf"]
 
-[ext_resource type="Theme" uid="uid://d1vexbsw5gkt7" path="res://style/mathing_theme.tres" id="1_kxvpt"]
-[ext_resource type="Script" uid="uid://c244gu1xt5c62" path="res://script/matching_select/matching_select.gd" id="1_u6p2j"]
+[ext_resource type="Script" uid="uid://c244gu1xt5c62" path="res://script/title/title.gd" id="1_hr6ky"]
+[ext_resource type="Theme" uid="uid://d1vexbsw5gkt7" path="res://style/mathing_theme.tres" id="2_0npwg"]
 
-[node name="MatchingSelect" type="Node2D" unique_id=1358436081]
-script = ExtResource("1_u6p2j")
+[node name="TItle" type="Node2D" unique_id=1358436081]
+script = ExtResource("1_hr6ky")
 
 [node name="UILayer" type="CanvasLayer" parent="." unique_id=941911166]
 
@@ -28,7 +28,7 @@ anchor_left = 0.4
 anchor_top = 0.5
 anchor_right = 0.6
 anchor_bottom = 0.6
-theme = ExtResource("1_kxvpt")
+theme = ExtResource("2_0npwg")
 theme_override_font_sizes/font_size = 32
 text = "部屋を作る"
 
