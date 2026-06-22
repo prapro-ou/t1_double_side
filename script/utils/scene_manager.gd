@@ -1,7 +1,7 @@
 extends Node
 
 const scene_dictionary:Dictionary[String,PackedScene] = {
-	"matching_select":preload("res://scene/matching_select.tscn"),
+	"title":preload("res://scene/title.tscn"),
 	"lobby":preload("res://scene/lobby.tscn")
 }
 
