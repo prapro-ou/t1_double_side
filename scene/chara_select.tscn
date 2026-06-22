@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dc2os171cno2i"]
+
+[ext_resource type="Script" uid="uid://b8cwgcpixbhux" path="res://script/chara_select/chara_select.gd" id="1_sthoc"]
+
+[node name="CharaSelect" type="Node2D" unique_id=472852071]
+script = ExtResource("1_sthoc")
