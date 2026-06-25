@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://clg4pgp74vk4m"]
 
-[ext_resource type="Script" uid="uid://dtsugrfah2tir" path="res://script/lobby/host.gd" id="1_44siu"]
+[ext_resource type="Script" uid="uid://dtsugrfah2tir" path="res://script/lobby/host/host.gd" id="1_44siu"]
 [ext_resource type="Theme" uid="uid://d1vexbsw5gkt7" path="res://style/mathing_theme.tres" id="2_d32vm"]
-[ext_resource type="Script" uid="uid://0bvilmphoo1m" path="res://script/lobby/build_room.gd" id="2_pre1e"]
+[ext_resource type="Script" uid="uid://0bvilmphoo1m" path="res://script/lobby/host/build_room.gd" id="2_pre1e"]
+[ext_resource type="Script" uid="uid://p7lt84om2k36" path="res://script/lobby/host/matching_host.gd" id="4_3xxnu"]
 
 [node name="Host" type="Control" unique_id=572982460]
 layout_mode = 3
@@ -58,6 +59,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("4_3xxnu")
 
 [connection signal="success_build" from="BuildRoom" to="." method="_on_build_room_success_build"]
 [connection signal="pressed" from="BuildRoom/Button" to="BuildRoom" method="_on_button_pressed"]
