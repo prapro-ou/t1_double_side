@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://co14cnfad3e4u"]
 
-[ext_resource type="Script" uid="uid://b86lxui0gwg6b" path="res://script/lobby/join_room.gd" id="1_g21ds"]
-[ext_resource type="Script" uid="uid://d135e68xjbvvk" path="res://script/lobby/join.gd" id="1_iohkc"]
+[ext_resource type="Script" uid="uid://b86lxui0gwg6b" path="res://script/lobby/join/join_room.gd" id="1_g21ds"]
+[ext_resource type="Script" uid="uid://d135e68xjbvvk" path="res://script/lobby/join/join.gd" id="1_iohkc"]
 [ext_resource type="Theme" uid="uid://d1vexbsw5gkt7" path="res://style/mathing_theme.tres" id="1_lquhe"]
+[ext_resource type="Script" uid="uid://il4o8ggudrtl" path="res://script/lobby/join/matching_join.gd" id="4_ihvfl"]
 
 [node name="Join" type="Control" unique_id=1036284993]
 layout_mode = 3
@@ -58,6 +59,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("4_ihvfl")
 
 [node name="HostLabel" type="Label" parent="Matching" unique_id=861456277]
 layout_mode = 1
