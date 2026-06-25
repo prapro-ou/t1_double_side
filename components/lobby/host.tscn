@@ -59,4 +59,5 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[connection signal="success_build" from="BuildRoom" to="." method="_on_build_room_success_build"]
 [connection signal="pressed" from="BuildRoom/Button" to="BuildRoom" method="_on_button_pressed"]

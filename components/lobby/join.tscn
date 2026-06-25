@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://co14cnfad3e4u"]
 
+[ext_resource type="Script" uid="uid://b86lxui0gwg6b" path="res://script/lobby/join_room.gd" id="1_g21ds"]
+[ext_resource type="Script" uid="uid://d135e68xjbvvk" path="res://script/lobby/join.gd" id="1_iohkc"]
 [ext_resource type="Theme" uid="uid://d1vexbsw5gkt7" path="res://style/mathing_theme.tres" id="1_lquhe"]
 
 [node name="Join" type="Control" unique_id=1036284993]
@@ -9,6 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_iohkc")
 
 [node name="JoinRoom" type="Control" parent="." unique_id=67077077]
 layout_mode = 1
@@ -17,6 +20,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_g21ds")
 
 [node name="NameEdit" type="LineEdit" parent="JoinRoom" unique_id=1198688908]
 layout_mode = 1
@@ -27,7 +31,7 @@ anchor_right = 0.6
 anchor_bottom = 0.45
 placeholder_text = "あなたの名前"
 
-[node name="TextEdit" type="LineEdit" parent="JoinRoom" unique_id=302049466]
+[node name="RoomEdit" type="LineEdit" parent="JoinRoom" unique_id=302049466]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.4
@@ -54,3 +58,22 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="HostLabel" type="Label" parent="Matching" unique_id=861456277]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.1
+anchor_right = 0.8
+anchor_bottom = 0.2
+
+[node name="PasswordLabel" type="Label" parent="Matching" unique_id=2125272730]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.4
+anchor_right = 0.8
+anchor_bottom = 0.5
+
+[connection signal="success_join" from="JoinRoom" to="." method="_on_join_room_success_join"]
+[connection signal="pressed" from="JoinRoom/Button" to="JoinRoom" method="_on_button_pressed"]
