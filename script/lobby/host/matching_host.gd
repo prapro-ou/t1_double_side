@@ -31,4 +31,4 @@ func _on_peer_left(_id:int,_username:String) -> void:
 
 
 func _on_start_button_pressed() -> void:
-	SceneManager.change_scene("webrtc_test")
+	NetworkManager.start_game.rpc()

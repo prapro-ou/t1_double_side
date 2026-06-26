@@ -9,7 +9,6 @@ const Matching = preload("res://script/lobby/host/matching_host.gd")
 func _ready() -> void:
 	build_room_node.visible = true
 	matching_node.visible = false
-	
 
 
 func _on_build_room_success_build(roomname:String) -> void:

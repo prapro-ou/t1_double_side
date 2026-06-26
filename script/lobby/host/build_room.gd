@@ -36,4 +36,6 @@ func _on_signaling_error(message:String) -> void:
 
 
 func _on_back_button_pressed() -> void:
+	signal_disconnect()
+	NetworkManager.leave()
 	SceneManager.change_scene("title")
