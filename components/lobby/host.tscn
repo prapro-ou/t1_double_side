@@ -1,0 +1,123 @@
+[gd_scene format=3 uid="uid://clg4pgp74vk4m"]
+
+[ext_resource type="Script" uid="uid://dtsugrfah2tir" path="res://script/lobby/host/host.gd" id="1_44siu"]
+[ext_resource type="Theme" uid="uid://d1vexbsw5gkt7" path="res://style/matching_theme.tres" id="2_d32vm"]
+[ext_resource type="Script" uid="uid://0bvilmphoo1m" path="res://script/lobby/host/build_room.gd" id="2_pre1e"]
+[ext_resource type="Script" uid="uid://p7lt84om2k36" path="res://script/lobby/host/matching_host.gd" id="4_3xxnu"]
+
+[node name="Host" type="Control" unique_id=572982460]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_44siu")
+
+[node name="BuildRoom" type="Control" parent="." unique_id=328319870]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_pre1e")
+
+[node name="NameEdit" type="LineEdit" parent="BuildRoom" unique_id=1656386690]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_top = 0.35
+anchor_right = 0.6
+anchor_bottom = 0.45
+placeholder_text = "あなたの名前"
+
+[node name="RoomEdit" type="LineEdit" parent="BuildRoom" unique_id=1533495068]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_top = 0.5
+anchor_right = 0.6
+anchor_bottom = 0.6
+placeholder_text = "キーワード"
+
+[node name="Button" type="Button" parent="BuildRoom" unique_id=395361187]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.35
+anchor_top = 0.7
+anchor_right = 0.65
+anchor_bottom = 0.8
+theme = ExtResource("2_d32vm")
+theme_override_font_sizes/font_size = 40
+text = "部屋を作る"
+
+[node name="BackButton" type="Button" parent="BuildRoom" unique_id=1349114275]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.025
+anchor_top = 0.025
+anchor_right = 0.15
+anchor_bottom = 0.1
+theme = ExtResource("2_d32vm")
+text = "タイトルに戻る"
+
+[node name="Matching" type="Control" parent="." unique_id=1048745695]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_3xxnu")
+
+[node name="HostLabel" type="Label" parent="Matching" unique_id=1764427482]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.1
+anchor_right = 0.8
+anchor_bottom = 0.2
+theme = ExtResource("2_d32vm")
+theme_type_variation = &"LobbyLabel"
+text = "あなたはホストです"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="JoinLabel" type="Label" parent="Matching" unique_id=2125445287]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.25
+anchor_right = 0.8
+anchor_bottom = 0.35
+theme = ExtResource("2_d32vm")
+theme_type_variation = &"LobbyLabel"
+text = "テスト文字"
+
+[node name="PasswordLabel" type="Label" parent="Matching" unique_id=1733600032]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.4
+anchor_right = 0.8
+anchor_bottom = 0.5
+theme = ExtResource("2_d32vm")
+theme_type_variation = &"LobbyLabel"
+text = "テスト文字"
+
+[node name="StartButton" type="Button" parent="Matching" unique_id=959782427]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_top = 0.8
+anchor_right = 0.6
+anchor_bottom = 0.9
+theme = ExtResource("2_d32vm")
+theme_override_font_sizes/font_size = 25
+text = "ゲームを開始する"
+
+[connection signal="success_build" from="BuildRoom" to="." method="_on_build_room_success_build"]
+[connection signal="pressed" from="BuildRoom/Button" to="BuildRoom" method="_on_button_pressed"]
+[connection signal="pressed" from="BuildRoom/BackButton" to="BuildRoom" method="_on_back_button_pressed"]
+[connection signal="pressed" from="Matching/StartButton" to="Matching" method="_on_start_button_pressed"]

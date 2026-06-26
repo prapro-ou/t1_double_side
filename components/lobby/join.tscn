@@ -1,0 +1,111 @@
+[gd_scene format=3 uid="uid://co14cnfad3e4u"]
+
+[ext_resource type="Script" uid="uid://b86lxui0gwg6b" path="res://script/lobby/join/join_room.gd" id="1_g21ds"]
+[ext_resource type="Script" uid="uid://d135e68xjbvvk" path="res://script/lobby/join/join.gd" id="1_iohkc"]
+[ext_resource type="Theme" uid="uid://d1vexbsw5gkt7" path="res://style/matching_theme.tres" id="1_lquhe"]
+[ext_resource type="Script" uid="uid://il4o8ggudrtl" path="res://script/lobby/join/matching_join.gd" id="4_ihvfl"]
+
+[node name="Join" type="Control" unique_id=1036284993]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_iohkc")
+
+[node name="JoinRoom" type="Control" parent="." unique_id=67077077]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_g21ds")
+
+[node name="NameEdit" type="LineEdit" parent="JoinRoom" unique_id=1198688908]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_top = 0.35
+anchor_right = 0.6
+anchor_bottom = 0.45
+placeholder_text = "あなたの名前"
+
+[node name="RoomEdit" type="LineEdit" parent="JoinRoom" unique_id=302049466]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_top = 0.5
+anchor_right = 0.6
+anchor_bottom = 0.6
+placeholder_text = "キーワード"
+
+[node name="Button" type="Button" parent="JoinRoom" unique_id=447249041]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.35
+anchor_top = 0.7
+anchor_right = 0.65
+anchor_bottom = 0.8
+theme = ExtResource("1_lquhe")
+theme_override_font_sizes/font_size = 40
+text = "部屋に入る"
+
+[node name="BackButton" type="Button" parent="JoinRoom" unique_id=78380261]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.025
+anchor_top = 0.025
+anchor_right = 0.15
+anchor_bottom = 0.1
+theme = ExtResource("1_lquhe")
+text = "タイトルに戻る"
+
+[node name="Matching" type="Control" parent="." unique_id=671739575]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_ihvfl")
+
+[node name="JoinLabel" type="Label" parent="Matching" unique_id=843517043]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.1
+anchor_right = 0.8
+anchor_bottom = 0.2
+theme = ExtResource("1_lquhe")
+theme_type_variation = &"LobbyLabel"
+text = "あなたは参加者です"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HostLabel" type="Label" parent="Matching" unique_id=861456277]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.25
+anchor_right = 0.8
+anchor_bottom = 0.35
+theme = ExtResource("1_lquhe")
+theme_type_variation = &"LobbyLabel"
+text = "テスト"
+
+[node name="PasswordLabel" type="Label" parent="Matching" unique_id=2125272730]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.4
+anchor_right = 0.8
+anchor_bottom = 0.5
+theme = ExtResource("1_lquhe")
+theme_type_variation = &"LobbyLabel"
+text = "テスト"
+
+[connection signal="success_join" from="JoinRoom" to="." method="_on_join_room_success_join"]
+[connection signal="pressed" from="JoinRoom/Button" to="JoinRoom" method="_on_button_pressed"]
+[connection signal="pressed" from="JoinRoom/BackButton" to="JoinRoom" method="_on_back_button_pressed"]

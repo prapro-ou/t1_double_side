@@ -11,8 +11,14 @@ config_version=5
 [application]
 
 config/name="t1_double_side"
+run/main_scene="uid://bo3lcrb7jpjqf"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+NetworkManager="*uid://cg4bfr1587pao"
+SceneManager="*uid://b7ntcfjs3qn3l"
 
 [editor_plugins]
 

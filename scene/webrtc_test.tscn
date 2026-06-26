@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://133n2l72uv50"]
+
+[ext_resource type="Script" uid="uid://cupbknoso3jgp" path="res://script/webrtc_test/webrtc_test.gd" id="1_aejrd"]
+[ext_resource type="Texture2D" uid="uid://0ce8voiyijmm" path="res://assets/img/webrtc_test/test_one.png" id="2_glyow"]
+[ext_resource type="Texture2D" uid="uid://bmin2jxiklc2i" path="res://assets/img/webrtc_test/test_two.png" id="3_d6spx"]
+[ext_resource type="Texture2D" uid="uid://b5ffj8fkwfxkc" path="res://assets/img/webrtc_test/test_three.png" id="4_d6spx"]
+
+[node name="WebrtcTest" type="Node2D" unique_id=481008345]
+script = ExtResource("1_aejrd")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=551837398]
+
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=2049452749]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="OneButton" type="TextureButton" parent="CanvasLayer/Control" unique_id=1494942815]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.6
+anchor_right = 0.25
+anchor_bottom = 0.95
+texture_normal = ExtResource("2_glyow")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="TwoButton" type="TextureButton" parent="CanvasLayer/Control" unique_id=1805533089]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.3
+anchor_top = 0.6
+anchor_right = 0.5
+anchor_bottom = 0.95
+texture_normal = ExtResource("3_d6spx")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="ThreeButton" type="TextureButton" parent="CanvasLayer/Control" unique_id=1176952794]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.55
+anchor_top = 0.6
+anchor_right = 0.75
+anchor_bottom = 0.95
+texture_normal = ExtResource("4_d6spx")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="PlayerLabel" type="Label" parent="CanvasLayer/Control" unique_id=538200443]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.3
+anchor_top = 0.05
+anchor_right = 0.7
+anchor_bottom = 0.15
+theme_override_font_sizes/font_size = 40
+text = "テスト"
+
+[node name="OpponentLabel" type="Label" parent="CanvasLayer/Control" unique_id=427052444]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.3
+anchor_top = 0.2
+anchor_right = 0.7
+anchor_bottom = 0.3
+theme_override_font_sizes/font_size = 40
+text = "テスト"
+
+[connection signal="pressed" from="CanvasLayer/Control/OneButton" to="." method="_on_one_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/TwoButton" to="." method="_on_two_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/ThreeButton" to="." method="_on_three_button_pressed"]
