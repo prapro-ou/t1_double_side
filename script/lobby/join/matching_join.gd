@@ -1,11 +1,13 @@
 extends Control
 
+@onready var host_label_node:Label = $HostLabel
+@onready var password_label_node:Label = $PasswordLabel
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	host_label_node.text = ""
+	password_label_node.text = ""
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func setup(hostname:String,password:String) -> void:
+	host_label_node.text = hostname;
+	password_label_node.text = password

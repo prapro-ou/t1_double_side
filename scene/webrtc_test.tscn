@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://133n2l72uv50"]
+
+[ext_resource type="Script" uid="uid://cupbknoso3jgp" path="res://script/webrtc_test/webrtc_test.gd" id="1_aejrd"]
+
+[node name="WebrtcTest" type="Node2D" unique_id=481008345]
+script = ExtResource("1_aejrd")

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bo3lcrb7jpjqf"]
 
 [ext_resource type="Script" uid="uid://c244gu1xt5c62" path="res://script/title/title.gd" id="1_hr6ky"]
-[ext_resource type="Theme" uid="uid://d1vexbsw5gkt7" path="res://style/mathing_theme.tres" id="2_0npwg"]
+[ext_resource type="Theme" uid="uid://d1vexbsw5gkt7" path="res://style/matching_theme.tres" id="2_0npwg"]
 
 [node name="TItle" type="Node2D" unique_id=1358436081]
 script = ExtResource("1_hr6ky")
