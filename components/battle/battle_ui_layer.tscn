@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://cy4rgcqbyc4ge"]
+
+[ext_resource type="PackedScene" uid="uid://brcer8xgg1l7k" path="res://components/battle/arrow.tscn" id="1_knu7v"]
+[ext_resource type="Script" uid="uid://b2sjkoxcqyr4t" path="res://script/battle/battle_ui_layer/battle_ui_layer.gd" id="1_sbslu"]
+[ext_resource type="Texture2D" uid="uid://dpv462q1g51u8" path="res://assets/img/battle/janken/zyanken_gu.png" id="2_ue8o0"]
+[ext_resource type="Texture2D" uid="uid://bciowm6nc3gxs" path="res://assets/img/battle/janken/zyanken_choki.png" id="3_6jp7w"]
+[ext_resource type="Texture2D" uid="uid://b88anjwtqorla" path="res://assets/img/battle/janken/zyanken_pa.png" id="4_ldy78"]
+
+[node name="BattleUILayer" type="CanvasLayer" unique_id=1898615455]
+script = ExtResource("1_sbslu")
+
+[node name="JankenButton" type="Control" parent="." unique_id=59876224]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RockButton" type="TextureButton" parent="JankenButton" unique_id=1408628439]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_top = 0.05
+anchor_right = 0.6
+anchor_bottom = 0.4
+texture_normal = ExtResource("2_ue8o0")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="ScissorsButton" type="TextureButton" parent="JankenButton" unique_id=38252835]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.25
+anchor_top = 0.5
+anchor_right = 0.45
+anchor_bottom = 0.85
+texture_normal = ExtResource("3_6jp7w")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="PaperButton" type="TextureButton" parent="JankenButton" unique_id=1831179784]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.55
+anchor_top = 0.5
+anchor_right = 0.75
+anchor_bottom = 0.85
+texture_normal = ExtResource("4_ldy78")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Arrow" parent="." unique_id=632622361 instance=ExtResource("1_knu7v")]
+position = Vector2(576, 324)
