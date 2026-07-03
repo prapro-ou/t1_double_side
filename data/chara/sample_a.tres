@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="CharaData" format=3 uid="uid://bvaqlnkaqgs3i"]
+
+[ext_resource type="Script" uid="uid://cm6i8gc0va1ic" path="res://data/chara/chara_data.gd" id="1_ib8g8"]
+
+[resource]
+script = ExtResource("1_ib8g8")
+id = &"sampleA"

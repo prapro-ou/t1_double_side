@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://30gaeu0acs35"]
+
+[ext_resource type="Script" uid="uid://ds0gimhfprhjs" path="res://script/battle/UI/left_turn_timer.gd" id="1_g6tip"]
+
+[node name="LeftTurnTimer" type="Control" unique_id=875117996]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 150.0
+offset_bottom = 150.0
+script = ExtResource("1_g6tip")
