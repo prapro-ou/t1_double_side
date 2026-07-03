@@ -9,7 +9,7 @@ signal signaling_error(message:String)    # エラーの出力
 
 
 const SIGNALING_URL:String = "wss://signaling.kotukoroom.net/ws";
-const ICE_SERVERS:Dictionary = { "iceServers": [{ "urls": ["stun:stun.l.google.com:19302"] }] }
+const DEFAULT_ICE_SERVERS:Dictionary = { "iceServers": [{ "urls": ["stun:stun.l.google.com:19302"] }] }
 
 var is_host:bool = false;
 
@@ -18,6 +18,8 @@ var rtc = WebRTCMultiplayerPeer.new()
 
 var connection_list:Dictionary[int,WebRTCPeerConnection] = {}
 var pending_action:Dictionary[String, Variant]
+
+var ice_servers:Dictionary = DEFAULT_ICE_SERVERS
 
 ## WebSocketを閉じる（送信待ちのpending_actionは破棄しない）
 func _close_ws() -> void:
@@ -45,6 +47,7 @@ func leave() -> void:
 	_reset_connection()
 	pending_action = {}
 	is_host = false
+	ice_servers = DEFAULT_ICE_SERVERS
 
 ## WebSocketでシグナリングサーバーに接続
 func _connect_ws() -> void:
@@ -68,7 +71,7 @@ func _on_ice_created(media: String, index: int, cand_name: String, peer_id: int)
 ## WebRTCで接続
 func _create_connection(peer_id:int) -> WebRTCPeerConnection:
 	var conn:WebRTCPeerConnection = WebRTCPeerConnection.new()
-	conn.initialize(ICE_SERVERS)
+	conn.initialize(ice_servers)
 	conn.session_description_created.connect(_on_sdp_created.bind(peer_id))
 	conn.ice_candidate_created.connect(_on_ice_created.bind(peer_id))
 	rtc.add_peer(conn,peer_id)
@@ -82,6 +85,7 @@ func _send(message:Dictionary[String,Variant]) -> void:
 ## 受け取ったメッセージの処理
 func _handle_message(msg:Dictionary) -> void:
 	match msg.get("cmd"):
+		"IceServers": _on_ice_servers(msg.get("ice_servers", []));
 		"Id": _on_id(int(msg["id"]));
 		"HostInfo": joined_room.emit(msg["username"])
 		"PeerConnect":_on_peer_connect(int(msg["id"]),msg["username"])
@@ -90,6 +94,12 @@ func _handle_message(msg:Dictionary) -> void:
 		"Answer":connection_list[int(msg["target_id"])].set_remote_description("answer",msg["sdp"])
 		"IceCandidate":connection_list[int(msg["target_id"])].add_ice_candidate(msg["media"],int(msg["index"]),msg["name"])
 		"Error":signaling_error.emit(msg.get("message", "原因不明のエラー"))
+
+## IceServerメッセージ
+func _on_ice_servers(servers:Array) -> void:
+	if servers.is_empty():
+		return
+	ice_servers = { "iceServers": servers }
 
 ## IDメッセージ
 func _on_id(id:int) -> void:
