@@ -9,3 +9,8 @@ func _ready() -> void:
 
 func setup(chara:) -> void:
 	pass
+
+
+## 対応したキャラを読み込む
+func set_chara(chara:CharaData) -> void:
+	pass

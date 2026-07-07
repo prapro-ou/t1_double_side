@@ -1,7 +1,20 @@
 [gd_resource type="Resource" script_class="CharaData" format=3 uid="uid://bvaqlnkaqgs3i"]
 
 [ext_resource type="Script" uid="uid://cm6i8gc0va1ic" path="res://data/chara/chara_data.gd" id="1_ib8g8"]
+[ext_resource type="Texture2D" uid="uid://d0xl2k784v3qq" path="res://assets/img/chara/sampleA/sampleA.png" id="2_spj5b"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7r4sd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_spj5b")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [resource]
 script = ExtResource("1_ib8g8")
 id = &"sampleA"
+sprite_frames = SubResource("SpriteFrames_7r4sd")

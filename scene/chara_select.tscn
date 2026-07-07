@@ -1,6 +1,74 @@
 [gd_scene format=3 uid="uid://dc2os171cno2i"]
 
 [ext_resource type="Script" uid="uid://b8cwgcpixbhux" path="res://script/chara_select/chara_select.gd" id="1_sthoc"]
+[ext_resource type="Texture2D" uid="uid://bbhkgt1u5ywan" path="res://assets/img/chara_select/button/sampleA_button.png" id="2_e55c8"]
+[ext_resource type="Texture2D" uid="uid://b1uijsfavq51d" path="res://assets/img/chara_select/button/sampleB_button.png" id="3_dfqo2"]
+[ext_resource type="Texture2D" uid="uid://lyg8knh2dhia" path="res://assets/img/chara_select/button/sampleC_button.png" id="4_gpwxx"]
 
 [node name="CharaSelect" type="Node2D" unique_id=472852071]
 script = ExtResource("1_sthoc")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1882665531]
+
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=119536363]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CharaA" type="TextureButton" parent="CanvasLayer/Control" unique_id=1747418117]
+layout_mode = 0
+offset_left = 200.0
+offset_top = 400.0
+offset_right = 500.0
+offset_bottom = 700.0
+scale = Vector2(0.5, 0.5)
+texture_normal = ExtResource("2_e55c8")
+
+[node name="CharaB" type="TextureButton" parent="CanvasLayer/Control" unique_id=1156883824]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 400.0
+offset_right = 800.0
+offset_bottom = 700.0
+scale = Vector2(0.5, 0.5)
+texture_normal = ExtResource("3_dfqo2")
+
+[node name="CharaC" type="TextureButton" parent="CanvasLayer/Control" unique_id=1615954830]
+layout_mode = 0
+offset_left = 800.0
+offset_top = 400.0
+offset_right = 1100.0
+offset_bottom = 700.0
+scale = Vector2(0.5, 0.5)
+texture_normal = ExtResource("4_gpwxx")
+
+[node name="Preview" type="TextureRect" parent="CanvasLayer/Control" unique_id=746959523]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="NameLabel" type="Label" parent="CanvasLayer/Control" unique_id=255962709]
+layout_mode = 0
+offset_left = 300.0
+offset_top = 50.0
+offset_right = 340.0
+offset_bottom = 73.0
+scale = Vector2(3, 3)
+
+[node name="DecisionLabel" type="Label" parent="CanvasLayer/Control" unique_id=164115708]
+layout_mode = 0
+offset_left = 300.0
+offset_top = 50.0
+offset_right = 340.0
+offset_bottom = 73.0
+scale = Vector2(3, 3)
+
+[connection signal="mouse_entered" from="CanvasLayer/Control/CharaA" to="." method="_on_chara_a_mouse_entered"]
+[connection signal="pressed" from="CanvasLayer/Control/CharaA" to="." method="_on_chara_a_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/Control/CharaB" to="." method="_on_chara_b_mouse_entered"]
+[connection signal="pressed" from="CanvasLayer/Control/CharaB" to="." method="_on_chara_b_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/Control/CharaC" to="." method="_on_chara_c_mouse_entered"]
+[connection signal="pressed" from="CanvasLayer/Control/CharaC" to="." method="_on_chara_c_pressed"]
