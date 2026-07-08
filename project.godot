@@ -20,6 +20,10 @@ config/icon="res://icon.svg"
 NetworkManager="*uid://cg4bfr1587pao"
 SceneManager="*uid://b7ntcfjs3qn3l"
 
+[display]
+
+window/stretch/mode="viewport"
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/gut/plugin.cfg")
