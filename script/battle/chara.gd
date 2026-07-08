@@ -11,4 +11,4 @@ func _ready() -> void:
 
 ## 対応したキャラを読み込む
 func set_chara(chara:CharaData) -> void:
-	animated_sprite2d.sprite_frame = chara.sprite_frame
+	animated_sprite2d.sprite_frames = chara.sprite_frames
