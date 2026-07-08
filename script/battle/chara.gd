@@ -9,10 +9,6 @@ extends Node2D
 func _ready() -> void:
 	pass # Replace with function body.
 
-func setup(chara:) -> void:
-	pass
-
-
 ## 対応したキャラを読み込む
 func set_chara(chara:CharaData) -> void:
 	animated_sprite2d.sprite_frame = chara.sprite_frame
