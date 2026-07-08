@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://dix5hd5fyebwo"]
+
+[ext_resource type="Script" uid="uid://uvmnp6vywd56" path="res://script/battle/UI/status_display.gd" id="1_vryhe"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2nf53"]
+bg_color = Color(0.13509169, 0.14671263, 0.14902386, 1)
+
+[node name="StatusDisplay" type="Control" unique_id=2093170967]
+layout_mode = 3
+offset_right = 250.0
+offset_bottom = 300.0
+script = ExtResource("1_vryhe")
+
+[node name="Panel" type="Panel" parent="." unique_id=215233173]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_2nf53")

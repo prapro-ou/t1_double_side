@@ -1,7 +1,9 @@
-[gd_scene format=3 uid="uid://gsnnc78elepa"]
+[gd_scene format=3 uid="uid://bv5hyjamya20l"]
 
-[ext_resource type="PackedScene" uid="uid://cy4rgcqbyc4ge" path="res://components/battle/battle_ui_layer.tscn" id="1_afp2b"]
+[ext_resource type="PackedScene" uid="uid://30gaeu0acs35" path="res://components/battle/UI/left_turn_timer.tscn" id="1_afp2b"]
 
-[node name="Battle" type="Node2D" unique_id=1507929973]
+[node name="Battle" type="Node2D" unique_id=2019355189]
 
-[node name="BattleUILayer" parent="." unique_id=1898615455 instance=ExtResource("1_afp2b")]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=635536237]
+
+[node name="LeftTurnTimer" parent="CanvasLayer" unique_id=875117996 instance=ExtResource("1_afp2b")]
