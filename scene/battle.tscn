@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dtxhvae2fa3c3"]
 
 [ext_resource type="PackedScene" uid="uid://30gaeu0acs35" path="res://components/battle/UI/left_turn_timer.tscn" id="1_afp2b"]
-[ext_resource type="PackedScene" uid="uid://cy4rgcqbyc4ge" path="res://components/battle/battle_ui_layer.tscn" id="2_ffp3s"]
+[ext_resource type="PackedScene" uid="uid://cy4rgcqbyc4ge" path="res://components/battle/UI/battle_ui_layer.tscn" id="2_ffp3s"]
 
 [node name="Battle" type="Node2D" unique_id=2019355189]
 
