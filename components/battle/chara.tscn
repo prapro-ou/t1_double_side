@@ -1,6 +1,42 @@
 [gd_scene format=3 uid="uid://bodt622jes7ss"]
 
 [ext_resource type="Script" uid="uid://bngaqvyouqkbo" path="res://script/battle/chara.gd" id="1_a6hc1"]
+[ext_resource type="Texture2D" uid="uid://d0xl2k784v3qq" path="res://assets/img/chara/sampleA/sampleA.png" id="2_7hnsl"]
+[ext_resource type="Texture2D" uid="uid://ci80mr1mmgh8r" path="res://assets/img/chara/sampleB/sampleB.png" id="3_in8mb"]
+[ext_resource type="Texture2D" uid="uid://b7m4u1m1wtghn" path="res://assets/img/chara/sampleC/sampleC.png" id="4_u7gxe"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ftf0i"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_7hnsl")
+}],
+"loop": true,
+"name": &"sampleA",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_in8mb")
+}],
+"loop": true,
+"name": &"sampleB",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_u7gxe")
+}],
+"loop": true,
+"name": &"sampleC",
+"speed": 5.0
+}]
 
 [node name="CharaBase" type="Node2D" unique_id=1411314231]
 script = ExtResource("1_a6hc1")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1333883340]
+position = Vector2(299, 374.99997)
+scale = Vector2(1.189, 1.1)
+sprite_frames = SubResource("SpriteFrames_ftf0i")
+animation = &"sampleA"
