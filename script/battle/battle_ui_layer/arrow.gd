@@ -10,6 +10,7 @@ signal fired(direction: Vector2)
 ## これ未満は非表示
 @export var min_dist:float = 20.0    
 
+
 ## 操作を受け付けているか
 var is_active:bool = true
 

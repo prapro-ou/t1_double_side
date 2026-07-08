@@ -51,5 +51,22 @@ texture_normal = ExtResource("4_ldy78")
 ignore_texture_size = true
 stretch_mode = 5
 
+[node name="Node2D" type="Node2D" parent="." unique_id=26319739]
+
+[node name="ZyankenGu" type="Sprite2D" parent="Node2D" unique_id=2099378894]
+position = Vector2(579, 100)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_ue8o0")
+
+[node name="ZyankenChoki" type="Sprite2D" parent="Node2D" unique_id=733647168]
+position = Vector2(302, 475)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_6jp7w")
+
+[node name="ZyankenPa" type="Sprite2D" parent="Node2D" unique_id=723059807]
+position = Vector2(881, 475)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_ldy78")
+
 [node name="Arrow" parent="." unique_id=632622361 instance=ExtResource("1_knu7v")]
 position = Vector2(576, 324)
