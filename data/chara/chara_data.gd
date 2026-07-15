@@ -7,4 +7,4 @@ extends Resource
 @export var max_hp: int
 @export var max_mp:int
 @export var attack: int
-@export var skills:Dictionary
+@export var skill_name:String
