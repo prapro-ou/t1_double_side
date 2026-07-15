@@ -28,12 +28,16 @@ func update_mp(current_mp: int) -> void:
 
 
 func _ready() -> void:
+	
 	var dummy_chara = {
-	"display_name": "テスト勇者",
-	"max_hp": 100,
-	"max_mp": 50
+		"display_name": "テスト勇者",
+		"max_hp": 100,
+		"max_mp": 50
 	}
+	
 	setup("Player No1", dummy_chara)
+	
+	
 	await get_tree().create_timer(2.0).timeout
 	update_hp(75)  # HPを75にする
 	update_mp(20)  # MPを20にする
