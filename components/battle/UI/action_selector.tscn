@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://i0y31sco83l8"]
+
+[ext_resource type="Script" uid="uid://duc6ptyb3v2bm" path="res://script/battle/UI/action_selector.gd" id="1_cw4gn"]
+
+[node name="ActionSelector" type="Control" unique_id=345756906]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cw4gn")
