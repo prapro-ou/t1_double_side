@@ -28,7 +28,7 @@ func _close_ws() -> void:
 
 ## シグナリングサーバー(WebSocket)との接続のみを切断する
 ## WebRTCのP2P接続は維持する（ゲーム開始後はシグナリングサーバーが不要なため）
-func _disconnect_signaling() -> void:
+func disconnect_signaling() -> void:
 	_close_ws()
 	pending_action = {}
 
@@ -142,10 +142,6 @@ func join_game(username:String,password:String) -> void:
 	_connect_ws()
 
 #----------------------------------------------------------------------------------
-@rpc("authority", "call_local", "reliable")
-func start_game() -> void:
-	_disconnect_signaling()
-	SceneManager.change_scene("webrtc_test")
 
 ## 接続後、pending_actionの内容を送信する
 func _process(delta: float) -> void:
