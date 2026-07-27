@@ -2,21 +2,28 @@
 
 [ext_resource type="PackedScene" uid="uid://30gaeu0acs35" path="res://components/battle/UI/left_turn_timer.tscn" id="1_afp2b"]
 [ext_resource type="Script" uid="uid://c5v42uvlhqu65" path="res://script/battle/battle.gd" id="1_soyo5"]
-[ext_resource type="PackedScene" uid="uid://cy4rgcqbyc4ge" path="res://components/battle/UI/battle_ui_layer.tscn" id="2_ffp3s"]
+[ext_resource type="PackedScene" uid="uid://dix5hd5fyebwo" path="res://components/battle/UI/status_display.tscn" id="3_ebedk"]
 [ext_resource type="PackedScene" uid="uid://bodt622jes7ss" path="res://components/battle/chara.tscn" id="4_0okv5"]
+[ext_resource type="PackedScene" uid="uid://cy4rgcqbyc4ge" path="res://components/battle/UI/hand_direction_selector.tscn" id="4_ebedk"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_0okv5"]
 
 [node name="Battle" type="Node2D" unique_id=2019355189]
 script = ExtResource("1_soyo5")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=635536237]
+[node name="StatusLayer" type="CanvasLayer" parent="." unique_id=635536237]
 
-[node name="LeftTurnTimer" parent="CanvasLayer" unique_id=875117996 instance=ExtResource("1_afp2b")]
+[node name="LeftTurnTimer" parent="StatusLayer" unique_id=875117996 instance=ExtResource("1_afp2b")]
 offset_left = 475.0
 offset_right = 675.0
 
-[node name="BattleUILayer" parent="." unique_id=1898615455 instance=ExtResource("2_ffp3s")]
+[node name="PlayerStatusDisplay" parent="StatusLayer" unique_id=2093170967 instance=ExtResource("3_ebedk")]
+
+[node name="OpponentStatusDisplay" parent="StatusLayer" unique_id=1905852654 instance=ExtResource("3_ebedk")]
+
+[node name="SelectorLayer" type="CanvasLayer" parent="." unique_id=1361772322]
+
+[node name="HandDirectionSelector" parent="SelectorLayer" unique_id=818577010 instance=ExtResource("4_ebedk")]
 visible = false
 
 [node name="CharaManager" type="Node2D" parent="." unique_id=669217821]
@@ -31,5 +38,3 @@ scale = Vector2(0.5, 0.5)
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=2044321510]
 replication_config = SubResource("SceneReplicationConfig_0okv5")
-
-[node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=788729310]

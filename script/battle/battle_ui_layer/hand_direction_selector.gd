@@ -1,4 +1,4 @@
-extends CanvasLayer
+extends Node2D
 
 const Hands = preload("res://script/battle/battle_ui_layer/hands.gd")
 const Direction =preload("res://script/battle/battle_ui_layer/direction.gd")

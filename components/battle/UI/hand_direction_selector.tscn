@@ -1,15 +1,15 @@
 [gd_scene format=3 uid="uid://cy4rgcqbyc4ge"]
 
 [ext_resource type="PackedScene" uid="uid://brcer8xgg1l7k" path="res://components/battle/arrow.tscn" id="1_knu7v"]
-[ext_resource type="Script" uid="uid://b2sjkoxcqyr4t" path="res://script/battle/battle_ui_layer/battle_ui_layer.gd" id="1_sbslu"]
+[ext_resource type="Script" uid="uid://b2sjkoxcqyr4t" path="res://script/battle/battle_ui_layer/hand_direction_selector.gd" id="1_u80py"]
 [ext_resource type="Script" uid="uid://ckmc1nhvv74fd" path="res://script/battle/battle_ui_layer/hands.gd" id="2_ldy78"]
 [ext_resource type="Texture2D" uid="uid://dpv462q1g51u8" path="res://assets/img/battle/janken/zyanken_gu.png" id="2_ue8o0"]
 [ext_resource type="Texture2D" uid="uid://bciowm6nc3gxs" path="res://assets/img/battle/janken/zyanken_choki.png" id="3_6jp7w"]
 [ext_resource type="Texture2D" uid="uid://b88anjwtqorla" path="res://assets/img/battle/janken/zyanken_pa.png" id="4_ldy78"]
 [ext_resource type="Script" uid="uid://wbv5a06ryp3k" path="res://script/battle/battle_ui_layer/direction.gd" id="7_aipfm"]
 
-[node name="BattleUILayer" type="CanvasLayer" unique_id=1898615455]
-script = ExtResource("1_sbslu")
+[node name="HandDirectionSelector" type="Node2D" unique_id=818577010]
+script = ExtResource("1_u80py")
 
 [node name="Hands" type="Node2D" parent="." unique_id=26319739]
 script = ExtResource("2_ldy78")
