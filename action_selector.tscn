@@ -11,22 +11,12 @@ offset_right = 47.0
 offset_bottom = 48.0
 script = ExtResource("1_qte0h")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=123229802]
+[node name="Panel" type="Panel" parent="." unique_id=717297224]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="AttackButton" type="Button" parent="HBoxContainer" unique_id=1387801599]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 5.42
-text = "攻撃"
-
-[node name="SkillButton" type="Button" parent="HBoxContainer" unique_id=83652187]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 4.9
-text = "スキル"
+offset_left = -6.0
+offset_top = -4.0
+offset_right = 395.0
+offset_bottom = 126.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=705551508]
 layout_mode = 0
@@ -43,12 +33,22 @@ horizontal_alignment = 1
 layout_mode = 2
 text = "激しい炎の球を解き放ち、相手に火属性の大ダメージを与える。"
 
-[node name="Panel" type="Panel" parent="." unique_id=717297224]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=123229802]
 layout_mode = 0
-offset_left = -6.0
-offset_top = -4.0
-offset_right = 395.0
-offset_bottom = 126.0
+offset_right = 91.0
+offset_bottom = 40.0
+
+[node name="AttackButton" type="Button" parent="HBoxContainer" unique_id=1387801599]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 5.42
+text = "攻撃"
+
+[node name="SkillButton" type="Button" parent="HBoxContainer" unique_id=83652187]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.9
+text = "スキル"
 
 [connection signal="pressed" from="HBoxContainer/AttackButton" to="." method="_on_attack_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/SkillButton" to="." method="_on_skill_button_pressed"]
