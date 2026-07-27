@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://30gaeu0acs35"]
 
 [ext_resource type="Script" uid="uid://ds0gimhfprhjs" path="res://script/battle/UI/left_turn_timer.gd" id="1_g6tip"]
+[ext_resource type="Texture2D" uid="uid://6vhfvpm7aypa" path="res://assets/img/battle/UI/left_turn_timer.png" id="2_mc3gm"]
 
 [node name="LeftTurnTimer" type="Control" unique_id=875117996]
 layout_mode = 3
@@ -8,3 +9,27 @@ anchors_preset = 0
 offset_right = 200.0
 offset_bottom = 150.0
 script = ExtResource("1_g6tip")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1011213538]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_mc3gm")
+
+[node name="Turn Label" type="Label" parent="." unique_id=1664445029]
+layout_mode = 0
+offset_left = 33.0
+offset_top = 53.0
+offset_right = 176.0
+offset_bottom = 131.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 27
+text = "残りターン:10
+"
+
+[node name="TurnDisplay" type="Control" parent="." unique_id=1617485320]
+anchors_preset = 0
+offset_left = 67.0
+offset_top = 43.0
+offset_right = 107.0
+offset_bottom = 83.0
