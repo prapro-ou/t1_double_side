@@ -5,6 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://cy4rgcqbyc4ge" path="res://components/battle/UI/battle_ui_layer.tscn" id="2_ffp3s"]
 [ext_resource type="PackedScene" uid="uid://bodt622jes7ss" path="res://components/battle/chara.tscn" id="4_0okv5"]
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_0okv5"]
+
 [node name="Battle" type="Node2D" unique_id=2019355189]
 script = ExtResource("1_soyo5")
 
@@ -15,6 +17,7 @@ offset_left = 475.0
 offset_right = 675.0
 
 [node name="BattleUILayer" parent="." unique_id=1898615455 instance=ExtResource("2_ffp3s")]
+visible = false
 
 [node name="CharaManager" type="Node2D" parent="." unique_id=669217821]
 
@@ -25,3 +28,8 @@ is_player = true
 [node name="OpponentChara" parent="CharaManager" unique_id=1575287063 instance=ExtResource("4_0okv5")]
 position = Vector2(986, 113)
 scale = Vector2(0.5, 0.5)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=2044321510]
+replication_config = SubResource("SceneReplicationConfig_0okv5")
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=788729310]
