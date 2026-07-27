@@ -12,3 +12,15 @@ enum Direction{
 	DOWN = 2,
 	RIGHT = 3
 }
+
+enum Player{
+	HOST,
+	JOIN
+}
+
+## じゃんけんの結果
+enum JankenResult{
+	HOST_WIN,
+	JOIN_WIN,
+	DRAW
+}
