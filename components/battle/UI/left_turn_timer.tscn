@@ -16,7 +16,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("2_mc3gm")
 
-[node name="Turn Label" type="Label" parent="." unique_id=1664445029]
+[node name="TurnLabel" type="Label" parent="." unique_id=1664445029]
 layout_mode = 0
 offset_left = 33.0
 offset_top = 53.0

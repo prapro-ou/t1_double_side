@@ -1,3 +1,5 @@
+class_name CharaBase
+
 extends Node2D
 
 ## 自分のキャラを表示する用のスプライトか
