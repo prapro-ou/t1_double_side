@@ -34,6 +34,3 @@ func _ready() -> void:
 	"max_mp": 50
 	}
 	setup("Player No1", dummy_chara)
-	await get_tree().create_timer(2.0).timeout
-	update_hp(75)  # HPを75にする
-	update_mp(20)  # MPを20にする

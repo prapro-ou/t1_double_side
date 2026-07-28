@@ -18,6 +18,22 @@ enum Player{
 	JOIN
 }
 
+enum Action{
+	ATTACK = 0,
+	SKILL = 1
+}
+
+## ゲームのフェーズ
+enum Phase{
+	SELECT_ACTION,
+}
+
+enum SelectMode{
+	ACTION,
+	HAND,
+	DIRECTION
+}
+
 ## じゃんけんの結果
 enum JankenResult{
 	HOST_WIN,

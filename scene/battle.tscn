@@ -35,6 +35,7 @@ offset_bottom = 342.0
 [node name="HandDirectionSelector" parent="SelectorLayer" unique_id=818577010 instance=ExtResource("4_ebedk")]
 
 [node name="ActionSelector" parent="SelectorLayer" unique_id=1567129468 instance=ExtResource("5_q27o7")]
+visible = false
 anchors_preset = -1
 offset_left = 505.0
 offset_top = 437.0
