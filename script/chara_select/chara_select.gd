@@ -23,9 +23,9 @@ func show_chara(button: TextureButton, name: String) -> void:
 
 func submit_selection(chara_id) -> void:
 	if multiplayer.is_server():
-		GameSession.receive_selection(multiplayer.get_unique_id(), chara_id)
+		GameSession.receive_chara_selection(multiplayer.get_unique_id(), chara_id)
 	else:
-		GameSession.submit.rpc_id(1, chara_id)
+		GameSession.chara_submit.rpc_id(1, chara_id)
 
 func decide_chara(button: TextureButton, chara_id: StringName) -> void:
 	if selected:

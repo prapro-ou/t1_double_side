@@ -23,6 +23,7 @@ func _ready() -> void:
 	skill_button.focus_entered.connect(_on_skill_button_hover)
 	skill_button.focus_exited.connect(_on_skill_button_unhover)
 
+
 # --- スキル情報の設定関数 (Issueの指定通り set_skil) ---
 func set_skil(skill_name: String, description: String) -> void:
 	if not is_node_ready():
