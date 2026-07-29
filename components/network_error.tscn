@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://52yvchrq6mko"]
+
+[ext_resource type="Script" uid="uid://ch8201g4nwko7" path="res://components/network_error.gd" id="1_tcret"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tcret"]
+content_margin_left = 20.0
+content_margin_top = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 20.0
+bg_color = Color(0.13333334, 0.13333334, 0.13333334, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="NetworkError" type="CanvasLayer" unique_id=1368133506]
+script = ExtResource("1_tcret")
+
+[node name="Control" type="Control" parent="." unique_id=1992306728]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control" unique_id=1114482437]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.5882353)
+
+[node name="PanelContainer" type="PanelContainer" parent="Control" unique_id=1258237672]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.5
+offset_top = -29.0
+offset_right = 80.5
+offset_bottom = 29.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_tcret")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer" unique_id=1637237095]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Error" type="Label" parent="Control/PanelContainer/VBoxContainer" unique_id=864343579]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "通信エラーが発生しました"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Go_title" type="Button" parent="Control/PanelContainer/VBoxContainer" unique_id=1387561532]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "タイトルへ戻る"
+
+[connection signal="pressed" from="Control/PanelContainer/VBoxContainer/Go_title" to="." method="_on_go_title_pressed"]
