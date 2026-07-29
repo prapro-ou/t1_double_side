@@ -21,14 +21,21 @@ func show_chara(button: TextureButton, name: String) -> void:
 	preview.texture = button.texture_normal
 	name_label.text = name
 
-func decide_chara(button: TextureButton, name: String) -> void:
+func submit_selection(chara_id) -> void:
+	if multiplayer.is_server():
+		GameSession.receive_selection(multiplayer.get_unique_id(), chara_id)
+	else:
+		GameSession.submit.rpc_id(1, chara_id)
+
+func decide_chara(button: TextureButton, chara_id: StringName) -> void:
 	if selected:
 		return
 
 	selected = true
 	preview.texture = button.texture_normal
-	name_label.text = name
-	decision_label.text = name + "に決定！"
+	name_label.text = chara_id
+	decision_label.text = chara_id + "に決定！"
+	submit_selection(chara_id)
 
 func clear_preview() -> void:
 	if selected:
@@ -42,13 +49,13 @@ func clear_preview() -> void:
 # -------------------
 
 func _on_chara_a_mouse_entered() -> void:
-	show_chara(chara_a, "CharaA")
+	show_chara(chara_a, "sampleA")
 
 func _on_chara_b_mouse_entered() -> void:
-	show_chara(chara_b, "CharaB")
+	show_chara(chara_b, "sampleB")
 
 func _on_chara_c_mouse_entered() -> void:
-	show_chara(chara_c, "CharaC")
+	show_chara(chara_c, "sampleC")
 
 # -------------------
 # マウスが離れたとき
@@ -68,10 +75,10 @@ func _on_chara_c_mouse_exited() -> void:
 # -------------------
 
 func _on_chara_a_pressed() -> void:
-	decide_chara(chara_a, "CharaA")
+	decide_chara(chara_a, &"sampleA")
 
 func _on_chara_b_pressed() -> void:
-	decide_chara(chara_b, "CharaB")
+	decide_chara(chara_b, &"sampleB")
 
 func _on_chara_c_pressed() -> void:
-	decide_chara(chara_c, "CharaC")
+	decide_chara(chara_c, &"sampleC")

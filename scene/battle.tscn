@@ -1,12 +1,27 @@
 [gd_scene format=3 uid="uid://dtxhvae2fa3c3"]
 
 [ext_resource type="PackedScene" uid="uid://30gaeu0acs35" path="res://components/battle/UI/left_turn_timer.tscn" id="1_afp2b"]
+[ext_resource type="Script" uid="uid://c5v42uvlhqu65" path="res://script/battle/battle.gd" id="1_soyo5"]
 [ext_resource type="PackedScene" uid="uid://cy4rgcqbyc4ge" path="res://components/battle/UI/battle_ui_layer.tscn" id="2_ffp3s"]
+[ext_resource type="PackedScene" uid="uid://bodt622jes7ss" path="res://components/battle/chara.tscn" id="4_0okv5"]
 
 [node name="Battle" type="Node2D" unique_id=2019355189]
+script = ExtResource("1_soyo5")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=635536237]
 
 [node name="LeftTurnTimer" parent="CanvasLayer" unique_id=875117996 instance=ExtResource("1_afp2b")]
+offset_left = 475.0
+offset_right = 675.0
 
 [node name="BattleUILayer" parent="." unique_id=1898615455 instance=ExtResource("2_ffp3s")]
+
+[node name="CharaManager" type="Node2D" parent="." unique_id=669217821]
+
+[node name="PlayerChara" parent="CharaManager" unique_id=1411314231 instance=ExtResource("4_0okv5")]
+position = Vector2(201, 374)
+is_player = true
+
+[node name="OpponentChara" parent="CharaManager" unique_id=1575287063 instance=ExtResource("4_0okv5")]
+position = Vector2(986, 113)
+scale = Vector2(0.5, 0.5)
