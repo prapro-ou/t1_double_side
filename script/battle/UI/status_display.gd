@@ -1,4 +1,4 @@
-extends Node
+extends Control
 
 @onready var user_name_label = $UserName
 @onready var chara_name_label = $CharaName

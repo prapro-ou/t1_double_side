@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://bodt622jes7ss" path="res://components/battle/chara.tscn" id="4_0okv5"]
 [ext_resource type="PackedScene" uid="uid://cy4rgcqbyc4ge" path="res://components/battle/UI/hand_direction_selector.tscn" id="4_ebedk"]
 [ext_resource type="PackedScene" uid="uid://c60a272ko1nji" path="res://components/battle/UI/action_selector.tscn" id="5_q27o7"]
+[ext_resource type="PackedScene" uid="uid://d4iuywgjlx57e" path="res://components/battle/janken_result/janken_result.tscn" id="7_6qw66"]
+[ext_resource type="Script" uid="uid://yjbqns23xdmf" path="res://script/battle/effect_manager.gd" id="7_p56j5"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_0okv5"]
 
@@ -25,10 +27,10 @@ offset_right = 275.0
 offset_bottom = 628.0
 
 [node name="OpponentStatusDisplay" parent="StatusLayer" unique_id=1905852654 instance=ExtResource("3_ebedk")]
-offset_left = 879.0
-offset_top = 181.0
-offset_right = 1129.0
-offset_bottom = 342.0
+offset_left = 894.0
+offset_top = 135.0
+offset_right = 1144.0
+offset_bottom = 296.0
 
 [node name="SelectorLayer" type="CanvasLayer" parent="." unique_id=1361772322]
 
@@ -51,6 +53,12 @@ is_player = true
 [node name="OpponentChara" parent="CharaManager" unique_id=1575287063 instance=ExtResource("4_0okv5")]
 position = Vector2(986, 113)
 scale = Vector2(0.5, 0.5)
+
+[node name="EffectManager" type="Node2D" parent="." unique_id=2054745561]
+script = ExtResource("7_p56j5")
+
+[node name="JankenResult" parent="EffectManager" unique_id=915383885 instance=ExtResource("7_6qw66")]
+visible = false
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=2044321510]
 replication_config = SubResource("SceneReplicationConfig_0okv5")
