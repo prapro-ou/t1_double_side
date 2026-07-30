@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cdxnpgagyoseg"]
 
-[ext_resource type="Script" uid="uid://00cbmtfq1wct" path="res://components/battle/UI/panel.gd" id="1_iavba"]
+[ext_resource type="Script" uid="uid://00cbmtfq1wct" path="res://script/battle/UI/aiko_counter.gd" id="1_iavba"]
 
 [node name="AikoCountor" type="Control" unique_id=2109178687]
 layout_mode = 3
@@ -9,12 +9,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_iavba")
 
 [node name="Panel" type="Panel" parent="." unique_id=476608582]
 layout_mode = 0
 offset_right = 53.0
 offset_bottom = 45.0
-script = ExtResource("1_iavba")
 
 [node name="Label" type="Label" parent="Panel" unique_id=860798621]
 layout_mode = 0
