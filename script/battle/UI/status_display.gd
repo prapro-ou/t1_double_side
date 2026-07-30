@@ -1,39 +1,61 @@
-extends Node
+extends Node2D
 
-@onready var user_name_label = $UserName
-@onready var chara_name_label = $CharaName
-@onready var hp_bar = $HP
-@onready var mp_bar = $MP
+# --- ノードの参照 ---
+@onready var turn_label: Label = $"Turn Label" if has_node("Turn Label") else null
+@onready var hp_bar: ProgressBar = $HP # HPバーノードを取得
 
-#ステータス表示を初期化
-func setup(username: String, chara: Dictionary) -> void:
-	
-	user_name_label.text = username
-	chara_name_label.text = chara.display_name
-	
-	hp_bar.max_value = chara.max_hp
-	mp_bar.max_value = chara.max_mp
-	
-	hp_bar.value = chara.max_hp
-	mp_bar.value = chara.max_mp
-
-#HPの現在値を変更
-func update_hp(current_hp: int) -> void:
-	hp_bar.value = current_hp
-
-#MPの現在値を変更
-func update_mp(current_mp: int) -> void:
-	mp_bar.value = current_mp
-
-
+# --- ステータス変数 ---
+@export var max_hp: int = 100
+var current_hp: int
 
 func _ready() -> void:
-	var dummy_chara = {
-	"display_name": "テスト勇者",
-	"max_hp": 100,
-	"max_mp": 50
-	}
-	setup("Player No1", dummy_chara)
-	await get_tree().create_timer(2.0).timeout
-	update_hp(75)  # HPを75にする
-	update_mp(20)  # MPを20にする
+	# ゲーム開始時にHPを最大値にセット
+	current_hp = max_hp
+	update_hp_display()
+
+# --- ターン表示の更新 ---
+func update_turn_display(turn: int) -> void:
+	if turn_label:
+		turn_label.text = "残りターン " + str(turn)
+
+# --- HP表示の更新 ---
+func update_hp_display() -> void:
+	if hp_bar:
+		hp_bar.max_value = max_hp
+		hp_bar.value = current_hp
+
+# --- ダメージを受ける処理（ここを外部から呼ぶ） ---
+func take_damage(amount: int) -> void:
+	if current_hp <= 0:
+		return
+
+	# HPを減らす
+	current_hp -= amount
+	current_hp = max(current_hp, 0) # 0未満にならないように補正
+	
+	# UIの表示を更新
+	update_hp_display()
+	
+	# ダメージモーション演出（画面・ノードの揺れ）
+	play_damage_animation()
+	
+	# HPが0になったかの判定
+	if current_hp <= 0:
+		on_defeat()
+
+# --- ダメージ時のモーション演出（Tweenを使った揺れ処理） ---
+func play_damage_animation() -> void:
+	# Tweenを使ってStatusDisplay全体（または指定ノード）を小刻みに揺らす
+	var tween = create_tween()
+	var original_pos = position
+	
+	# 左右にササッと揺らす演出
+	tween.tween_property(self, "position", original_pos + Vector2(-10, 0), 0.05)
+	tween.tween_property(self, "position", original_pos + Vector2(10, 0), 0.05)
+	tween.tween_property(self, "position", original_pos + Vector2(-5, 0), 0.05)
+	tween.tween_property(self, "position", original_pos + Vector2(0, 0), 0.05)
+
+# --- 敗北（HP0）時の処理 ---
+func on_defeat() -> void:
+	print("勝負あり！HPが0になりました。")
+	# ここにゲームオーバー画面を表示する処理などを追加できます
