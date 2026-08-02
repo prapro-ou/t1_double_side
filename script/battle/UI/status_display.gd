@@ -25,8 +25,8 @@ func update_hp_display(current_hp: int) -> void:
 
 #MPの現在値を変更
 func update_mp(current_mp: int) -> void:
-  if mp_bar:
-    mp_bar.value = current_mp
+	if mp_bar:
+		mp_bar.value = current_mp
 
 # --- ダメージ時のモーション演出（Tweenを使った揺れ処理） ---
 func play_damage_animation() -> void:
