@@ -56,7 +56,7 @@ func handle_janken() -> void:
 	effect_manager_node.show_janken(host_hand,join_hand)
 
 	if result == BattleEnum.JankenResult.DRAW:
-		handle_aiko()
+		await handle_aiko()
 		effect_manager_node.hide_janken()
 		return
 	
