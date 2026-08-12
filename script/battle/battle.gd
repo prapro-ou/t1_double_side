@@ -56,8 +56,7 @@ func handle_janken() -> void:
 	effect_manager_node.show_janken(host_hand,join_hand)
 
 	if result == BattleEnum.JankenResult.DRAW:
-		handle_aiko()
-		effect_manager_node.hide_janken()
+		await handle_aiko()
 		return
 	
 	set_aiko_count(0)
@@ -114,6 +113,7 @@ func _on_select_mode_completed(mode: BattleEnum.SelectMode, values: Dictionary) 
 func _on_select_mode_restarted(mode: BattleEnum.SelectMode) -> void:
 	match mode:
 		BattleEnum.SelectMode.HAND:
+			effect_manager_node.hide_janken()
 			hand_direction_selector_node.start_janken()
 
 
