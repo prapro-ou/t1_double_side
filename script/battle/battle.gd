@@ -58,6 +58,10 @@ func handle_janken() -> void:
 		return
 
 	set_aiko_count(0)
+	
+	await get_tree().create_timer(JANKEN_RESULT_DISPLAY_TIME).timeout
+	
+	await effect_manager_node.emphasis_janken(result)
 
 ## あいこだったときの処理。結果を見せてから、じゃんけんをやり直させる
 func handle_aiko() -> void:
