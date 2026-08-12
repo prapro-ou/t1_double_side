@@ -19,3 +19,12 @@ static func judge_janken(host:BattleEnum.Hand,join:BattleEnum.Hand) -> BattleEnu
 ## pointed: じゃんけん勝者が指差した方向 / faced: 敗者が向いた方向
 static func judge_hoi(pointed:BattleEnum.Direction,faced:BattleEnum.Direction) -> bool:
 	return pointed == faced
+
+static func is_janken_winner(result:BattleEnum.JankenResult,player:BattleEnum.Player) -> bool:
+	match result:
+		BattleEnum.JankenResult.HOST_WIN:
+			return player == BattleEnum.Player.HOST
+		BattleEnum.JankenResult.JOIN_WIN:
+			return player == BattleEnum.Player.JOIN
+		_:
+			return false

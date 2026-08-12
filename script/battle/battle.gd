@@ -19,6 +19,8 @@ var join_hp:int = 0
 ## 連続であいこになった回数
 var aiko_count:int = 0
 
+var current_janken_result:BattleEnum.JankenResult
+
 @onready var player_chara_node:CharaBase = $CharaManager/PlayerChara
 @onready var opponent_chara_node:CharaBase = $CharaManager/OpponentChara
 
@@ -55,13 +57,19 @@ func handle_janken() -> void:
 
 	if result == BattleEnum.JankenResult.DRAW:
 		handle_aiko()
+		effect_manager_node.hide_janken()
 		return
-
+	
 	set_aiko_count(0)
+	
+	current_janken_result = result
 	
 	await get_tree().create_timer(JANKEN_RESULT_DISPLAY_TIME).timeout
 	
 	await effect_manager_node.emphasis_janken(result)
+	effect_manager_node.hide_janken()
+	
+	hand_direction_selector_node.start_direction()
 
 ## あいこだったときの処理。結果を見せてから、じゃんけんをやり直させる
 func handle_aiko() -> void:
@@ -72,6 +80,7 @@ func handle_aiko() -> void:
 		return
 	await get_tree().create_timer(JANKEN_RESULT_DISPLAY_TIME).timeout
 	GameSession.restart_select_mode(BattleEnum.SelectMode.HAND)
+	
 
 ## あいこの回数を更新し、表示に反映する
 func set_aiko_count(count:int) -> void:
@@ -105,7 +114,6 @@ func _on_select_mode_completed(mode: BattleEnum.SelectMode, values: Dictionary) 
 func _on_select_mode_restarted(mode: BattleEnum.SelectMode) -> void:
 	match mode:
 		BattleEnum.SelectMode.HAND:
-			effect_manager_node.hide_janken()
 			hand_direction_selector_node.start_janken()
 
 

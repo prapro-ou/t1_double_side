@@ -12,6 +12,13 @@ func start_battle() -> void:
 	SceneManager.change_scene("battle")
 
 
+## peer_idをHOST/JOINに正規化する。ホストは常にpeer_id 1
+func to_player(peer_id:int) -> BattleEnum.Player:
+	return BattleEnum.Player.HOST if peer_id == 1 else BattleEnum.Player.JOIN
+
+func get_self_player() -> BattleEnum.Player:
+	return to_player(multiplayer.get_unique_id())
+
 #--------------------------------------------
 # ゲームのフェーズの監理
 #--------------------------------------------
@@ -88,10 +95,6 @@ var _pending:Dictionary[BattleEnum.SelectMode,int] = {}
 var _selected:Dictionary[BattleEnum.SelectMode,Dictionary] = {}
 ## 開示された実際の値
 var _revealed:Dictionary[BattleEnum.SelectMode,Dictionary] = {}
-
-## peer_idをHOST/JOINに正規化する。ホストは常にpeer_id 1
-func to_player(peer_id:int) -> BattleEnum.Player:
-	return BattleEnum.Player.HOST if peer_id == 1 else BattleEnum.Player.JOIN
 
 ## 全SelectModeの選択をやり直せる状態に戻す。change_phase()から呼ばれる
 func _reset_all_select_modes() -> void:
