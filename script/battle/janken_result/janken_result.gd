@@ -9,3 +9,6 @@ func show_hand(player_hand:BattleEnum.Hand,opponent_hand:BattleEnum.Hand) -> voi
 	player_hand_node.set_hand(player_hand)
 	opponent_hand_node.set_hand(opponent_hand)
 	visible = true;
+
+func hide_hand() -> void:
+	visible = false

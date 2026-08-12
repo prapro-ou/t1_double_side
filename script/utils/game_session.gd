@@ -79,6 +79,9 @@ func reset_chara_selections() -> void:
 ## 両者の値が出揃ったときに発火する。values = { BattleEnum.Player : 選んだ値 }
 signal select_mode_completed(mode:BattleEnum.SelectMode, values:Dictionary)
 
+## 選択がやり直しになったときに両者で発火する
+signal select_mode_restarted(mode:BattleEnum.SelectMode)
+
 ## 自分が選んだ値。両者が選択済みになるまで送信しない
 var _pending:Dictionary[BattleEnum.SelectMode,int] = {}
 ## 「選択済みかどうか」だけのフラグ。値は含まない
@@ -101,6 +104,19 @@ func reset_select_mode(mode:BattleEnum.SelectMode) -> void:
 	_pending.erase(mode)
 	_selected[mode] = {}
 	_revealed[mode] = {}
+
+## 特定のSelectModeだけ選び直させる。あいこのときのじゃんけんなど
+## 進行権はホストのみが持つので、クライアントから呼んでも無視される
+func restart_select_mode(mode:BattleEnum.SelectMode) -> void:
+	if not multiplayer.is_server():
+		return
+	_restart_select_mode.rpc(mode)
+
+## 直接呼ばずrestart_select_mode()を使うこと。call_localなので両者で同じ順序で走る
+@rpc("authority", "call_local", "reliable")
+func _restart_select_mode(mode:BattleEnum.SelectMode) -> void:
+	reset_select_mode(mode)
+	select_mode_restarted.emit(mode)
 
 ## 選択を宣言する。この時点では値を送らず「選んだ」ことだけを相手に伝える
 func submit(mode:BattleEnum.SelectMode, value:int) -> void:

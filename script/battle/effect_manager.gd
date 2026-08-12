@@ -9,3 +9,6 @@ func show_janken(host_hand:BattleEnum.Hand,join_hand:BattleEnum.Hand) ->void:
 		janken_result_node.show_hand(host_hand,join_hand)
 	else:
 		janken_result_node.show_hand(join_hand,host_hand)
+
+func hide_janken() -> void:
+	janken_result_node.hide_hand()

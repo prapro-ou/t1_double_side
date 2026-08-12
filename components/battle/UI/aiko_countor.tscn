@@ -4,21 +4,22 @@
 
 [node name="AikoCountor" type="Control" unique_id=2109178687]
 layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_iavba")
+is_debug = true
+
+[node name="Panel" type="Panel" parent="." unique_id=476608582]
+layout_mode = 0
+offset_right = 235.0
+offset_bottom = 70.0
+
+[node name="Label" type="Label" parent="Panel" unique_id=860798621]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_iavba")
-
-[node name="Panel" type="Panel" parent="." unique_id=476608582]
-layout_mode = 0
-offset_right = 53.0
-offset_bottom = 45.0
-
-[node name="Label" type="Label" parent="Panel" unique_id=860798621]
-layout_mode = 0
-offset_right = 49.0
-offset_bottom = 43.0
 theme_override_font_sizes/font_size = 25
 horizontal_alignment = 1
+vertical_alignment = 1
