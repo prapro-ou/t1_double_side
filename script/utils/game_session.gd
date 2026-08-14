@@ -73,6 +73,17 @@ func receive_chara_selection(peer_id:int,chara_id:StringName) -> void:
 	if chara_selections.size() == multiplayer.get_peers().size() + 1:
 		start_battle.rpc()
 
+## 指定プレイヤーが選んだキャラのIDを返す。まだ選んでいなければ空
+func get_chara_id(player:BattleEnum.Player) -> StringName:
+	for peer_id:int in chara_selections:
+		if to_player(peer_id) == player:
+			return chara_selections[peer_id]
+	return &""
+
+## 指定プレイヤーが選んだキャラのデータを返す。未選択・未登録のIDならnull
+func get_chara_data(player:BattleEnum.Player) -> CharaData:
+	return CharaDB.get_data(get_chara_id(player))
+
 ## キャラ選択をやり直せる状態に戻す。
 func reset_chara_selections() -> void:
 	chara_selections.clear()

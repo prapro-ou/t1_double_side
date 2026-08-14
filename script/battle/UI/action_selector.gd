@@ -40,6 +40,9 @@ func set_skil(skill_name: String, description: String) -> void:
 	skill_name_label.text = skill_name
 	skill_description_label.text = description
 
+func finish_battle(winner:BattleEnum.Player) -> void:
+	pass
+
 # --- ホバー/フォーカス時の処理 ---
 func _on_skill_button_hover() -> void:
 	# マウスが載ったら説明文を表示する

@@ -40,3 +40,9 @@ enum JankenResult{
 	JOIN_WIN,
 	DRAW
 }
+
+enum Winner{
+	HOST,
+	JOIN,
+	DRAW
+}

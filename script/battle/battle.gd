@@ -13,8 +13,15 @@ enum Player{
 	JOIN
 }
 
+## 選択されたキャラのデータ。setup_charas()で入る
+var host_chara_data:CharaData
+var join_chara_data:CharaData
+
 var host_hp:int = 0
+var host_hp_max:int = 0
+
 var join_hp:int = 0
+var join_hp_max:int = 0
 
 ## 連続であいこになった回数
 var aiko_count:int = 0
@@ -36,8 +43,25 @@ func _ready() -> void:
 	GameSession.select_mode_restarted.connect(_on_select_mode_restarted)
 	GameSession.changed_phase.connect(_on_changed_phase)
 
+	setup_charas()
+
 	if multiplayer.is_server():
 		start_turn()
+
+## 選択されたキャラのデータを読み込み、HPをそのキャラの最大値で初期化する
+func setup_charas() -> void:
+	host_chara_data = GameSession.get_chara_data(BattleEnum.Player.HOST)
+	join_chara_data = GameSession.get_chara_data(BattleEnum.Player.JOIN)
+
+	if host_chara_data == null or join_chara_data == null:
+		push_warning("キャラが決まっていないため、HPを初期化できません")
+		return
+
+	host_hp_max = host_chara_data.max_hp
+	host_hp = host_hp_max
+
+	join_hp_max = join_chara_data.max_hp
+	join_hp = join_hp_max
 
 ## ターンを開始する。ホストが呼ぶと両者のフェーズが進む
 func start_turn() -> void:
@@ -116,6 +140,12 @@ func _on_select_mode_restarted(mode: BattleEnum.SelectMode) -> void:
 			effect_manager_node.hide_janken()
 			hand_direction_selector_node.start_janken()
 
+## 残ターンが0になったときに呼ばれる処理
+func turn_limit_reached() -> void:
+	pass
+
+func finish_battle(winner:BattleEnum.Winner) -> void:
+	pass
 
 func _on_action_selector_attack_selected() -> void:
 	GameSession.submit(BattleEnum.SelectMode.ACTION, BattleEnum.Action.ATTACK)
