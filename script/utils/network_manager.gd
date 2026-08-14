@@ -6,12 +6,17 @@ signal joined_room(host_name:String)      # クライアント：参加成功
 signal peer_joined(id:int,username:String)             # 誰か参加（ロビーの人数表示用）
 signal peer_left(id:int,username:String)
 signal signaling_error(message:String)    # エラーの出力
+signal connection_lost()                  # 通信が意図せず切断された
 
 
 const SIGNALING_URL:String = "wss://signaling.kotukoroom.net/ws";
 const DEFAULT_ICE_SERVERS:Dictionary = { "iceServers": [{ "urls": ["stun:stun.l.google.com:19302"] }] }
 
 var is_host:bool = false;
+
+## ゲーム本編（キャラ選択以降）が進行中かどうか。
+## ロビーでの切断は待機状態に戻すだけなので、通信エラー扱いにするのはこのフラグが立っている間だけ
+var in_game:bool = false
 
 var ws = WebSocketPeer.new()
 var rtc = WebRTCMultiplayerPeer.new()
@@ -21,8 +26,24 @@ var pending_action:Dictionary[String, Variant]
 
 var ice_servers:Dictionary = DEFAULT_ICE_SERVERS
 
+## シグナリングサーバーとの接続を維持すべき状態かどうか。
+## trueのままWebSocketが閉じた場合は意図しない切断として扱う
+var _ws_expected:bool = false
+## connection_lostを二重に発火させないためのフラグ
+var _connection_lost_notified:bool = false
+
+func _ready() -> void:
+	# WebRTCのP2P接続が切れたタイミング
+	multiplayer.peer_disconnected.connect(_on_multiplayer_peer_disconnected)
+	multiplayer.server_disconnected.connect(_on_multiplayer_server_disconnected)
+
+## ゲーム本編の開始を通知する。以降、相手との切断は通信エラーとして扱われる
+func begin_game() -> void:
+	in_game = true
+
 ## WebSocketを閉じる（送信待ちのpending_actionは破棄しない）
 func _close_ws() -> void:
+	_ws_expected = false
 	if ws.get_ready_state() != WebSocketPeer.STATE_CLOSED:
 		ws.close()
 
@@ -44,6 +65,8 @@ func _reset_connection() -> void:
 
 ## サーバーとの接続をすべて切断し、接続前の状態に戻す（ロビーから戻るとき用）
 func leave() -> void:
+	in_game = false
+	_connection_lost_notified = false
 	_reset_connection()
 	pending_action = {}
 	is_host = false
@@ -51,12 +74,33 @@ func leave() -> void:
 
 ## WebSocketでシグナリングサーバーに接続
 func _connect_ws() -> void:
+	_connection_lost_notified = false
 	_reset_connection()
 	rtc = WebRTCMultiplayerPeer.new()
 	ws = WebSocketPeer.new()
 	var err:Error = ws.connect_to_url(SIGNALING_URL)
 	if err != OK:
 		signaling_error.emit("接続に失敗しました")
+		return
+	_ws_expected = true
+
+## ゲーム中に相手との接続が切れた（ホスト側から見た参加者の切断）
+func _on_multiplayer_peer_disconnected(_id:int) -> void:
+	if in_game:
+		_notify_connection_lost()
+
+## ゲーム中にホストとの接続が切れた（参加者側）
+func _on_multiplayer_server_disconnected() -> void:
+	if in_game:
+		_notify_connection_lost()
+
+## 通信が切断されたことを一度だけ通知する
+func _notify_connection_lost() -> void:
+	if _connection_lost_notified:
+		return
+	_connection_lost_notified = true
+	in_game = false
+	connection_lost.emit()
 
 ## sdpの作成、送信
 func _on_sdp_created(type:String,sdp:String,peer_id:int):
@@ -156,4 +200,7 @@ func _process(delta: float) -> void:
 			var msg = JSON.parse_string(ws.get_packet().get_string_from_utf8())
 			if msg != null:
 				_handle_message(msg)
-	
+	elif state == WebSocketPeer.STATE_CLOSED and _ws_expected:
+		# 意図せずシグナリングサーバーとの接続が切れた（マッチング中の切断）
+		_ws_expected = false
+		_notify_connection_lost()

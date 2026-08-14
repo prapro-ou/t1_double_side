@@ -4,6 +4,7 @@ extends Node
 @rpc("authority", "call_local", "reliable")
 func start_game() -> void:
 	NetworkManager.disconnect_signaling()
+	NetworkManager.begin_game()
 	reset_chara_selections()
 	SceneManager.change_scene("chara_select")
 
