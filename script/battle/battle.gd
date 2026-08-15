@@ -139,10 +139,23 @@ func _on_select_mode_restarted(mode: BattleEnum.SelectMode) -> void:
 		BattleEnum.SelectMode.HAND:
 			effect_manager_node.hide_janken()
 			hand_direction_selector_node.start_janken()
-
+	
 ## 残ターンが0になったときに呼ばれる処理
 func turn_limit_reached() -> void:
-	pass
+	# ゼロ除算を防ぎつつHP割合（0.0 〜 1.0）を計算
+	var host_ratio: float = float(host_hp) / float(host_hp_max) if host_hp_max > 0 else 0.0
+	var join_ratio: float = float(join_hp) / float(join_hp_max) if join_hp_max > 0 else 0.0
+
+	var winner: BattleEnum.Winner
+
+	if host_ratio > join_ratio:
+		winner = BattleEnum.Winner.HOST
+	elif join_ratio > host_ratio:
+		winner = BattleEnum.Winner.JOIN
+	else:
+		winner = BattleEnum.Winner.DRAW
+
+	finish_battle(winner)
 
 func finish_battle(winner:BattleEnum.Winner) -> void:
 	pass
