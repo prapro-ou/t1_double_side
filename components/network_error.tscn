@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://52yvchrq6mko"]
 
-[ext_resource type="Script" uid="uid://ch8201g4nwko7" path="res://components/network_error.gd" id="1_tcret"]
+[ext_resource type="Script" uid="uid://ch8201g4nwko7" path="res://script/utils/network_error.gd" id="1_tcret"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tcret"]
 content_margin_left = 20.0

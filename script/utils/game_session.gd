@@ -4,6 +4,7 @@ extends Node
 @rpc("authority", "call_local", "reliable")
 func start_game() -> void:
 	NetworkManager.disconnect_signaling()
+	NetworkManager.begin_game()
 	reset_chara_selections()
 	SceneManager.change_scene("chara_select")
 
@@ -11,6 +12,13 @@ func start_game() -> void:
 func start_battle() -> void:
 	SceneManager.change_scene("battle")
 
+
+## peer_idをHOST/JOINに正規化する。ホストは常にpeer_id 1
+func to_player(peer_id:int) -> BattleEnum.Player:
+	return BattleEnum.Player.HOST if peer_id == 1 else BattleEnum.Player.JOIN
+
+func get_self_player() -> BattleEnum.Player:
+	return to_player(multiplayer.get_unique_id())
 
 #--------------------------------------------
 # ゲームのフェーズの監理
@@ -65,6 +73,17 @@ func receive_chara_selection(peer_id:int,chara_id:StringName) -> void:
 	if chara_selections.size() == multiplayer.get_peers().size() + 1:
 		start_battle.rpc()
 
+## 指定プレイヤーが選んだキャラのIDを返す。まだ選んでいなければ空
+func get_chara_id(player:BattleEnum.Player) -> StringName:
+	for peer_id:int in chara_selections:
+		if to_player(peer_id) == player:
+			return chara_selections[peer_id]
+	return &""
+
+## 指定プレイヤーが選んだキャラのデータを返す。未選択・未登録のIDならnull
+func get_chara_data(player:BattleEnum.Player) -> CharaData:
+	return CharaDB.get_data(get_chara_id(player))
+
 ## キャラ選択をやり直せる状態に戻す。
 func reset_chara_selections() -> void:
 	chara_selections.clear()
@@ -79,16 +98,15 @@ func reset_chara_selections() -> void:
 ## 両者の値が出揃ったときに発火する。values = { BattleEnum.Player : 選んだ値 }
 signal select_mode_completed(mode:BattleEnum.SelectMode, values:Dictionary)
 
+## 選択がやり直しになったときに両者で発火する
+signal select_mode_restarted(mode:BattleEnum.SelectMode)
+
 ## 自分が選んだ値。両者が選択済みになるまで送信しない
 var _pending:Dictionary[BattleEnum.SelectMode,int] = {}
 ## 「選択済みかどうか」だけのフラグ。値は含まない
 var _selected:Dictionary[BattleEnum.SelectMode,Dictionary] = {}
 ## 開示された実際の値
 var _revealed:Dictionary[BattleEnum.SelectMode,Dictionary] = {}
-
-## peer_idをHOST/JOINに正規化する。ホストは常にpeer_id 1
-func to_player(peer_id:int) -> BattleEnum.Player:
-	return BattleEnum.Player.HOST if peer_id == 1 else BattleEnum.Player.JOIN
 
 ## 全SelectModeの選択をやり直せる状態に戻す。change_phase()から呼ばれる
 func _reset_all_select_modes() -> void:
@@ -101,6 +119,19 @@ func reset_select_mode(mode:BattleEnum.SelectMode) -> void:
 	_pending.erase(mode)
 	_selected[mode] = {}
 	_revealed[mode] = {}
+
+## 特定のSelectModeだけ選び直させる。あいこのときのじゃんけんなど
+## 進行権はホストのみが持つので、クライアントから呼んでも無視される
+func restart_select_mode(mode:BattleEnum.SelectMode) -> void:
+	if not multiplayer.is_server():
+		return
+	_restart_select_mode.rpc(mode)
+
+## 直接呼ばずrestart_select_mode()を使うこと。call_localなので両者で同じ順序で走る
+@rpc("authority", "call_local", "reliable")
+func _restart_select_mode(mode:BattleEnum.SelectMode) -> void:
+	reset_select_mode(mode)
+	select_mode_restarted.emit(mode)
 
 ## 選択を宣言する。この時点では値を送らず「選んだ」ことだけを相手に伝える
 func submit(mode:BattleEnum.SelectMode, value:int) -> void:

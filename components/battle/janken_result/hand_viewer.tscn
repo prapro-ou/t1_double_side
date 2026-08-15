@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://dpv462q1g51u8" path="res://assets/img/battle/janken/zyanken_gu.png" id="1_0kewb"]
 [ext_resource type="Texture2D" uid="uid://bciowm6nc3gxs" path="res://assets/img/battle/janken/zyanken_choki.png" id="2_icisq"]
 [ext_resource type="Texture2D" uid="uid://b88anjwtqorla" path="res://assets/img/battle/janken/zyanken_pa.png" id="3_168m2"]
-[ext_resource type="Script" uid="uid://d2rmjb4x30vyf" path="res://script/battle/janken_result/hand_viewer.gd" id="4_icisq"]
+[ext_resource type="Script" uid="uid://dbyklbgp88cbo" path="res://script/battle/janken_result/hand_viewer.gd" id="4_icisq"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_vvane"]
 animations = [{
@@ -22,7 +22,46 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="Animation" id="Animation_icisq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.8, 0.8)]
+}
+
+[sub_resource type="Animation" id="Animation_168m2"]
+resource_name = "emphasis"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.8, 0.8), Vector2(1.3, 1.3), Vector2(0.8, 0.8)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vvane"]
+_data = {
+&"RESET": SubResource("Animation_icisq"),
+&"emphasis": SubResource("Animation_168m2")
+}
+
 [node name="PlayerHand" type="AnimatedSprite2D" unique_id=1703917674]
 scale = Vector2(0.8, 0.8)
 sprite_frames = SubResource("SpriteFrames_vvane")
 script = ExtResource("4_icisq")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1844888293]
+libraries/ = SubResource("AnimationLibrary_vvane")
