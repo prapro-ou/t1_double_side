@@ -1,5 +1,9 @@
 extends Node2D
 
+const HandDirectionSelector = preload("res://script/battle/battle_ui_layer/hand_direction_selector.gd")
+const ActionSelector = preload("res://script/battle/UI/action_selector.gd")
+const EffectManager = preload("res://script/battle/effect_manager.gd")
+
 enum Player{
 	HOST,
 	JOIN
@@ -11,15 +15,72 @@ var join_hp:int = 0
 @onready var player_chara_node:CharaBase = $CharaManager/PlayerChara
 @onready var opponent_chara_node:CharaBase = $CharaManager/OpponentChara
 
+@onready var hand_direction_selector_node:HandDirectionSelector = $SelectorLayer/HandDirectionSelector
+@onready var action_selector_node:ActionSelector = $SelectorLayer/ActionSelector
+
+@onready var effect_manager_node:EffectManager = $EffectManager
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	GameSession.select_mode_completed.connect(_on_select_mode_completed)
+	GameSession.changed_phase.connect(_on_changed_phase)
+	
+	if multiplayer.is_server():
+		start_turn()
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+## ターンを開始する。ホストが呼ぶと両者のフェーズが進む
+func start_turn() -> void:
+	GameSession.advance_phase(BattleEnum.Phase.SELECT_ACTION)
 
 ## recent_hp_data = { Player.Host: "Hostの体力", Player.JOIN:"Joinの体力"}
 func play_damage_effect(recent_hp_data:Dictionary[Player,int],target:Player) -> void:
 	pass
+
+func handle_janken() -> void:
+	var host_hand:BattleEnum.Hand = GameSession.get_value(BattleEnum.SelectMode.HAND,BattleEnum.Player.HOST)
+	var join_hand:BattleEnum.Hand = GameSession.get_value(BattleEnum.SelectMode.HAND,BattleEnum.Player.JOIN)
+	var result:BattleEnum.JankenResult = BattleJudge.judge_janken(host_hand,join_hand)
+	print(result)
+	
+	effect_manager_node.show_janken(host_hand,join_hand)
+	
+
+## フェーズが切り替わったときに両者で呼ばれる
+func _on_changed_phase(phase: BattleEnum.Phase) -> void:
+	match phase:
+		BattleEnum.Phase.SELECT_ACTION:
+			action_selector_node.visible = true
+
+
+## 両者の選択が出揃ったときに呼ばれる。values = { BattleEnum.Player : 選んだ値 }
+func _on_select_mode_completed(mode: BattleEnum.SelectMode, values: Dictionary) -> void:
+	match mode:
+		BattleEnum.SelectMode.ACTION:
+			if values[BattleEnum.Player.HOST] == BattleEnum.Action.SKILL:
+				pass
+			if values[BattleEnum.Player.JOIN] == BattleEnum.Action.SKILL:
+				pass
+
+			hand_direction_selector_node.start_janken();
+		BattleEnum.SelectMode.HAND:
+			handle_janken()
+		BattleEnum.SelectMode.DIRECTION:
+			pass
+
+
+func _on_action_selector_attack_selected() -> void:
+	GameSession.submit(BattleEnum.SelectMode.ACTION, BattleEnum.Action.ATTACK)
+	action_selector_node.visible = false
+
+
+func _on_action_selector_skill_selected() -> void:
+	GameSession.submit(BattleEnum.SelectMode.ACTION, BattleEnum.Action.SKILL)
+	action_selector_node.visible = false
+
+
+func _on_hand_direction_selector_direction_selected(direction: BattleEnum.Direction) -> void:
+	GameSession.submit(BattleEnum.SelectMode.DIRECTION, direction)
+
+
+func _on_hand_direction_selector_hands_selected(hand: BattleEnum.Hand) -> void:
+	GameSession.submit(BattleEnum.SelectMode.HAND, hand)

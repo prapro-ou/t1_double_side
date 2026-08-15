@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://d4iuywgjlx57e"]
+
+[ext_resource type="PackedScene" uid="uid://bhjnwltfgpsp5" path="res://components/battle/janken_result/hand_viewer.tscn" id="1_mcyur"]
+[ext_resource type="Script" uid="uid://c7u42hrjqseyr" path="res://script/battle/janken_result/janken_result.gd" id="1_votpt"]
+
+[node name="JankenResult" type="Node2D" unique_id=915383885]
+script = ExtResource("1_votpt")
+
+[node name="PlayerHand" parent="." unique_id=1703917674 instance=ExtResource("1_mcyur")]
+position = Vector2(764, 185)
+
+[node name="OpponentHand" parent="." unique_id=1025212632 instance=ExtResource("1_mcyur")]
+position = Vector2(415, 411)

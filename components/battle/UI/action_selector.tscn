@@ -15,27 +15,29 @@ script = ExtResource("1_cw4gn")
 layout_mode = 0
 offset_left = -6.0
 offset_top = -4.0
-offset_right = 395.0
-offset_bottom = 126.0
+offset_right = 621.0
+offset_bottom = 194.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=705551508]
 layout_mode = 0
-offset_top = 22.0
-offset_right = 399.0
-offset_bottom = 91.0
+offset_top = 68.0
+offset_right = 608.0
+offset_bottom = 178.0
 
 [node name="SkillNameLabel" type="Label" parent="VBoxContainer" unique_id=1181813800]
 layout_mode = 2
+theme_override_font_sizes/font_size = 25
 text = "ファイヤーボール"
 horizontal_alignment = 1
 
 [node name="SkillDescriptionLabel" type="Label" parent="VBoxContainer" unique_id=1940029369]
 layout_mode = 2
+theme_override_font_sizes/font_size = 23
 text = "激しい炎の球を解き放ち、相手に火属性の大ダメージを与える。"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=123229802]
 layout_mode = 0
-offset_right = 91.0
+offset_right = 614.0
 offset_bottom = 40.0
 
 [node name="AttackButton" type="Button" parent="HBoxContainer" unique_id=1387801599]
