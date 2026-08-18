@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://b5tn1pcuo818l"]
+
+[ext_resource type="Script" uid="uid://cwuq4sxvw2civ" path="res://script/battle/chara_manager/chara_manager.gd" id="1_hip4s"]
+[ext_resource type="PackedScene" uid="uid://bodt622jes7ss" path="res://components/battle/chara_manager/chara.tscn" id="2_sr1jg"]
+
+[node name="CharaManager" type="Node2D" unique_id=753385096]
+script = ExtResource("1_hip4s")
+
+[node name="PlayerChara" parent="." unique_id=1411314231 instance=ExtResource("2_sr1jg")]
+position = Vector2(201, 374)
+is_player = true
+
+[node name="OpponentChara" parent="." unique_id=828052574 instance=ExtResource("2_sr1jg")]
+position = Vector2(986, 113)
+scale = Vector2(0.5, 0.5)

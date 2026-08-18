@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bodt622jes7ss"]
 
-[ext_resource type="Script" uid="uid://bngaqvyouqkbo" path="res://script/battle/chara.gd" id="1_a6hc1"]
+[ext_resource type="Script" uid="uid://bngaqvyouqkbo" path="res://script/battle/chara_manager/chara.gd" id="1_a6hc1"]
 [ext_resource type="Texture2D" uid="uid://d0xl2k784v3qq" path="res://assets/img/chara/sampleA/sampleA.png" id="2_7hnsl"]
 [ext_resource type="Texture2D" uid="uid://ci80mr1mmgh8r" path="res://assets/img/chara/sampleB/sampleB.png" id="3_in8mb"]
 [ext_resource type="Texture2D" uid="uid://b7m4u1m1wtghn" path="res://assets/img/chara/sampleC/sampleC.png" id="4_u7gxe"]

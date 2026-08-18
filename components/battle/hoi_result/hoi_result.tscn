@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://dl62rd8ura4ux"]
+
+[ext_resource type="Script" uid="uid://bhjhwtdmkw8rm" path="res://script/battle/hoi_result/hoi_result.gd" id="1_7ygvd"]
+[ext_resource type="PackedScene" uid="uid://0bgjajcphsy8" path="res://components/battle/hoi_result/hoi_viewer.tscn" id="2_8l6vh"]
+
+[node name="HoiResult" type="Node2D" unique_id=1358208044]
+script = ExtResource("1_7ygvd")
+
+[node name="PlayerHoi" parent="." unique_id=514512421 instance=ExtResource("2_8l6vh")]
+position = Vector2(314, 470)
+
+[node name="OpponentHoi" parent="." unique_id=1568135189 instance=ExtResource("2_8l6vh")]
+position = Vector2(825, 193)

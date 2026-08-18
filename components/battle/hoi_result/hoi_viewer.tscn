@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://0bgjajcphsy8"]
+
+[ext_resource type="Texture2D" uid="uid://ydk6wh3d7e88" path="res://assets/img/battle/arrow/arrow.png" id="1_7isms"]
+[ext_resource type="Script" uid="uid://d11ead54g0iyu" path="res://script/battle/hoi_result/hoi_viewer.gd" id="1_w6oxu"]
+
+[node name="HoiViewer" type="Node2D" unique_id=514512421]
+script = ExtResource("1_w6oxu")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=352284134]
+texture = ExtResource("1_7isms")

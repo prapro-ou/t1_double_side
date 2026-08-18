@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://bf1ue0skklj1g"]
+
+[ext_resource type="Script" uid="uid://o0xxf7g1f3lb" path="res://script/battle/UI/status_display/status_display_manager.gd" id="1_gaeve"]
+[ext_resource type="PackedScene" uid="uid://dix5hd5fyebwo" path="res://components/battle/UI/status_display/status_display.tscn" id="2_wynol"]
+
+[node name="StatusDisplayManager" type="Control" unique_id=347625047]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gaeve")
+
+[node name="OpponentStatusDisplay" parent="." unique_id=2093170967 instance=ExtResource("2_wynol")]
+layout_mode = 0
+offset_left = 894.0
+offset_top = 135.0
+offset_right = 1144.0
+offset_bottom = 296.0
+
+[node name="PlayerStatusDisplay" parent="." unique_id=1279481158 instance=ExtResource("2_wynol")]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 467.0
+offset_right = 275.0
+offset_bottom = 628.0
