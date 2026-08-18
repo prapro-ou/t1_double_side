@@ -1,11 +1,13 @@
 extends Node2D
 
 const JankenResult = preload("res://script/battle/janken_result/janken_result.gd")
+const HoiResult = preload("res://script/battle/hoi_result/hoi_result.gd")
 
 @onready var janken_result_node:JankenResult = $JankenResult
+@onready var hoi_result_node:HoiResult = $HoiResult
 
 func show_janken(host_hand:BattleEnum.Hand,join_hand:BattleEnum.Hand) ->void:
-	if GameSession.get_self_player() == BattleEnum.Player.HOST:
+	if GameSession.is_self(BattleEnum.Player.HOST):
 		janken_result_node.show_hand(host_hand,join_hand)
 	else:
 		janken_result_node.show_hand(join_hand,host_hand)
@@ -19,3 +21,13 @@ func emphasis_janken(result:BattleEnum.JankenResult) -> void:
 
 func hide_janken() -> void:
 	janken_result_node.hide_hand()
+
+
+func show_hoi(host_direction:BattleEnum.Direction,join_direction:BattleEnum.Direction) -> void:
+	if GameSession.is_self(BattleEnum.Player.HOST):
+		hoi_result_node.show_hoi(host_direction,join_direction)
+	else:
+		hoi_result_node.show_hoi(join_direction,host_direction)
+
+func hide_hoi() -> void:
+	hoi_result_node.hide_hoi()

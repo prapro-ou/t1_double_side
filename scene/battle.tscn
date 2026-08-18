@@ -2,13 +2,14 @@
 
 [ext_resource type="PackedScene" uid="uid://30gaeu0acs35" path="res://components/battle/UI/left_turn_timer.tscn" id="1_afp2b"]
 [ext_resource type="Script" uid="uid://c5v42uvlhqu65" path="res://script/battle/battle.gd" id="1_soyo5"]
-[ext_resource type="PackedScene" uid="uid://dix5hd5fyebwo" path="res://components/battle/UI/status_display.tscn" id="3_ebedk"]
-[ext_resource type="PackedScene" uid="uid://bodt622jes7ss" path="res://components/battle/chara.tscn" id="4_0okv5"]
+[ext_resource type="PackedScene" uid="uid://bf1ue0skklj1g" path="res://components/battle/UI/status_display/status_display_manager.tscn" id="4_bdn7b"]
 [ext_resource type="PackedScene" uid="uid://cy4rgcqbyc4ge" path="res://components/battle/UI/hand_direction_selector.tscn" id="4_ebedk"]
 [ext_resource type="PackedScene" uid="uid://cdxnpgagyoseg" path="res://components/battle/UI/aiko_countor.tscn" id="4_ougy3"]
 [ext_resource type="PackedScene" uid="uid://c60a272ko1nji" path="res://components/battle/UI/action_selector.tscn" id="5_q27o7"]
 [ext_resource type="PackedScene" uid="uid://d4iuywgjlx57e" path="res://components/battle/janken_result/janken_result.tscn" id="7_6qw66"]
+[ext_resource type="PackedScene" uid="uid://b5tn1pcuo818l" path="res://components/battle/chara_manager/chara_manager.tscn" id="7_bdn7b"]
 [ext_resource type="Script" uid="uid://yjbqns23xdmf" path="res://script/battle/effect_manager.gd" id="7_p56j5"]
+[ext_resource type="PackedScene" uid="uid://dl62rd8ura4ux" path="res://components/battle/hoi_result/hoi_result.tscn" id="10_bdn7b"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_0okv5"]
 
@@ -21,24 +22,14 @@ script = ExtResource("1_soyo5")
 offset_right = 0.0
 offset_bottom = 0.0
 
-[node name="PlayerStatusDisplay" parent="StatusLayer" unique_id=2093170967 instance=ExtResource("3_ebedk")]
-offset_left = 25.0
-offset_top = 467.0
-offset_right = 275.0
-offset_bottom = 628.0
-
-[node name="OpponentStatusDisplay" parent="StatusLayer" unique_id=1905852654 instance=ExtResource("3_ebedk")]
-offset_left = 894.0
-offset_top = 135.0
-offset_right = 1144.0
-offset_bottom = 296.0
-
 [node name="AikoCountor" parent="StatusLayer" unique_id=2109178687 instance=ExtResource("4_ougy3")]
 offset_left = 6.0
 offset_top = 104.0
 offset_right = 6.0
 offset_bottom = 104.0
 is_debug = false
+
+[node name="StatusDisplayManager" parent="StatusLayer" unique_id=347625047 instance=ExtResource("4_bdn7b")]
 
 [node name="SelectorLayer" type="CanvasLayer" parent="." unique_id=1361772322]
 
@@ -52,20 +43,15 @@ offset_top = 437.0
 offset_right = 545.0
 offset_bottom = 477.0
 
-[node name="CharaManager" type="Node2D" parent="." unique_id=669217821]
-
-[node name="PlayerChara" parent="CharaManager" unique_id=1411314231 instance=ExtResource("4_0okv5")]
-position = Vector2(201, 374)
-is_player = true
-
-[node name="OpponentChara" parent="CharaManager" unique_id=1575287063 instance=ExtResource("4_0okv5")]
-position = Vector2(986, 113)
-scale = Vector2(0.5, 0.5)
+[node name="CharaManager" parent="." unique_id=753385096 instance=ExtResource("7_bdn7b")]
 
 [node name="EffectManager" type="Node2D" parent="." unique_id=2054745561]
 script = ExtResource("7_p56j5")
 
 [node name="JankenResult" parent="EffectManager" unique_id=915383885 instance=ExtResource("7_6qw66")]
+visible = false
+
+[node name="HoiResult" parent="EffectManager" unique_id=1358208044 instance=ExtResource("10_bdn7b")]
 visible = false
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=2044321510]

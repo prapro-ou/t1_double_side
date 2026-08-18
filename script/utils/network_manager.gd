@@ -14,6 +14,9 @@ const DEFAULT_ICE_SERVERS:Dictionary = { "iceServers": [{ "urls": ["stun:stun.l.
 
 var is_host:bool = false;
 
+## 自分が入力したユーザー名。host_game()/join_game()で入り、leave()で消える
+var self_username:String = ""
+
 ## ゲーム本編（キャラ選択以降）が進行中かどうか。
 ## ロビーでの切断は待機状態に戻すだけなので、通信エラー扱いにするのはこのフラグが立っている間だけ
 var in_game:bool = false
@@ -70,6 +73,7 @@ func leave() -> void:
 	_reset_connection()
 	pending_action = {}
 	is_host = false
+	self_username = ""
 	ice_servers = DEFAULT_ICE_SERVERS
 
 ## WebSocketでシグナリングサーバーに接続
@@ -176,12 +180,14 @@ func _on_offer(target_id:int,sdp:String):
 ## ホストとしてサーバーに接続
 func host_game(username:String,password:String,max_player:int) -> void:
 	is_host = true;
+	self_username = username
 	pending_action =  { "cmd": "Host", "username": username, "password": password, "max_player": max_player }
 	_connect_ws()
 
 ## Joinとしてサーバーに接続
 func join_game(username:String,password:String) -> void:
 	is_host = false
+	self_username = username
 	pending_action =  { "cmd": "Join", "username": username, "password": password}
 	_connect_ws()
 

@@ -1,9 +1,21 @@
 [gd_scene format=3 uid="uid://dix5hd5fyebwo"]
 
-[ext_resource type="Script" uid="uid://uvmnp6vywd56" path="res://script/battle/UI/status_display.gd" id="1_vryhe"]
+[ext_resource type="Script" uid="uid://uvmnp6vywd56" path="res://script/battle/UI/status_display/status_display.gd" id="1_vryhe"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2nf53"]
 bg_color = Color(0.13509169, 0.14671263, 0.14902386, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ttufa"]
+bg_color = Color(0.23753911, 0.23753914, 0.23753902, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h7jab"]
+bg_color = Color(0.39210206, 0.5825383, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lumqj"]
+bg_color = Color(0.23921569, 0.23921569, 0.23921569, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jy5tw"]
+bg_color = Color(0, 0.8279078, 0.27949852, 1)
 
 [node name="StatusDisplay" type="Control" unique_id=2093170967]
 layout_mode = 3
@@ -31,6 +43,21 @@ offset_left = 37.0
 offset_top = 120.0
 offset_right = 216.0
 offset_bottom = 156.0
+theme_override_styles/background = SubResource("StyleBoxFlat_ttufa")
+theme_override_styles/fill = SubResource("StyleBoxFlat_h7jab")
+show_percentage = false
+
+[node name="MpLabel" type="Label" parent="MP" unique_id=1916348054]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+text = "00/00"
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="HP" type="ProgressBar" parent="." unique_id=605691617]
 layout_mode = 0
@@ -38,6 +65,21 @@ offset_left = 37.0
 offset_top = 71.0
 offset_right = 216.0
 offset_bottom = 108.0
+theme_override_styles/background = SubResource("StyleBoxFlat_lumqj")
+theme_override_styles/fill = SubResource("StyleBoxFlat_jy5tw")
+show_percentage = false
+
+[node name="HpLabel" type="Label" parent="HP" unique_id=832839363]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+text = "00/00"
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="CharaName" type="Label" parent="." unique_id=1683177205]
 layout_mode = 1

@@ -20,6 +20,11 @@ static func judge_janken(host:BattleEnum.Hand,join:BattleEnum.Hand) -> BattleEnu
 static func judge_hoi(pointed:BattleEnum.Direction,faced:BattleEnum.Direction) -> bool:
 	return pointed == faced
 
+## 1ヒットぶんのダメージを計算する。
+## 直接呼ばずGameSession.attack()を使うこと。両者でHPがズレないよう、計算はホストだけが行う
+static func calc_damage(attacker:CharaData) -> int:
+	return attacker.attack
+
 static func is_janken_winner(result:BattleEnum.JankenResult,player:BattleEnum.Player) -> bool:
 	match result:
 		BattleEnum.JankenResult.HOST_WIN:
