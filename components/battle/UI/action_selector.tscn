@@ -13,10 +13,10 @@ script = ExtResource("1_cw4gn")
 
 [node name="Panel" type="Panel" parent="." unique_id=717297224]
 layout_mode = 0
-offset_left = -6.0
-offset_top = -4.0
+offset_left = -9.0
+offset_top = -7.0
 offset_right = 621.0
-offset_bottom = 194.0
+offset_bottom = 191.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=705551508]
 layout_mode = 0
@@ -35,6 +35,18 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 23
 text = "激しい炎の球を解き放ち、相手に火属性の大ダメージを与える。"
 
+[node name="CatchphraseNameLabel" type="Label" parent="VBoxContainer" unique_id=1890453039]
+layout_mode = 2
+theme_override_font_sizes/font_size = 23
+text = "未来はこっちだ！あっち向いて…ほい！"
+horizontal_alignment = 1
+
+[node name="CatchphraseDescriptionLabel" type="Label" parent="VBoxContainer" unique_id=314187500]
+layout_mode = 2
+theme_override_font_sizes/font_size = 23
+text = "圧倒的な覇気で相手の動揺を誘い、
+次ターンの「あっち向いてほい」成功率を大幅にアップさせる。"
+
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=123229802]
 layout_mode = 0
 offset_right = 614.0
@@ -52,5 +64,12 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.9
 text = "スキル"
 
+[node name="CatchphraseButton" type="Button" parent="HBoxContainer" unique_id=1263004297]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 5.22
+text = "決め台詞"
+
 [connection signal="pressed" from="HBoxContainer/AttackButton" to="." method="_on_attack_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/SkillButton" to="." method="_on_skill_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/CatchphraseButton" to="." method="_on_catchphrase_button_pressed"]
