@@ -9,7 +9,7 @@ extends Control
 
 # ノードの参照
 
-@onready var how_to_play_ima: TextureRect = $HowToPlayImage
+@export var how_to_play_ima: TextureRect
 @onready var title_button: BaseButton = $TitleButton
 @onready var back_button: BaseButton = $BackButton
 @onready var forward_button: BaseButton = $ForwardButton
@@ -24,6 +24,7 @@ func _ready() -> void:
 	
 	# 初回表示の更新
 	update_display()
+"res://assets/img/how_to_play/"
 
 # 表示とボタンの有効/無効状態を更新
 func update_display() -> void:
