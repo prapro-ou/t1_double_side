@@ -1,13 +1,13 @@
 [gd_resource type="Resource" script_class="CharaData" format=3 uid="uid://bvaqlnkaqgs3i"]
 
-[ext_resource type="Script" uid="uid://cm6i8gc0va1ic" path="res://data/chara/chara_data.gd" id="1_ib8g8"]
-[ext_resource type="Texture2D" uid="uid://d0xl2k784v3qq" path="res://assets/img/chara/sampleA/sampleA.png" id="2_spj5b"]
+[ext_resource type="Script" uid="uid://cm6i8gc0va1ic" path="res://data/chara/chara_data.gd" id="1_gf4io"]
+[ext_resource type="Texture2D" uid="uid://bwyy1lg0olg4" path="res://assets/img/chara/fire_man/fire_man.png" id="2_gf4io"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_7r4sd"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_spj5b")
+"texture": ExtResource("2_gf4io")
 }],
 "loop": true,
 "name": &"default",
@@ -15,15 +15,15 @@ animations = [{
 }]
 
 [resource]
-script = ExtResource("1_ib8g8")
-id = &"sampleA"
+script = ExtResource("1_gf4io")
+id = &"fire_man"
 sprite_frames = SubResource("SpriteFrames_7r4sd")
-display_name = "sampleA"
+display_name = "fire_man"
 max_hp = 80
 max_mp = 50
 attack = 20
 skill_name = "気合入れ"
 skill_discription = "次にじゃんけん勝ったとき二回攻撃相手は二回ガード"
-catchprase = "お前には俺の拳は破れない！"
+catchprase = "「お前には俺の拳は破れない！」"
 catchprase_description = "成功時　このターンのガードを無視し、相手へのダメージ増加
 失敗時　このターンのガード不可で被ダメージ増加"

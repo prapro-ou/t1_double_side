@@ -31,16 +31,20 @@ func _ready() -> void:
 	catchphrase_button.focus_exited.connect(_on_catchphrase_button_unhover)
 
 
+func set_chara(chara:CharaData) -> void:
+	set_skill(chara.skill_name,chara.skill_discription)
+	set_catchphrase(chara.catchprase,chara.catchprase_description)
+
 # --- スキル情報の設定関数 (Issueの指定通り set_skill) ---
 func set_skill(skill_name: String, description: String) -> void:
-	# スキルボタン自体のテキスト変更
-	skill_button.text = skill_name
-	
 	# スキル用ラベルの中身を更新
 	skill_name_label.text = skill_name
 	skill_description_label.text = description
 
-func 
+## 決め台詞の設定関数
+func set_catchphrase(catchphrase:String, description:String) -> void:
+	catchphrase_name_label.text = catchphrase
+	catchphrase_description_label.text = description
 
 # --- ホバー/フォーカス時の処理 ---
 func _on_skill_button_hover() -> void:

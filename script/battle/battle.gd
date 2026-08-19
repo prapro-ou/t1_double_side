@@ -93,6 +93,11 @@ func setup_charas() -> void:
 	status_display_manager_node.set_chara(host_chara_data,join_chara_data)
 	chara_manager_node.set_chara(host_chara_data,join_chara_data)
 	status_display_manager_node.set_mp(host_mp,join_mp)
+	
+	if GameSession.get_self_player() == BattleEnum.Player.HOST:
+		action_selector_node.set_chara(host_chara_data)
+	else:
+		action_selector_node.set_chara(join_chara_data)
 
 ## 両者のユーザー名を表示に反映する
 func setup_usernames() -> void:

@@ -1,13 +1,13 @@
 [gd_resource type="Resource" script_class="CharaData" format=3 uid="uid://ceji1nis8lxul"]
 
-[ext_resource type="Script" uid="uid://cm6i8gc0va1ic" path="res://data/chara/chara_data.gd" id="1_3akyk"]
-[ext_resource type="Texture2D" uid="uid://b7m4u1m1wtghn" path="res://assets/img/chara/sampleC/sampleC.png" id="2_vb75d"]
+[ext_resource type="Script" uid="uid://cm6i8gc0va1ic" path="res://data/chara/chara_data.gd" id="1_nd3lw"]
+[ext_resource type="Texture2D" uid="uid://cod0vb27mbncq" path="res://assets/img/chara/logic_woman/logic_woman.png" id="2_nd3lw"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_850mp"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_vb75d")
+"texture": ExtResource("2_nd3lw")
 }],
 "loop": true,
 "name": &"default",
@@ -15,16 +15,16 @@ animations = [{
 }]
 
 [resource]
-script = ExtResource("1_3akyk")
-id = &"sampleC"
+script = ExtResource("1_nd3lw")
+id = &"logic_woman"
 sprite_frames = SubResource("SpriteFrames_850mp")
-display_name = "sampleC"
+display_name = "logic_woman"
 max_hp = 100
 max_mp = 50
 attack = 15
 skill_name = "マジックパリィ"
 skill_discription = "次に防御に成功したときにカウンター"
-catchprase = "次のじゃんけんの勝率...100%"
+catchprase = "「次のじゃんけんの勝率...100%」"
 catchprase_description = "決め台詞成功　相手のMPを吸収
 失敗時　相手のMPが増加"
 metadata/_custom_type_script = "uid://cm6i8gc0va1ic"
