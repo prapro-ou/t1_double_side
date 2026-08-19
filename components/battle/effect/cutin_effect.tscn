@@ -1,8 +1,7 @@
 [gd_scene format=3 uid="uid://0u74phe0vex0"]
 
 [ext_resource type="Texture2D" uid="uid://dlilmx5iituca" path="res://assets/img/battle/effect/cutin.png" id="1_7oqx0"]
-[ext_resource type="Script" uid="uid://dgmu4uoxrs3bo" path="res://components/battle/effect/cutin_effect.gd" id="1_b11d6"]
-[ext_resource type="Script" uid="uid://cmrlhn4dnxsif" path="res://components/battle/effect/animation_player.gd" id="3_jbfr3"]
+[ext_resource type="Script" uid="uid://dgmu4uoxrs3bo" path="res://script/battle/effect_manager/cutin_effect.gd" id="1_b11d6"]
 
 [sub_resource type="Animation" id="Animation_67ilw"]
 length = 3.0
@@ -51,4 +50,3 @@ texture = ExtResource("1_7oqx0")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1339323048]
 libraries/ = SubResource("AnimationLibrary_ys2j4")
-script = ExtResource("3_jbfr3")
