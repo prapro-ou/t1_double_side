@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://c60a272ko1nji" path="res://components/battle/UI/action_selector.tscn" id="5_q27o7"]
 [ext_resource type="PackedScene" uid="uid://d4iuywgjlx57e" path="res://components/battle/janken_result/janken_result.tscn" id="7_6qw66"]
 [ext_resource type="PackedScene" uid="uid://b5tn1pcuo818l" path="res://components/battle/chara_manager/chara_manager.tscn" id="7_bdn7b"]
-[ext_resource type="Script" uid="uid://yjbqns23xdmf" path="res://script/battle/effect_manager.gd" id="7_p56j5"]
+[ext_resource type="Script" uid="uid://yjbqns23xdmf" path="res://script/battle/effect_manager/effect_manager.gd" id="7_p56j5"]
 [ext_resource type="PackedScene" uid="uid://dl62rd8ura4ux" path="res://components/battle/hoi_result/hoi_result.tscn" id="10_bdn7b"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_0okv5"]

@@ -2,7 +2,7 @@ extends Node2D
 
 const HandDirectionSelector = preload("res://script/battle/battle_ui_layer/hand_direction_selector.gd")
 const ActionSelector = preload("res://script/battle/UI/action_selector.gd")
-const EffectManager = preload("res://script/battle/effect_manager.gd")
+const EffectManager = preload("res://script/battle/effect_manager/effect_manager.gd")
 const AikoCounter = preload("res://script/battle/UI/aiko_counter.gd")
 const StatusDisplayManager = preload("res://script/battle/UI/status_display/status_display_manager.gd")
 const CharaManager = preload("res://script/battle/chara_manager/chara_manager.gd")
