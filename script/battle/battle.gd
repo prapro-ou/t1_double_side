@@ -7,6 +7,14 @@ const AikoCounter = preload("res://script/battle/UI/aiko_counter.gd")
 const StatusDisplayManager = preload("res://script/battle/UI/status_display/status_display_manager.gd")
 const CharaManager = preload("res://script/battle/chara_manager/chara_manager.gd")
 
+
+## ターン終了時に両者に与えられるMP
+@export var turn_end_mp_up:int
+## ガードに成功したときに貰えるMP
+@export var guard_mp_up:int
+## 決め台詞成功時に貰えるMP
+@export var catchphrase_mp_up:int
+
 ## じゃんけんの結果を見せてから次に進むまでの待ち時間（秒）
 const JANKEN_RESULT_DISPLAY_TIME:float = 1.5
 
@@ -24,6 +32,13 @@ var host_hp_max:int = 0
 
 var join_hp:int = 0
 var join_hp_max:int = 0
+
+## MPは0から始まり、ガードや決め台詞で溜まる
+var host_mp:int = 0
+var host_mp_max:int = 0
+
+var join_mp:int = 0
+var join_mp_max:int = 0
 
 ## 連続であいこになった回数
 var aiko_count:int = 0
@@ -46,6 +61,7 @@ func _ready() -> void:
 	GameSession.select_mode_restarted.connect(_on_select_mode_restarted)
 	GameSession.changed_phase.connect(_on_changed_phase)
 	GameSession.damage_applied.connect(_on_damage_applied)
+	GameSession.mp_changed.connect(_on_mp_changed)
 
 	setup_charas()
 	setup_usernames()
@@ -53,7 +69,7 @@ func _ready() -> void:
 	if multiplayer.is_server():
 		start_turn()
 
-## 選択されたキャラのデータを読み込み、HPをそのキャラの最大値で初期化する
+## 選択されたキャラのデータを読み込み、HP/MPをそのキャラの最大値で初期化する
 func setup_charas() -> void:
 	host_chara_data = GameSession.get_chara_data(BattleEnum.Player.HOST)
 	join_chara_data = GameSession.get_chara_data(BattleEnum.Player.JOIN)
@@ -67,9 +83,16 @@ func setup_charas() -> void:
 
 	join_hp_max = join_chara_data.max_hp
 	join_hp = join_hp_max
-	
+
+	host_mp_max = host_chara_data.max_mp
+	host_mp = 0
+
+	join_mp_max = join_chara_data.max_mp
+	join_mp = 0
+
 	status_display_manager_node.set_chara(host_chara_data,join_chara_data)
 	chara_manager_node.set_chara(host_chara_data,join_chara_data)
+	status_display_manager_node.set_mp(host_mp,join_mp)
 
 ## 両者のユーザー名を表示に反映する
 func setup_usernames() -> void:
@@ -87,6 +110,11 @@ func start_turn() -> void:
 func end_turn() -> void:
 	if not multiplayer.is_server():
 		return
+	
+	change_mp({
+		BattleEnum.Player.HOST:turn_end_mp_up,
+		BattleEnum.Player.JOIN:turn_end_mp_up
+	})
 	
 	if host_hp <= 0 and join_hp <= 0:
 		finish_battle(BattleEnum.Winner.DRAW)
@@ -198,13 +226,17 @@ func handle_hoi() -> void:
 	effect_manager_node.hide_hoi()
 
 	if is_guard_success:
-		guard()
+		guard(defender)
 	else:
 		resolve_attack(attacker,defender)
 
 
-func guard() -> void:
-	pass
+func guard(defender:BattleEnum.Player) -> void:
+	change_mp({
+		defender:guard_mp_up
+	})
+	
+	end_turn()
 
 ## じゃんけん勝者の攻撃を確定させる。
 ## 両者でHPがズレないよう、計算はホストだけが行い、確定後のHPをGameSessionが両者に配る
@@ -230,8 +262,44 @@ func resolve_attack(attacker:BattleEnum.Player,defender:BattleEnum.Player) -> vo
 func _on_damage_applied(defender:BattleEnum.Player, hp:Dictionary[BattleEnum.Player,int], damage:int) -> void:
 	host_hp = hp[BattleEnum.Player.HOST]
 	join_hp = hp[BattleEnum.Player.JOIN]
-	
+
 	play_damage_effect(damage,defender)
+
+
+## MPの増減に関する関数群
+#region
+
+## MPを増減させる。MPを動かすときは必ずこの関数を通すこと。
+## changes = { BattleEnum.Player : 増減値 }。マイナスを渡せば消費になる。
+## 両者でMPがズレないよう、計算はホストだけが行い、確定後のMPをGameSessionが両者に配る
+func change_mp(changes:Dictionary[BattleEnum.Player,int]) -> void:
+	if not multiplayer.is_server():
+		return
+
+	var recent_mp:Dictionary[BattleEnum.Player,int] = {
+		BattleEnum.Player.HOST: host_mp,
+		BattleEnum.Player.JOIN: join_mp,
+	}
+	for player:BattleEnum.Player in changes:
+		recent_mp[player] = _mp_after(player, changes[player])
+	
+	GameSession.apply_mp(recent_mp)
+
+## 指定プレイヤーのMPをamountだけ動かした結果を、0〜最大値に収めて返す。
+## 上限・下限のチェックはここだけで行う
+func _mp_after(player:BattleEnum.Player, amount:int) -> int:
+	var current:int = host_mp if player == BattleEnum.Player.HOST else join_mp
+	var maximum:int = host_mp_max if player == BattleEnum.Player.HOST else join_mp_max
+	return clampi(current + amount, 0, maximum)
+
+## MPが確定したときに両者で呼ばれる
+func _on_mp_changed(mp:Dictionary[BattleEnum.Player,int]) -> void:
+	host_mp = mp[BattleEnum.Player.HOST]
+	join_mp = mp[BattleEnum.Player.JOIN]
+	
+	status_display_manager_node.set_mp(host_mp,join_mp)
+
+#endregion
 
 
 ## 両者の選択が出揃ったときに呼ばれる。values = { BattleEnum.Player : 選んだ値 }

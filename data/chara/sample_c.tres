@@ -20,6 +20,6 @@ id = &"sampleC"
 sprite_frames = SubResource("SpriteFrames_850mp")
 display_name = "sampleC"
 max_hp = 80
-max_mp = 70
+max_mp = 50
 attack = 13
 metadata/_custom_type_script = "uid://cm6i8gc0va1ic"
