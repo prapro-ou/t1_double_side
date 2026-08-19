@@ -280,3 +280,29 @@ func _apply_damage(defender:BattleEnum.Player, hp:Dictionary, damage:int) -> voi
 	damage_applied.emit(defender, hp, damage)
 
 #endregion
+
+
+#--------------------------------------------
+# MPの同期について
+#--------------------------------------------
+#region
+
+## MPが変動したときに両者で発火する。
+## mp = { BattleEnum.Player.HOST: HostのMP, BattleEnum.Player.JOIN: JoinのMP }（増減後の値）
+signal mp_changed(mp:Dictionary[BattleEnum.Player,int])
+
+## 確定したMPを両者に配る。計算はホストのbattle.gdが行う。
+## 増分ではなく確定値を配ることで、一度ズレても次の更新で揃う。
+## 進行権はホストのみが持つので、クライアントから呼んでも無視される
+func apply_mp(mp:Dictionary[BattleEnum.Player,int]) -> void:
+	if not multiplayer.is_server():
+		return
+
+	_apply_mp.rpc(mp)
+
+## 直接呼ばずapply_mp()を使うこと。
+@rpc("authority","call_local","reliable")
+func _apply_mp(mp:Dictionary) -> void:
+	mp_changed.emit(mp)
+
+#endregion
