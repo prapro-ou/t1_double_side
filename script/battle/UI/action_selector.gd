@@ -31,11 +31,8 @@ func _ready() -> void:
 	catchphrase_button.focus_exited.connect(_on_catchphrase_button_unhover)
 
 
-# --- スキル情報の設定関数 (Issueの指定通り set_skil) ---
-func set_skil(skill_name: String, description: String) -> void:
-	if not is_node_ready():
-		await ready
-
+# --- スキル情報の設定関数 (Issueの指定通り set_skill) ---
+func set_skill(skill_name: String, description: String) -> void:
 	# スキルボタン自体のテキスト変更
 	skill_button.text = skill_name
 	
@@ -43,6 +40,7 @@ func set_skil(skill_name: String, description: String) -> void:
 	skill_name_label.text = skill_name
 	skill_description_label.text = description
 
+func 
 
 # --- ホバー/フォーカス時の処理 ---
 func _on_skill_button_hover() -> void:
