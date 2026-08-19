@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://0u74phe0vex0"]
 
-[ext_resource type="Texture2D" uid="uid://dlilmx5iituca" path="res://assets/img/battle/effect/cutin.png" id="1_7oqx0"]
 [ext_resource type="Script" uid="uid://dgmu4uoxrs3bo" path="res://script/battle/effect_manager/cutin_effect.gd" id="1_b11d6"]
+[ext_resource type="Texture2D" uid="uid://bl60wou40vyb7" path="res://assets/img/battle/effect/cutin_fire_dot.png" id="2_sb8bx"]
+[ext_resource type="Texture2D" uid="uid://y2solwb3a2le" path="res://assets/img/battle/effect/cutin_label_back.png" id="3_b11d6"]
 
 [sub_resource type="Animation" id="Animation_67ilw"]
 length = 3.0
@@ -20,7 +21,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_lei30"]
 resource_name = "cutin"
-length = 0.1
+length = 0.46666667
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -31,7 +32,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(-367, 207.00002), Vector2(800, 207)]
+"values": [Vector2(-600, 207), Vector2(576, 207)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ys2j4"]
@@ -45,8 +46,27 @@ script = ExtResource("1_b11d6")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=793992376]
 position = Vector2(-367, 207.00002)
-scale = Vector2(1.378, 1.3058333)
-texture = ExtResource("1_7oqx0")
+scale = Vector2(0.89687496, 0.89687496)
+texture = ExtResource("2_sb8bx")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1339323048]
 libraries/ = SubResource("AnimationLibrary_ys2j4")
+
+[node name="LabelBack" type="TextureRect" parent="." unique_id=1234683260]
+offset_left = 72.0
+offset_top = 374.0
+offset_right = 1072.0
+offset_bottom = 624.0
+texture = ExtResource("3_b11d6")
+
+[node name="Label" type="Label" parent="LabelBack" unique_id=472179869]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.25
+anchor_right = 0.9
+anchor_bottom = 0.75
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+vertical_alignment = 1

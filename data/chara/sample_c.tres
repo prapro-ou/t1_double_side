@@ -23,4 +23,8 @@ max_hp = 100
 max_mp = 50
 attack = 15
 skill_name = "マジックパリィ"
+skill_discription = "次に防御に成功したときにカウンター"
+catchprase = "次のじゃんけんの勝率...100%"
+catchprase_description = "決め台詞成功　相手のMPを吸収
+失敗時　相手のMPが増加"
 metadata/_custom_type_script = "uid://cm6i8gc0va1ic"

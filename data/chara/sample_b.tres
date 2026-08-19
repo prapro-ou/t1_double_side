@@ -23,4 +23,8 @@ max_hp = 120
 max_mp = 50
 attack = 10
 skill_name = "デュアルガード"
+skill_discription = "次にじゃんけん負けたとき、2方向をガードできる"
+catchprase = "君の攻撃...生っちょろくて防ぐ木にもならんな"
+catchprase_description = "成功時　永続で防御力が上がる
+失敗時　永続で防御力が下がる"
 metadata/_custom_type_script = "uid://cm6i8gc0va1ic"
