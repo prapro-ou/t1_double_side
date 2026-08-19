@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://d4iuywgjlx57e"]
 
 [ext_resource type="PackedScene" uid="uid://bhjnwltfgpsp5" path="res://components/battle/janken_result/hand_viewer.tscn" id="1_mcyur"]
-[ext_resource type="Script" uid="uid://c7u42hrjqseyr" path="res://script/battle/janken_result/janken_result.gd" id="1_votpt"]
+[ext_resource type="Script" uid="uid://bgxb2fjcpjwg8" path="res://script/battle/janken_result/janken_result.gd" id="1_votpt"]
 
 [node name="JankenResult" type="Node2D" unique_id=915383885]
 script = ExtResource("1_votpt")
