@@ -33,8 +33,6 @@ class PlayerStatus:
 @export var turn_end_mp_up:int
 ## ガードに成功したときに貰えるMP
 @export var guard_mp_up:int
-## 決め台詞成功時に貰えるMP
-@export var catchphrase_mp_up:int
 
 ## じゃんけんの結果を見せてから次に進むまでの待ち時間（秒）
 const JANKEN_RESULT_DISPLAY_TIME:float = 1.5
