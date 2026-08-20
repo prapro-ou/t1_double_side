@@ -352,7 +352,7 @@ func handle_hoi() -> void:
 	effect_manager_node.hide_hoi()
 
 	if is_guard_success:
-		guard(defender)
+		guard(attacker,defender)
 	else:
 		resolve_attack(attacker,defender)
 
@@ -362,36 +362,29 @@ func handle_hoi() -> void:
 ## 攻撃周りの処理
 #region
 
-func guard(defender:BattleEnum.Player) -> void:
+## ガード成功時
+func guard(attacker:BattleEnum.Player,defender:BattleEnum.Player) -> void:
 	change_mp({
 		defender:guard_mp_up
 	})
 	
 	if battle_status_node.consume_pending_flag(defender,BattleEnum.PendingFlag.LOGIC_SK_COUNTER):
-		pass
+		var ld:LogicWomanData = player_status_list[defender].chara as LogicWomanData
+		resolve_counter(defender,attacker,ceili(ld.attack * ld.skill_counter_damage_rate))
+		return
 	
 	advance_attack_step()
 
-## じゃんけん勝者の攻撃を確定させる。
-## 両者でHPがズレないよう、計算はホストだけが行い、確定後のHPをGameSessionが両者に配る
-func resolve_attack(attacker:BattleEnum.Player,defender:BattleEnum.Player) -> void:
-	if not multiplayer.is_server():
-		return
-
-	var attacker_data:CharaData = player_status_list[attacker].chara
-	if attacker_data == null:
-		push_warning("攻撃側のキャラが不明なため、ダメージを計算できません")
-		return
-
-	
-	var damage:int = attacker_data.attack
+## ダメージの計算
+func calc_damage(attacker:BattleEnum.Player,defender:BattleEnum.Player,base_damage:int) -> int:
+	var damage:int = base_damage
 	
 	if battle_status_node.get_turn_flag(attacker, BattleEnum.TurnFlag.FIRE_IGNORE_GUARD):
 		var fd:FireManData = player_status_list[attacker].chara as FireManData
 		damage = ceili(damage * fd.catchphrase_success_damage_rate)
 	
 	if battle_status_node.get_turn_flag(defender, BattleEnum.TurnFlag.FIRE_DISABLE_GUARD):
-		var fd:FireManData = player_status_list[attacker].chara as FireManData
+		var fd:FireManData = player_status_list[defender].chara as FireManData
 		damage = ceili(damage * fd.catchphrase_fail_damage_taken_rate)
 	
 	if battle_status_node.get_permanence_flag(defender, BattleEnum.PermanenceFlag.GUARD_CP_ARMOR):
@@ -402,13 +395,48 @@ func resolve_attack(attacker:BattleEnum.Player,defender:BattleEnum.Player) -> vo
 		var gd:GuardManData = player_status_list[defender].chara as GuardManData
 		damage = ceili(damage * gd.catchphrase_fail_damage_taken_rate)
 	
+	return damage
+
+
+## じゃんけん勝者の攻撃を確定させる。
+## 両者でHPがズレないよう、計算はホストだけが行い、確定後のHPをGameSessionが両者に配る
+func resolve_attack(attacker:BattleEnum.Player,defender:BattleEnum.Player) -> void:
+	if not multiplayer.is_server():
+		return
+		
+	var attacker_data:CharaData = player_status_list[attacker].chara
+	if attacker_data == null:
+		push_warning("攻撃側のキャラが不明なため、ダメージを計算できません")
+		return
+		
 	var recent_hp:Dictionary[BattleEnum.Player,int] = {
 		BattleEnum.Player.HOST: player_status_list[BattleEnum.Player.HOST].hp,
 		BattleEnum.Player.JOIN: player_status_list[BattleEnum.Player.JOIN].hp,
 	}
+	
+	var damage:int = calc_damage(attacker,defender,attacker_data.attack)
+	
 	recent_hp[defender] = maxi(0, recent_hp[defender] - damage)
 
 	GameSession.apply_damage(defender, recent_hp, damage)
+
+## カウンターを確定させる。ガードに成功した側が、じゃんけん勝者に反撃する。
+## 反撃の威力は発動元のスキルごとに決めてbase_damageで渡すこと。
+## 計算はホストだけが行い、確定後のHPをGameSessionが両者に配る
+func resolve_counter(counter_user:BattleEnum.Player,target:BattleEnum.Player,base_damage:int) -> void:
+	if not multiplayer.is_server():
+		return
+
+	var recent_hp:Dictionary[BattleEnum.Player,int] = {
+		BattleEnum.Player.HOST: player_status_list[BattleEnum.Player.HOST].hp,
+		BattleEnum.Player.JOIN: player_status_list[BattleEnum.Player.JOIN].hp,
+	}
+
+	var damage:int = calc_damage(counter_user,target,base_damage)
+
+	recent_hp[target] = maxi(0, recent_hp[target] - damage)
+
+	GameSession.apply_damage(target, recent_hp, damage)
 
 func _on_damage_applied(defender:BattleEnum.Player, hp:Dictionary[BattleEnum.Player,int], damage:int) -> void:
 	for player:BattleEnum.Player in player_status_list:
