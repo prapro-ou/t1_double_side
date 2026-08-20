@@ -117,6 +117,19 @@ func setup_usernames() -> void:
 func start_turn() -> void:
 	set_aiko_count(0)
 	GameSession.advance_phase(BattleEnum.Phase.SELECT_ACTION)
+	
+	var skill_disable:bool
+	var catchphrase_disable:bool
+	
+	if GameSession.get_self_player() == BattleEnum.Player.HOST:
+		skill_disable = host_mp < host_mp_max
+		catchphrase_disable = battle_status_node.catchphrase_used[BattleEnum.Player.HOST]
+	else:
+		skill_disable = join_mp < join_mp_max
+		catchphrase_disable = battle_status_node.catchphrase_used[BattleEnum.Player.JOIN]
+	
+	action_selector_node.set_button_disable(skill_disable,catchphrase_disable)
+
 
 ## ターンの終わりに関する処理
 func end_turn() -> void:
@@ -139,7 +152,6 @@ func end_turn() -> void:
 
 ## ダメージの演出
 func play_damage_effect(damage:int,target:BattleEnum.Player) -> void:
-	
 	status_display_manager_node.set_hp(host_hp,join_hp)
 	status_display_manager_node.play_damage(target)
 	chara_manager_node.play_damage(target)
@@ -327,6 +339,8 @@ func handle_skill(user:BattleEnum.Player, chara:CharaData) -> void:
 func handle_catchphrase(user:BattleEnum.Player, chara:CharaData) -> void:
 	battle_status_node.catchphrase_used[user] = true;
 	await effect_manager_node.play_cutin(chara)
+	
+	
 
 ## 両者の選択が出揃ったときに呼ばれる。values = { BattleEnum.Player : 選んだ値 }
 func _on_select_mode_completed(mode: BattleEnum.SelectMode, values: Dictionary) -> void:
