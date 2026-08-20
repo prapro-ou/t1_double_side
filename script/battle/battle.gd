@@ -3,6 +3,7 @@ extends Node2D
 const HandDirectionSelector = preload("res://script/battle/battle_ui_layer/hand_direction_selector.gd")
 const ActionSelector = preload("res://script/battle/UI/action_selector.gd")
 const EffectManager = preload("res://script/battle/effect_manager/effect_manager.gd")
+const LeftTurnTimer = preload("res://script/battle/UI/left_turn_timer.gd")
 const AikoCounter = preload("res://script/battle/UI/aiko_counter.gd")
 const StatusDisplayManager = preload("res://script/battle/UI/status_display/status_display_manager.gd")
 const CharaManager = preload("res://script/battle/chara_manager/chara_manager.gd")
@@ -22,6 +23,11 @@ class PlayerStatus:
 		hp = hp_max
 		mp_max = chara_data.max_mp if chara_data != null else 0
 		mp = 0
+
+@export var _debug_mp_max:bool = false
+
+## 試合の長さ
+@export var turn_limit:int = 20
 
 ## ターン終了時に両者に与えられるMP
 @export var turn_end_mp_up:int
@@ -43,6 +49,9 @@ var player_status_list:Dictionary[BattleEnum.Player, PlayerStatus] = {}
 ## 連続であいこになった回数
 var aiko_count:int = 0
 
+## このターンに残っている攻撃回数
+var remaining_attack_count:int = 0
+
 var current_janken_result:BattleEnum.JankenResult
 
 @onready var battle_status_node:BattleStatus = $BattleStatus
@@ -51,10 +60,11 @@ var current_janken_result:BattleEnum.JankenResult
 
 @onready var hand_direction_selector_node:HandDirectionSelector = $SelectorLayer/HandDirectionSelector
 @onready var action_selector_node:ActionSelector = $SelectorLayer/ActionSelector
-@onready var aiko_counter_node:AikoCounter = $StatusLayer/AikoCountor
 
 @onready var effect_manager_node:EffectManager = $EffectManager
 
+@onready var left_turn_timer_node:LeftTurnTimer = $StatusLayer/LeftTurnTimer
+@onready var aiko_counter_node:AikoCounter = $StatusLayer/AikoCountor
 @onready var status_display_manager_node:StatusDisplayManager = $StatusLayer/StatusDisplayManager
 
 # Called when the node enters the scene tree for the first time.
@@ -67,6 +77,12 @@ func _ready() -> void:
 
 	setup_charas()
 	setup_usernames()
+	
+	if _debug_mp_max:
+		change_mp({
+			BattleEnum.Player.HOST:player_status_list[BattleEnum.Player.HOST].mp_max,
+			BattleEnum.Player.JOIN:player_status_list[BattleEnum.Player.JOIN].mp_max
+		})
 
 	if multiplayer.is_server():
 		start_turn()
@@ -78,14 +94,14 @@ func _ready() -> void:
 func setup_charas() -> void:
 	var host_chara_data:CharaData = GameSession.get_chara_data(BattleEnum.Player.HOST)
 	var join_chara_data:CharaData = GameSession.get_chara_data(BattleEnum.Player.JOIN)
-
+	
 	player_status_list.clear()
 	player_status_list[BattleEnum.Player.HOST] = PlayerStatus.new(host_chara_data)
 	player_status_list[BattleEnum.Player.JOIN] = PlayerStatus.new(join_chara_data)
-
+	
 	if host_chara_data == null or join_chara_data == null:
 		push_warning("キャラが決まっていないため、HPを初期化できません")
-
+	
 	status_display_manager_node.set_chara(host_chara_data,join_chara_data)
 	chara_manager_node.set_chara(host_chara_data,join_chara_data)
 	status_display_manager_node.set_mp(
@@ -120,9 +136,8 @@ func _on_changed_phase(phase: BattleEnum.Phase) -> void:
 			action_selector_node.visible = true
 			set_select_button_disable()
 
-func refresh_step() -> void:
-	battle_status_node.clear_turn_flag()
-	end_turn()
+## ターンの進行に関わる部分
+#region
 
 ## ターンを開始する。ホストが呼ぶと両者のフェーズが進む
 func start_turn() -> void:
@@ -130,9 +145,52 @@ func start_turn() -> void:
 	GameSession.advance_phase(BattleEnum.Phase.SELECT_ACTION)
 	
 
+## このターンの攻撃回数を決める。じゃんけんの勝敗が決まった直後に呼ぶこと。
+## 「次にじゃんけんに勝ったとき」の効果なので、攻撃側になれたときだけフラグを消費する
+func setup_attack_count() -> void:
+	var attacker:BattleEnum.Player = get_attacker()
+
+	remaining_attack_count = 1
+
+	if battle_status_node.consume_pending_flag(attacker,BattleEnum.PendingFlag.FIRE_SK_DUAL_ATTACK):
+		var fd:FireManData = player_status_list[attacker].chara as FireManData
+		remaining_attack_count = fd.skill_attack_count
+
+## 攻撃1回分を始める。
+## ガードの成否が確定しているときは方向選択を飛ばし、そのまま攻撃を通す
+func start_attack_step() -> void:
+	if is_skip_select_direction():
+		resolve_attack(get_attacker(),get_defender())
+	else:
+		hand_direction_selector_node.start_direction()
+
+## 攻撃1回分が終わったときに呼ぶ。
+## 攻撃が残っていればあっち向いてホイからやり直し、残っていなければターンを終える
+func advance_attack_step() -> void:
+	remaining_attack_count -= 1
+
+	if remaining_attack_count <= 0:
+		refresh_step()
+		return
+
+	if (player_status_list[BattleEnum.Player.HOST].hp <= 0 or player_status_list[BattleEnum.Player.JOIN].hp <= 0):
+		refresh_step()
+		return
+
+	# やり直しの合図はホストだけが出し、両者が_on_select_mode_restarted()で受け取る
+	if not multiplayer.is_server():
+		return
+
+	GameSession.restart_select_mode(BattleEnum.SelectMode.DIRECTION)
+
+func refresh_step() -> void:
+	turn_limit -= 1;
+	left_turn_timer_node.update_turn_display(turn_limit)
+	battle_status_node.clear_turn_flag()
+	end_turn()
 
 ## ターンの終わりに関する処理
-func end_turn() -> void:	
+func end_turn() -> void:
 	if not multiplayer.is_server():
 		return
 	
@@ -151,7 +209,13 @@ func end_turn() -> void:
 	elif join_dead:
 		finish_battle(BattleEnum.Winner.HOST)
 	else:
-		start_turn()
+		
+		if turn_limit <= 0:
+			turn_limit_reached()
+		else:
+			start_turn()
+
+#endregion
 
 ## ダメージの演出
 func play_damage_effect(damage:int,target:BattleEnum.Player) -> void:
@@ -163,8 +227,8 @@ func play_damage_effect(damage:int,target:BattleEnum.Player) -> void:
 	chara_manager_node.play_damage(target)
 	
 	await get_tree().create_timer(AFTER_DAMAGE_EFFECT_TIME).timeout
-	
-	refresh_step()
+
+	advance_attack_step()
 
 
 ## じゃんけんに関する関数群
@@ -194,11 +258,8 @@ func handle_janken() -> void:
 	
 	check_catchphrase(result)
 
-	# ガードの成否が確定しているときは方向選択を飛ばし、そのまま攻撃を通す
-	if is_skip_select_direction():
-		resolve_attack(get_attacker(),get_defender())
-	else:
-		hand_direction_selector_node.start_direction()
+	setup_attack_count()
+	start_attack_step()
 
 ## あいこだったときの処理。結果を見せてから、じゃんけんをやり直させる
 func handle_aiko() -> void:
@@ -207,6 +268,7 @@ func handle_aiko() -> void:
 	# やり直しの合図はホストだけが出し、両者が_on_select_mode_restarted()で受け取る
 	if not multiplayer.is_server():
 		return
+
 	await get_tree().create_timer(JANKEN_RESULT_DISPLAY_TIME).timeout
 	GameSession.restart_select_mode(BattleEnum.SelectMode.HAND)
 	
@@ -290,8 +352,8 @@ func guard(defender:BattleEnum.Player) -> void:
 	change_mp({
 		defender:guard_mp_up
 	})
-	
-	refresh_step()
+
+	advance_attack_step()
 
 ## じゃんけん勝者の攻撃を確定させる。
 ## 両者でHPがズレないよう、計算はホストだけが行い、確定後のHPをGameSessionが両者に配る
@@ -379,6 +441,10 @@ func _on_mp_changed(mp:Dictionary[BattleEnum.Player,int]) -> void:
 
 ## スキルに関する処理
 func handle_skill(user:BattleEnum.Player, chara:CharaData) -> void:
+	change_mp({
+		user: -chara.max_mp
+	})
+	
 	match player_status_list[user].chara.id:
 		&"fire_man":
 			battle_status_node.add_pending_flag(user,BattleEnum.PendingFlag.FIRE_SK_DUAL_ATTACK)
@@ -451,6 +517,9 @@ func _on_select_mode_restarted(mode: BattleEnum.SelectMode) -> void:
 		BattleEnum.SelectMode.HAND:
 			effect_manager_node.hide_janken()
 			hand_direction_selector_node.start_janken()
+		BattleEnum.SelectMode.DIRECTION:
+			# 二連撃などで、同じじゃんけんの勝敗のままもう一度攻撃する
+			start_attack_step()
 	
 ## 残ターンが0になったときに呼ばれる処理
 func turn_limit_reached() -> void:

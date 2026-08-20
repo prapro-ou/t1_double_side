@@ -7,7 +7,7 @@
 script = ExtResource("1_votpt")
 
 [node name="PlayerHand" parent="." unique_id=1703917674 instance=ExtResource("1_mcyur")]
-position = Vector2(764, 185)
+position = Vector2(413, 408)
 
 [node name="OpponentHand" parent="." unique_id=1025212632 instance=ExtResource("1_mcyur")]
-position = Vector2(415, 411)
+position = Vector2(802.99994, 193)

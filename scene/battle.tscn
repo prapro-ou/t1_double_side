@@ -17,6 +17,7 @@
 
 [node name="Battle" type="Node2D" unique_id=2019355189]
 script = ExtResource("1_soyo5")
+_debug_mp_max = true
 turn_end_mp_up = 10
 guard_mp_up = 10
 
