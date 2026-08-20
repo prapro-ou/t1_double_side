@@ -304,6 +304,7 @@ func resolve_attack(attacker:BattleEnum.Player,defender:BattleEnum.Player) -> vo
 		push_warning("攻撃側のキャラが不明なため、ダメージを計算できません")
 		return
 
+	
 	var damage:int = attacker_data.attack
 
 	var recent_hp:Dictionary[BattleEnum.Player,int] = {
@@ -384,14 +385,15 @@ func resolve_catchphrase(target:BattleEnum.Player, is_success:bool) -> void:
 			else:
 				battle_status_node.add_permanence_flag(target,BattleEnum.PermanenceFlag.GUARD_CP_WEEK)
 		&"logic_woman":
+			var data:LogicWomanData = player_status_list[target].chara as LogicWomanData
 			var opponent:BattleEnum.Player = GameSession.get_other_player(target)
 			if is_success:
-				# 相手のMPを全て奪う
-				var drain:int = player_status_list[opponent].mp
+				# 相手のMPを奪う
+				var drain:int = int(player_status_list[opponent].mp * data.catchphrase_success_mp_drain_rate)
 				change_mp({target:drain, opponent:-drain})
 			else:
-				# 逆に相手のMPを満タンにする
-				change_mp({opponent:player_status_list[opponent].mp_max})
+				# 逆に相手のMPを増やす
+				change_mp({opponent:int(player_status_list[opponent].mp_max * data.catchphrase_fail_mp_up_rate)})
 
 func check_catchphrase(result:BattleEnum.JankenResult) -> void:
 	for target:BattleEnum.Player in [BattleEnum.Player.HOST,BattleEnum.Player.JOIN]:

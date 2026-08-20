@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="CharaData" format=3 uid="uid://ceji1nis8lxul"]
+[gd_resource type="Resource" script_class="LogicWomanData" format=3 uid="uid://ceji1nis8lxul"]
 
 [ext_resource type="Texture2D" uid="uid://dtod6vps85ylk" path="res://assets/img/battle/effect/cutin_logic_dot.png" id="1_dwjlo"]
-[ext_resource type="Script" uid="uid://cm6i8gc0va1ic" path="res://data/chara/chara_data.gd" id="1_nd3lw"]
+[ext_resource type="Script" uid="uid://fbmos72hbvj" path="res://data/chara/logic_woman_data.gd" id="1_nd3lw"]
 [ext_resource type="Texture2D" uid="uid://cod0vb27mbncq" path="res://assets/img/chara/logic_woman/logic_woman.png" id="2_nd3lw"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_850mp"]
@@ -17,6 +17,7 @@ animations = [{
 
 [resource]
 script = ExtResource("1_nd3lw")
+skill_counter_damage_rate = 1.5
 id = &"logic_woman"
 sprite_frames = SubResource("SpriteFrames_850mp")
 cutin = ExtResource("1_dwjlo")
