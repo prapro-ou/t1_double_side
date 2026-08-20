@@ -155,7 +155,7 @@ signal select_mode_completed(mode:BattleEnum.SelectMode, values:Dictionary)
 signal select_mode_restarted(mode:BattleEnum.SelectMode)
 
 ## 自分が選んだ値。両者が選択済みになるまで送信しない
-var _pending:Dictionary[BattleEnum.SelectMode,int] = {}
+var _pending:Dictionary[BattleEnum.SelectMode,Array] = {}
 ## 「選択済みかどうか」だけのフラグ。値は含まない
 var _selected:Dictionary[BattleEnum.SelectMode,Dictionary] = {}
 ## 開示された実際の値
@@ -190,7 +190,14 @@ func _restart_select_mode(mode:BattleEnum.SelectMode) -> void:
 func submit(mode:BattleEnum.SelectMode, value:int) -> void:
 	if _pending.has(mode):
 		return
-	_pending[mode] = value
+	_pending[mode] = [value]
+	_notify_selected.rpc(mode)
+	_mark_selected(mode, multiplayer.get_unique_id())
+
+func submit_multi_value(mode:BattleEnum.SelectMode, values:Array[int]) -> void:
+	if _pending.has(mode):
+		return
+	_pending[mode] = values
 	_notify_selected.rpc(mode)
 	_mark_selected(mode, multiplayer.get_unique_id())
 
@@ -215,7 +222,7 @@ func is_all_selected(mode:BattleEnum.SelectMode) -> bool:
 func _send_reveal(mode:BattleEnum.SelectMode) -> void:
 	if not _pending.has(mode):
 		return
-	var value:int = _pending[mode]
+	var value:Array = _pending[mode]
 	_pending.erase(mode)
 	_reveal.rpc(mode, value)
 	_apply_reveal(mode, multiplayer.get_unique_id(), value)
@@ -223,11 +230,11 @@ func _send_reveal(mode:BattleEnum.SelectMode) -> void:
 ## 相手に自身の手を通知
 ## @rpc("any_peer","call_remote","reliable")
 @rpc("any_peer","call_remote","reliable")
-func _reveal(mode:BattleEnum.SelectMode, value:int) -> void:
-	_apply_reveal(mode, multiplayer.get_remote_sender_id(), value)
+func _reveal(mode:BattleEnum.SelectMode, values:Array[int]) -> void:
+	_apply_reveal(mode, multiplayer.get_remote_sender_id(), values)
 
 ## 通知された手を伝える
-func _apply_reveal(mode:BattleEnum.SelectMode, peer_id:int, value:int) -> void:
+func _apply_reveal(mode:BattleEnum.SelectMode, peer_id:int, value:Array) -> void:
 	if not _revealed.has(mode):
 		_revealed[mode] = {}
 	_revealed[mode][to_player(peer_id)] = value
@@ -250,8 +257,16 @@ func get_hand(player:BattleEnum.Player) -> BattleEnum.Hand:
 func get_direction(player:BattleEnum.Player) -> BattleEnum.Direction:
 	return _get_value(BattleEnum.SelectMode.DIRECTION, player) as BattleEnum.Direction
 
+func get_multi_directions(player:BattleEnum.Player) -> Array[BattleEnum.Direction]:
+	var directions:Array[BattleEnum.Direction] = []
+	directions.assign(_get_multi_values(BattleEnum.SelectMode.DIRECTION, player))
+	return directions
+
 ## 直接呼ばずget_action()などSelectModeごとの関数を使うこと
 func _get_value(mode:BattleEnum.SelectMode, player:BattleEnum.Player) -> int:
+	return _revealed[mode][player][0]
+
+func _get_multi_values(mode:BattleEnum.SelectMode, player:BattleEnum.Player) -> Array[int]:
 	return _revealed[mode][player]
 
 #endregion
