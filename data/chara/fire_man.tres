@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="FireManData" format=3 uid="uid://bvaqlnkaqgs3i"]
+
+[ext_resource type="Texture2D" uid="uid://bl60wou40vyb7" path="res://assets/img/battle/effect/cutin_fire_dot.png" id="1_2mnqn"]
+[ext_resource type="Script" uid="uid://cd8fcganebj5s" path="res://data/chara/fire_man_data.gd" id="1_gf4io"]
+[ext_resource type="Texture2D" uid="uid://bwyy1lg0olg4" path="res://assets/img/chara/fire_man/fire_man.png" id="2_gf4io"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7r4sd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_gf4io")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[resource]
+script = ExtResource("1_gf4io")
+catchphrase_success_damage_rate = 2.0
+catchphrase_fail_damage_taken_rate = 2.0
+id = &"fire_man"
+sprite_frames = SubResource("SpriteFrames_7r4sd")
+cutin = ExtResource("1_2mnqn")
+display_name = "fire_man"
+max_hp = 80
+max_mp = 50
+attack = 20
+skill_name = "二連撃"
+skill_description = "次にじゃんけん勝ったとき二回攻撃相手は二回ガード"
+catchphrase = "「お前には俺の拳は破れない！」"
+catchphrase_description = "成功時　次の相手のガードを無視し、大ダメージ
+失敗時　このターンガードできず、防御力ダウン"

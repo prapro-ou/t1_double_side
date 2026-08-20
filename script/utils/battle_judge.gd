@@ -16,14 +16,10 @@ static func judge_janken(host:BattleEnum.Hand,join:BattleEnum.Hand) -> BattleEnu
 	return BattleEnum.JankenResult.JOIN_WIN
 
 ## あっち向いてホイの成否を判定する
-## pointed: じゃんけん勝者が指差した方向 / faced: 敗者が向いた方向
-static func judge_hoi(pointed:BattleEnum.Direction,faced:BattleEnum.Direction) -> bool:
-	return pointed == faced
+## どれか1つでも一致すればガード成功
+static func judge_hoi(pointed:BattleEnum.Direction,faced:Array[BattleEnum.Direction]) -> bool:
+	return faced.has(pointed)
 
-## 1ヒットぶんのダメージを計算する。
-## 直接呼ばずGameSession.attack()を使うこと。両者でHPがズレないよう、計算はホストだけが行う
-static func calc_damage(attacker:CharaData) -> int:
-	return attacker.attack
 
 static func is_janken_winner(result:BattleEnum.JankenResult,player:BattleEnum.Player) -> bool:
 	match result:

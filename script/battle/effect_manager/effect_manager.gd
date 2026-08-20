@@ -1,10 +1,12 @@
-extends Node2D
+extends CanvasLayer
 
 const JankenResult = preload("res://script/battle/janken_result/janken_result.gd")
 const HoiResult = preload("res://script/battle/hoi_result/hoi_result.gd")
+const CutinEffect = preload("res://script/battle/effect_manager/cutin_effect.gd")
 
 @onready var janken_result_node:JankenResult = $JankenResult
 @onready var hoi_result_node:HoiResult = $HoiResult
+@onready var cutin_effect_node:CutinEffect = $CutinEffect
 
 func show_janken(host_hand:BattleEnum.Hand,join_hand:BattleEnum.Hand) ->void:
 	if GameSession.is_self(BattleEnum.Player.HOST):
@@ -23,7 +25,7 @@ func hide_janken() -> void:
 	janken_result_node.hide_hand()
 
 
-func show_hoi(host_direction:BattleEnum.Direction,join_direction:BattleEnum.Direction) -> void:
+func show_hoi(host_direction:Array[BattleEnum.Direction],join_direction:Array[BattleEnum.Direction]) -> void:
 	if GameSession.is_self(BattleEnum.Player.HOST):
 		hoi_result_node.show_hoi(host_direction,join_direction)
 	else:
@@ -31,3 +33,6 @@ func show_hoi(host_direction:BattleEnum.Direction,join_direction:BattleEnum.Dire
 
 func hide_hoi() -> void:
 	hoi_result_node.hide_hoi()
+
+func play_cutin(chara:CharaData) -> void:
+	await cutin_effect_node.play_cutin(chara)

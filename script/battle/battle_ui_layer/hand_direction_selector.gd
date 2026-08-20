@@ -10,15 +10,6 @@ const Direction =preload("res://script/battle/battle_ui_layer/direction.gd")
 @onready var direction_node:Direction = $Direction
 
 
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-## BattleUILayerを表示し、一連の選択を開始
-func setup() -> void:
-	pass
-
 func change_janken_activate(active:bool) -> void:
 	hands_node.visible = active
 	hands_node.set_activity(active)
@@ -33,12 +24,15 @@ func start_janken() -> void:
 	change_direction_activate(false)
 
 ## ホイする方向の選択を開始
-func start_direction() -> void:
+func start_direction(count:int = 1) -> void:
 	change_janken_activate(false)
 	change_direction_activate(true)
+	direction_node.start_select(count)
 
+	
+	
 
-func _on_direction_direction_selected(direction: BattleEnum.Direction) -> void:
+func _on_direction_direction_selected(direction: Array[BattleEnum.Direction]) -> void:
 	change_direction_activate(false)
 	direction_selected.emit(direction)
 	

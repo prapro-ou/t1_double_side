@@ -1,7 +1,8 @@
 extends Control
 
-signal attack_selected
-signal skill_selected
+signal attack_selected()
+signal skill_selected()
+signal catchphrase_selected()
 
 # 各ノードへの参照
 @onready var skill_button: Button = $HBoxContainer/SkillButton
@@ -31,20 +32,24 @@ func _ready() -> void:
 	catchphrase_button.focus_exited.connect(_on_catchphrase_button_unhover)
 
 
-# --- スキル情報の設定関数 (Issueの指定通り set_skil) ---
-func set_skil(skill_name: String, description: String) -> void:
-	if not is_node_ready():
-		await ready
+func set_chara(chara:CharaData) -> void:
+	set_skill(chara.skill_name,chara.skill_description)
+	set_catchphrase(chara.catchphrase,chara.catchphrase_description)
 
-	# スキルボタン自体のテキスト変更
-	skill_button.text = skill_name
-	
+# --- スキル情報の設定関数 (Issueの指定通り set_skill) ---
+func set_skill(skill_name: String, description: String) -> void:
 	# スキル用ラベルの中身を更新
 	skill_name_label.text = skill_name
 	skill_description_label.text = description
 
-func finish_battle(winner:BattleEnum.Player) -> void:
-	pass
+## 決め台詞の設定関数
+func set_catchphrase(catchphrase:String, description:String) -> void:
+	catchphrase_name_label.text = catchphrase
+	catchphrase_description_label.text = description
+
+func set_button_disable(skill:bool, catchphrase:bool) -> void:
+	skill_button.disabled = skill
+	catchphrase_button.disabled = catchphrase
 
 # --- ホバー/フォーカス時の処理 ---
 func _on_skill_button_hover() -> void:
@@ -79,4 +84,4 @@ func _on_skill_button_pressed() -> void:
 	skill_selected.emit()
 
 func _on_catchphrase_button_pressed() -> void:
-	pass 
+	catchphrase_selected.emit()

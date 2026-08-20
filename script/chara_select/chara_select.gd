@@ -75,10 +75,10 @@ func _on_chara_c_mouse_exited() -> void:
 # -------------------
 
 func _on_chara_a_pressed() -> void:
-	decide_chara(chara_a, &"sampleA")
+	decide_chara(chara_a, &"fire_man")
 
 func _on_chara_b_pressed() -> void:
-	decide_chara(chara_b, &"sampleB")
+	decide_chara(chara_b, &"guard_man")
 
 func _on_chara_c_pressed() -> void:
-	decide_chara(chara_c, &"sampleC")
+	decide_chara(chara_c, &"logic_woman")

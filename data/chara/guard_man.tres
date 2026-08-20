@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="GuardManData" format=3 uid="uid://cvfct6j2tulgd"]
+
+[ext_resource type="Texture2D" uid="uid://5jtw0llkg8a3" path="res://assets/img/battle/effect/cutin_guard_dot.png" id="1_khsfy"]
+[ext_resource type="Script" uid="uid://b7eig45q8s15x" path="res://data/chara/guard_man_data.gd" id="1_lrfbf"]
+[ext_resource type="Texture2D" uid="uid://crtdygiectfd3" path="res://assets/img/chara/guard_man/guard_man.png" id="2_lrfbf"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_iy8go"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_lrfbf")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[resource]
+script = ExtResource("1_lrfbf")
+catchphrase_success_damage_taken_rate = 0.5
+catchphrase_fail_damage_taken_rate = 1.5
+id = &"guard_man"
+sprite_frames = SubResource("SpriteFrames_iy8go")
+cutin = ExtResource("1_khsfy")
+display_name = "guard_man"
+max_hp = 120
+max_mp = 50
+attack = 10
+skill_name = "デュアルガード"
+skill_description = "次にじゃんけん負けたとき、2方向をガードできる"
+catchphrase = "「君の攻撃...生っちょろくて防ぐ気にもならんな」"
+catchphrase_description = "成功時　永続で防御力が上がる
+失敗時　永続で防御力が下がる"
+metadata/_custom_type_script = "uid://cm6i8gc0va1ic"

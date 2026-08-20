@@ -8,6 +8,7 @@ script = ExtResource("1_7ygvd")
 
 [node name="PlayerHoi" parent="." unique_id=514512421 instance=ExtResource("2_8l6vh")]
 position = Vector2(314, 470)
+is_player_hoi = true
 
 [node name="OpponentHoi" parent="." unique_id=1568135189 instance=ExtResource("2_8l6vh")]
 position = Vector2(825, 193)
