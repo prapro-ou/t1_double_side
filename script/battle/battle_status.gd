@@ -17,6 +17,8 @@ var join_turn_flag:Dictionary[BattleEnum.TurnFlag, bool] = {}
 var host_permanence_flag:Dictionary[BattleEnum.PermanenceFlag, bool] = {}
 var join_permanence_flag:Dictionary[BattleEnum.PermanenceFlag, bool] = {}
 
+
+
 func add_pending_flag(target:BattleEnum.Player,flag:BattleEnum.PendingFlag) -> void:
 	var target_list:Dictionary[BattleEnum.PendingFlag, bool] = host_pending_flag if target == BattleEnum.Player.HOST else join_pending_flag
 

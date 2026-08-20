@@ -145,9 +145,7 @@ func start_turn() -> void:
 
 
 ## ターンの終わりに関する処理
-func end_turn() -> void:
-	battle_status_node.clear_turn_flag()
-	
+func end_turn() -> void:	
 	if not multiplayer.is_server():
 		return
 	
@@ -201,7 +199,13 @@ func handle_janken() -> void:
 	await effect_manager_node.emphasis_janken(result)
 	effect_manager_node.hide_janken()
 	
-	hand_direction_selector_node.start_direction()
+	check_catchphrase(result)
+
+	# ガードの成否が確定しているときは方向選択を飛ばし、そのまま攻撃を通す
+	if is_skip_select_direction():
+		resolve_attack(get_attacker(),get_defender())
+	else:
+		hand_direction_selector_node.start_direction()
 
 ## あいこだったときの処理。結果を見せてから、じゃんけんをやり直させる
 func handle_aiko() -> void:
@@ -224,6 +228,27 @@ func set_aiko_count(count:int) -> void:
 ## あっち向いてホイについて
 #region
 
+## じゃんけん勝者（攻撃側）を返す。あいこのまま呼んではいけない
+func get_attacker() -> BattleEnum.Player:
+	return BattleEnum.Player.HOST if current_janken_result == BattleEnum.JankenResult.HOST_WIN else BattleEnum.Player.JOIN
+
+## じゃんけん敗者（防御側）を返す。あいこのまま呼んではいけない
+func get_defender() -> BattleEnum.Player:
+	return BattleEnum.Player.JOIN if current_janken_result == BattleEnum.JankenResult.HOST_WIN else BattleEnum.Player.HOST
+
+## あっち向いてホイを飛ばすかどうかを返す。
+## ガードの成否がすでに確定しているなら、方向を選ばせても結果が変わらないため飛ばす
+func is_skip_select_direction() -> bool:
+	# 攻撃側が相手のガードを無視する
+	if battle_status_node.get_turn_flag(get_attacker(),BattleEnum.TurnFlag.FIRE_IGNORE_GUARD):
+		return true
+
+	# 防御側がそもそもガードできない
+	if battle_status_node.get_turn_flag(get_defender(),BattleEnum.TurnFlag.FIRE_DISABLE_GUARD):
+		return true
+
+	return false
+
 ## 両者が指す方向を選んだあとに実行される。
 ## 方向を開示して、結果を表示する
 func handle_hoi() -> void:
@@ -231,21 +256,17 @@ func handle_hoi() -> void:
 	var join_direction:BattleEnum.Direction = GameSession.get_direction(BattleEnum.Player.JOIN)
 
 	## じゃんけん勝者が攻撃側になる
-	var attacker:BattleEnum.Player
-	var defender:BattleEnum.Player
+	var attacker:BattleEnum.Player = get_attacker()
+	var defender:BattleEnum.Player = get_defender()
 
 	var pointed:BattleEnum.Direction
 	var faced:BattleEnum.Direction
 
 	match current_janken_result:
 		BattleEnum.JankenResult.HOST_WIN:
-			attacker = BattleEnum.Player.HOST
-			defender = BattleEnum.Player.JOIN
 			pointed = host_direction;
 			faced = join_direction
 		BattleEnum.JankenResult.JOIN_WIN:
-			attacker = BattleEnum.Player.JOIN
-			defender = BattleEnum.Player.HOST
 			pointed = join_direction;
 			faced = host_direction
 		BattleEnum.JankenResult.DRAW:
@@ -269,6 +290,9 @@ func handle_hoi() -> void:
 
 #endregion
 
+## 攻撃周りの処理
+#region
+
 func guard(defender:BattleEnum.Player) -> void:
 	change_mp({
 		defender:guard_mp_up
@@ -287,7 +311,7 @@ func resolve_attack(attacker:BattleEnum.Player,defender:BattleEnum.Player) -> vo
 		push_warning("攻撃側のキャラが不明なため、ダメージを計算できません")
 		return
 
-	var damage:int = BattleJudge.calc_damage(attacker_data)
+	var damage:int = attacker_data.attack
 
 	var recent_hp:Dictionary[BattleEnum.Player,int] = {
 		BattleEnum.Player.HOST: host_hp,
@@ -303,6 +327,7 @@ func _on_damage_applied(defender:BattleEnum.Player, hp:Dictionary[BattleEnum.Pla
 
 	play_damage_effect(damage,defender)
 
+#endregion
 
 ## MPの増減に関する関数群
 #region
@@ -323,12 +348,18 @@ func change_mp(changes:Dictionary[BattleEnum.Player,int]) -> void:
 	
 	GameSession.apply_mp(recent_mp)
 
+## 指定プレイヤーの現在MPを返す
+func get_mp(player:BattleEnum.Player) -> int:
+	return host_mp if player == BattleEnum.Player.HOST else join_mp
+
+## 指定プレイヤーの最大MPを返す
+func get_mp_max(player:BattleEnum.Player) -> int:
+	return host_mp_max if player == BattleEnum.Player.HOST else join_mp_max
+
 ## 指定プレイヤーのMPをamountだけ動かした結果を、0〜最大値に収めて返す。
 ## 上限・下限のチェックはここだけで行う
 func _mp_after(player:BattleEnum.Player, amount:int) -> int:
-	var current:int = host_mp if player == BattleEnum.Player.HOST else join_mp
-	var maximum:int = host_mp_max if player == BattleEnum.Player.HOST else join_mp_max
-	return clampi(current + amount, 0, maximum)
+	return clampi(get_mp(player) + amount, 0, get_mp_max(player))
 
 ## MPが確定したときに両者で呼ばれる
 func _on_mp_changed(mp:Dictionary[BattleEnum.Player,int]) -> void:
@@ -347,9 +378,44 @@ func handle_skill(user:BattleEnum.Player, chara:CharaData) -> void:
 ## 決め台詞に関する処理
 func handle_catchphrase(user:BattleEnum.Player, chara:CharaData) -> void:
 	battle_status_node.catchphrase_used[user] = true;
+	battle_status_node.add_turn_flag(user,BattleEnum.TurnFlag.CATCHPHRASE)
 	await effect_manager_node.play_cutin(chara)
 	
-	
+
+func resolve_catchphrase(target:BattleEnum.Player, is_success:bool) -> void:
+	var charas:Dictionary[BattleEnum.Player, CharaData] = {
+		BattleEnum.Player.HOST:host_chara_data,
+		BattleEnum.Player.JOIN:join_chara_data
+	}
+	match charas[target].id:
+		&"fire_man":
+			if is_success:
+				battle_status_node.add_turn_flag(target,BattleEnum.TurnFlag.FIRE_IGNORE_GUARD)
+			else:
+				battle_status_node.add_turn_flag(target,BattleEnum.TurnFlag.FIRE_DISABLE_GUARD)
+		&"guard_man":
+			if is_success:
+				battle_status_node.add_permanence_flag(target,BattleEnum.PermanenceFlag.GUARD_CP_ARMOR)
+			else:
+				battle_status_node.add_permanence_flag(target,BattleEnum.PermanenceFlag.GUARD_CP_WEEK)
+		&"logic_woman":
+			var opponent:BattleEnum.Player = (
+				BattleEnum.Player.JOIN if target == BattleEnum.Player.HOST
+				else BattleEnum.Player.HOST
+			)
+			if is_success:
+				# 相手のMPを全て奪う
+				var drain:int = get_mp(opponent)
+				change_mp({target:drain, opponent:-drain})
+			else:
+				# 逆に相手のMPを満タンにする
+				change_mp({opponent:get_mp_max(opponent)})
+
+func check_catchphrase(result:BattleEnum.JankenResult) -> void:
+	for target:BattleEnum.Player in [BattleEnum.Player.HOST,BattleEnum.Player.JOIN]:
+		if battle_status_node.get_turn_flag(target,BattleEnum.TurnFlag.CATCHPHRASE):
+			resolve_catchphrase(target,BattleJudge.is_janken_winner(result,target))
+		
 
 ## 両者の選択が出揃ったときに呼ばれる。values = { BattleEnum.Player : 選んだ値 }
 func _on_select_mode_completed(mode: BattleEnum.SelectMode, values: Dictionary) -> void:

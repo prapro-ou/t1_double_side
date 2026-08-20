@@ -61,8 +61,9 @@ enum PendingFlag{
 
 ## そのターンの終わりに消えるフラグ
 enum TurnFlag{
-	IGNORE_GUARD, #相手のガードを無視する
-	DISABLE_GUARD #自分がガードできない
+	CATCHPHRASE, #このターン決め台詞を使った
+	FIRE_IGNORE_GUARD, #firemanの決め台詞で相手のガードを無視する
+	FIRE_DISABLE_GUARD #firemanの決め台詞で自分がガードできない
 }
 
 enum PermanenceFlag{
