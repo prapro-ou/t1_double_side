@@ -49,7 +49,8 @@ offset_bottom = 477.0
 
 [node name="CharaManager" parent="." unique_id=753385096 instance=ExtResource("7_bdn7b")]
 
-[node name="EffectManager" type="Node2D" parent="." unique_id=2054745561]
+[node name="EffectManager" type="CanvasLayer" parent="." unique_id=1225187096]
+layer = 3
 script = ExtResource("7_p56j5")
 
 [node name="JankenResult" parent="EffectManager" unique_id=915383885 instance=ExtResource("7_6qw66")]
@@ -70,5 +71,5 @@ replication_config = SubResource("SceneReplicationConfig_0okv5")
 [connection signal="direction_selected" from="SelectorLayer/HandDirectionSelector" to="." method="_on_hand_direction_selector_direction_selected"]
 [connection signal="hands_selected" from="SelectorLayer/HandDirectionSelector" to="." method="_on_hand_direction_selector_hands_selected"]
 [connection signal="attack_selected" from="SelectorLayer/ActionSelector" to="." method="_on_action_selector_attack_selected"]
-[connection signal="catchphrae_selected" from="SelectorLayer/ActionSelector" to="." method="_on_action_selector_catchphrae_selected"]
+[connection signal="catchphrase_selected" from="SelectorLayer/ActionSelector" to="." method="_on_action_selector_catchphrase_selected"]
 [connection signal="skill_selected" from="SelectorLayer/ActionSelector" to="." method="_on_action_selector_skill_selected"]

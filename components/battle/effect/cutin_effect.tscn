@@ -18,10 +18,22 @@ tracks/0/keys = {
 "update": 0,
 "values": [Vector2(-367, 207.00002)]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LabelBack:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_lei30"]
 resource_name = "cutin"
-length = 0.46666667
+length = 4.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -34,6 +46,18 @@ tracks/0/keys = {
 "update": 0,
 "values": [Vector2(-600, 207), Vector2(576, 207)]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LabelBack:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ys2j4"]
 _data = {
@@ -43,6 +67,15 @@ _data = {
 
 [node name="CutinEffect" type="Node2D" unique_id=839558847]
 script = ExtResource("1_b11d6")
+catchphrase_fontsize = 55
+description_fontsize = 40
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=368483692]
+offset_left = -82.0
+offset_top = -57.0
+offset_right = 1258.0
+offset_bottom = 714.0
+color = Color(0, 0, 0, 0.6509804)
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=793992376]
 position = Vector2(-367, 207.00002)
@@ -53,6 +86,7 @@ texture = ExtResource("2_sb8bx")
 libraries/ = SubResource("AnimationLibrary_ys2j4")
 
 [node name="LabelBack" type="TextureRect" parent="." unique_id=1234683260]
+visible = false
 offset_left = 72.0
 offset_top = 374.0
 offset_right = 1072.0
@@ -68,5 +102,7 @@ anchor_right = 0.9
 anchor_bottom = 0.75
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 55
+text = "テストメッセージ"
 vertical_alignment = 1
+autowrap_mode = 1

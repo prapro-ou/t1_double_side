@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="CharaData" format=3 uid="uid://cvfct6j2tulgd"]
 
+[ext_resource type="Texture2D" uid="uid://5jtw0llkg8a3" path="res://assets/img/battle/effect/cutin_guard_dot.png" id="1_khsfy"]
 [ext_resource type="Script" uid="uid://cm6i8gc0va1ic" path="res://data/chara/chara_data.gd" id="1_lrfbf"]
 [ext_resource type="Texture2D" uid="uid://crtdygiectfd3" path="res://assets/img/chara/guard_man/guard_man.png" id="2_lrfbf"]
 
@@ -18,13 +19,14 @@ animations = [{
 script = ExtResource("1_lrfbf")
 id = &"guard_man"
 sprite_frames = SubResource("SpriteFrames_iy8go")
+cutin = ExtResource("1_khsfy")
 display_name = "guard_man"
 max_hp = 120
 max_mp = 50
 attack = 10
 skill_name = "デュアルガード"
-skill_discription = "次にじゃんけん負けたとき、2方向をガードできる"
-catchprase = "「君の攻撃...生っちょろくて防ぐ気にもならんな」"
-catchprase_description = "成功時　永続で防御力が上がる
+skill_description = "次にじゃんけん負けたとき、2方向をガードできる"
+catchphrase = "「君の攻撃...生っちょろくて防ぐ気にもならんな」"
+catchphrase_description = "成功時　永続で防御力が上がる
 失敗時　永続で防御力が下がる"
 metadata/_custom_type_script = "uid://cm6i8gc0va1ic"

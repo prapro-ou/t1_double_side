@@ -71,6 +71,9 @@ func _ready() -> void:
 	if multiplayer.is_server():
 		start_turn()
 
+##ゲームスタート時の互いの設定について
+#region
+
 ## 選択されたキャラのデータを読み込み、HP/MPをそのキャラの最大値で初期化する
 func setup_charas() -> void:
 	host_chara_data = GameSession.get_chara_data(BattleEnum.Player.HOST)
@@ -107,6 +110,8 @@ func setup_usernames() -> void:
 		GameSession.get_username(BattleEnum.Player.HOST),
 		GameSession.get_username(BattleEnum.Player.JOIN)
 	)
+
+#endregion
 
 ## ターンを開始する。ホストが呼ぶと両者のフェーズが進む
 func start_turn() -> void:
@@ -195,6 +200,9 @@ func _on_changed_phase(phase: BattleEnum.Phase) -> void:
 
 #endregion
 
+## あっち向いてホイについて
+#region
+
 ## 両者が指す方向を選んだあとに実行される。
 ## 方向を開示して、結果を表示する
 func handle_hoi() -> void:
@@ -237,6 +245,8 @@ func handle_hoi() -> void:
 	else:
 		resolve_attack(attacker,defender)
 
+
+#endregion
 
 func guard(defender:BattleEnum.Player) -> void:
 	change_mp({
@@ -309,6 +319,15 @@ func _on_mp_changed(mp:Dictionary[BattleEnum.Player,int]) -> void:
 #endregion
 
 
+## スキルに関する処理
+func handle_skill(user:BattleEnum.Player, chara:CharaData) -> void:
+	pass
+
+## 決め台詞に関する処理
+func handle_catchphrase(user:BattleEnum.Player, chara:CharaData) -> void:
+	battle_status_node.catchphrase_used[user] = true;
+	await effect_manager_node.play_cutin(chara)
+
 ## 両者の選択が出揃ったときに呼ばれる。values = { BattleEnum.Player : 選んだ値 }
 func _on_select_mode_completed(mode: BattleEnum.SelectMode, values: Dictionary) -> void:
 	match mode:
@@ -317,6 +336,11 @@ func _on_select_mode_completed(mode: BattleEnum.SelectMode, values: Dictionary) 
 				pass
 			if GameSession.get_action(BattleEnum.Player.JOIN) == BattleEnum.Action.SKILL:
 				pass
+			
+			if GameSession.get_action(BattleEnum.Player.HOST) == BattleEnum.Action.CATCHPHRASE:
+				await handle_catchphrase(BattleEnum.Player.HOST,host_chara_data)
+			if GameSession.get_action(BattleEnum.Player.JOIN) == BattleEnum.Action.CATCHPHRASE:
+				await handle_catchphrase(BattleEnum.Player.JOIN,join_chara_data)
 
 			hand_direction_selector_node.start_janken();
 		BattleEnum.SelectMode.HAND:
@@ -361,7 +385,7 @@ func _on_action_selector_skill_selected() -> void:
 	GameSession.submit(BattleEnum.SelectMode.ACTION, BattleEnum.Action.SKILL)
 	action_selector_node.visible = false
 
-func _on_action_selector_catchphrae_selected() -> void:
+func _on_action_selector_catchphrase_selected() -> void:
 	GameSession.submit(BattleEnum.SelectMode.ACTION, BattleEnum.Action.CATCHPHRASE)
 	action_selector_node.visible = false
 

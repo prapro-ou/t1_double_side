@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="CharaData" format=3 uid="uid://bvaqlnkaqgs3i"]
 
+[ext_resource type="Texture2D" uid="uid://bl60wou40vyb7" path="res://assets/img/battle/effect/cutin_fire_dot.png" id="1_2mnqn"]
 [ext_resource type="Script" uid="uid://cm6i8gc0va1ic" path="res://data/chara/chara_data.gd" id="1_gf4io"]
 [ext_resource type="Texture2D" uid="uid://bwyy1lg0olg4" path="res://assets/img/chara/fire_man/fire_man.png" id="2_gf4io"]
 
@@ -18,12 +19,13 @@ animations = [{
 script = ExtResource("1_gf4io")
 id = &"fire_man"
 sprite_frames = SubResource("SpriteFrames_7r4sd")
+cutin = ExtResource("1_2mnqn")
 display_name = "fire_man"
 max_hp = 80
 max_mp = 50
 attack = 20
 skill_name = "二連撃"
-skill_discription = "次にじゃんけん勝ったとき二回攻撃相手は二回ガード"
-catchprase = "「お前には俺の拳は破れない！」"
-catchprase_description = "成功時　このターンのガードを無視し、相手へのダメージ増加
-失敗時　このターンのガード不可で被ダメージ増加"
+skill_description = "次にじゃんけん勝ったとき二回攻撃相手は二回ガード"
+catchphrase = "「お前には俺の拳は破れない！」"
+catchphrase_description = "成功時　次の相手のガードを無視し、大ダメージ
+失敗時　このターンガードできず、防御力ダウン"
