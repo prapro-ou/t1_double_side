@@ -306,7 +306,23 @@ func resolve_attack(attacker:BattleEnum.Player,defender:BattleEnum.Player) -> vo
 
 	
 	var damage:int = attacker_data.attack
-
+	
+	if battle_status_node.get_turn_flag(attacker, BattleEnum.TurnFlag.FIRE_IGNORE_GUARD):
+		var fd:FireManData = player_status_list[attacker].chara as FireManData
+		damage = ceili(damage * fd.catchphrase_success_damage_rate)
+	
+	if battle_status_node.get_turn_flag(defender, BattleEnum.TurnFlag.FIRE_DISABLE_GUARD):
+		var fd:FireManData = player_status_list[attacker].chara as FireManData
+		damage = ceili(damage * fd.catchphrase_fail_damage_taken_rate)
+	
+	if battle_status_node.get_permanence_flag(defender, BattleEnum.PermanenceFlag.GUARD_CP_ARMOR):
+		var gd:GuardManData = player_status_list[defender].chara as GuardManData
+		damage = floori(damage * gd.catchphrase_success_damage_taken_rate)
+	
+	if battle_status_node.get_permanence_flag(defender, BattleEnum.PermanenceFlag.GUARD_CP_WEAK):
+		var gd:GuardManData = player_status_list[defender].chara as GuardManData
+		damage = ceili(damage * gd.catchphrase_fail_damage_taken_rate)
+	
 	var recent_hp:Dictionary[BattleEnum.Player,int] = {
 		BattleEnum.Player.HOST: player_status_list[BattleEnum.Player.HOST].hp,
 		BattleEnum.Player.JOIN: player_status_list[BattleEnum.Player.JOIN].hp,
@@ -363,7 +379,16 @@ func _on_mp_changed(mp:Dictionary[BattleEnum.Player,int]) -> void:
 
 ## スキルに関する処理
 func handle_skill(user:BattleEnum.Player, chara:CharaData) -> void:
-	pass
+	match player_status_list[user].chara.id:
+		&"fire_man":
+			battle_status_node.add_pending_flag(user,BattleEnum.PendingFlag.FIRE_SK_DUAL_ATTACK)
+		&"guard_man":
+			battle_status_node.add_pending_flag(user,BattleEnum.PendingFlag.GUARD_SK_DUAL_BLOCK)
+		&"logic_woman":
+			battle_status_node.add_pending_flag(user,BattleEnum.PendingFlag.LOGIC_SK_COUNTER)
+			
+	
+	
 
 ## 決め台詞に関する処理
 func handle_catchphrase(user:BattleEnum.Player, chara:CharaData) -> void:
@@ -383,7 +408,7 @@ func resolve_catchphrase(target:BattleEnum.Player, is_success:bool) -> void:
 			if is_success:
 				battle_status_node.add_permanence_flag(target,BattleEnum.PermanenceFlag.GUARD_CP_ARMOR)
 			else:
-				battle_status_node.add_permanence_flag(target,BattleEnum.PermanenceFlag.GUARD_CP_WEEK)
+				battle_status_node.add_permanence_flag(target,BattleEnum.PermanenceFlag.GUARD_CP_WEAK)
 		&"logic_woman":
 			var data:LogicWomanData = player_status_list[target].chara as LogicWomanData
 			var opponent:BattleEnum.Player = GameSession.get_other_player(target)
@@ -405,15 +430,14 @@ func check_catchphrase(result:BattleEnum.JankenResult) -> void:
 func _on_select_mode_completed(mode: BattleEnum.SelectMode, values: Dictionary) -> void:
 	match mode:
 		BattleEnum.SelectMode.ACTION:
-			if GameSession.get_action(BattleEnum.Player.HOST) == BattleEnum.Action.SKILL:
-				pass
-			if GameSession.get_action(BattleEnum.Player.JOIN) == BattleEnum.Action.SKILL:
-				pass
+			for player:BattleEnum.Player in [BattleEnum.Player.HOST,BattleEnum.Player.JOIN]:
+				if GameSession.get_action(player) == BattleEnum.Action.SKILL:
+					await handle_skill(player,player_status_list[player].chara)
 			
 			for player:BattleEnum.Player in [BattleEnum.Player.HOST,BattleEnum.Player.JOIN]:
 				if GameSession.get_action(player) == BattleEnum.Action.CATCHPHRASE:
 					await handle_catchphrase(player,player_status_list[player].chara)
-
+			
 			hand_direction_selector_node.start_janken();
 		BattleEnum.SelectMode.HAND:
 			handle_janken()

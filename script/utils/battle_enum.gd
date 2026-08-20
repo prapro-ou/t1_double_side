@@ -68,7 +68,7 @@ enum TurnFlag{
 
 enum PermanenceFlag{
 	GUARD_CP_ARMOR, #guard_manの決め台詞が成功
-	GUARD_CP_WEEK, #guard_manの決め台詞が失敗
+	GUARD_CP_WEAK, #guard_manの決め台詞が失敗
 }
 
 #endregion
