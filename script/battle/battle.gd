@@ -7,6 +7,21 @@ const AikoCounter = preload("res://script/battle/UI/aiko_counter.gd")
 const StatusDisplayManager = preload("res://script/battle/UI/status_display/status_display_manager.gd")
 const CharaManager = preload("res://script/battle/chara_manager/chara_manager.gd")
 
+## プレイヤー1人分のキャラ・HP・MPをまとめて持つ
+class PlayerStatus:
+	var chara:CharaData
+	var hp:int
+	var hp_max:int
+	var mp:int
+	var mp_max:int
+
+	## キャラのデータからHP/MPを初期化する。HPは最大値から、MPは0から始まる。
+	func _init(chara_data:CharaData = null) -> void:
+		chara = chara_data
+		hp_max = chara_data.max_hp if chara_data != null else 0
+		hp = hp_max
+		mp_max = chara_data.max_mp if chara_data != null else 0
+		mp = 0
 
 ## ターン終了時に両者に与えられるMP
 @export var turn_end_mp_up:int
@@ -22,23 +37,8 @@ const HOI_RESULT_DISPLAY_TIME:float = 1.5
 
 const AFTER_DAMAGE_EFFECT_TIME:float = 1.0
 
-
-## 選択されたキャラのデータ。setup_charas()で入る
-var host_chara_data:CharaData
-var join_chara_data:CharaData
-
-var host_hp:int = 0
-var host_hp_max:int = 0
-
-var join_hp:int = 0
-var join_hp_max:int = 0
-
-## MPは0から始まり、ガードや決め台詞で溜まる
-var host_mp:int = 0
-var host_mp_max:int = 0
-
-var join_mp:int = 0
-var join_mp_max:int = 0
+## プレイヤーごとのキャラ・HP・MP。setup_charas()で入る。
+var player_status_list:Dictionary[BattleEnum.Player, PlayerStatus] = {}
 
 ## 連続であいこになった回数
 var aiko_count:int = 0
@@ -76,33 +76,24 @@ func _ready() -> void:
 
 ## 選択されたキャラのデータを読み込み、HP/MPをそのキャラの最大値で初期化する
 func setup_charas() -> void:
-	host_chara_data = GameSession.get_chara_data(BattleEnum.Player.HOST)
-	join_chara_data = GameSession.get_chara_data(BattleEnum.Player.JOIN)
+	var host_chara_data:CharaData = GameSession.get_chara_data(BattleEnum.Player.HOST)
+	var join_chara_data:CharaData = GameSession.get_chara_data(BattleEnum.Player.JOIN)
+
+	player_status_list.clear()
+	player_status_list[BattleEnum.Player.HOST] = PlayerStatus.new(host_chara_data)
+	player_status_list[BattleEnum.Player.JOIN] = PlayerStatus.new(join_chara_data)
 
 	if host_chara_data == null or join_chara_data == null:
 		push_warning("キャラが決まっていないため、HPを初期化できません")
-		return
-
-	host_hp_max = host_chara_data.max_hp
-	host_hp = host_hp_max
-
-	join_hp_max = join_chara_data.max_hp
-	join_hp = join_hp_max
-
-	host_mp_max = host_chara_data.max_mp
-	host_mp = 0
-
-	join_mp_max = join_chara_data.max_mp
-	join_mp = 0
 
 	status_display_manager_node.set_chara(host_chara_data,join_chara_data)
 	chara_manager_node.set_chara(host_chara_data,join_chara_data)
-	status_display_manager_node.set_mp(host_mp,join_mp)
-	
-	if GameSession.get_self_player() == BattleEnum.Player.HOST:
-		action_selector_node.set_chara(host_chara_data)
-	else:
-		action_selector_node.set_chara(join_chara_data)
+	status_display_manager_node.set_mp(
+		player_status_list[BattleEnum.Player.HOST].mp,
+		player_status_list[BattleEnum.Player.JOIN].mp
+	)
+
+	action_selector_node.set_chara(player_status_list[GameSession.get_self_player()].chara)
 
 ## 両者のユーザー名を表示に反映する
 func setup_usernames() -> void:
@@ -114,16 +105,12 @@ func setup_usernames() -> void:
 #endregion
 
 func set_select_button_disable() -> void:
-	var skill_disable:bool
-	var catchphrase_disable:bool
-	
-	if GameSession.get_self_player() == BattleEnum.Player.HOST:
-		skill_disable = host_mp < host_mp_max
-		catchphrase_disable = battle_status_node.catchphrase_used[BattleEnum.Player.HOST]
-	else:
-		skill_disable = join_mp < join_mp_max
-		catchphrase_disable = battle_status_node.catchphrase_used[BattleEnum.Player.JOIN]
-	
+	var self_player:BattleEnum.Player = GameSession.get_self_player()
+	var self_status:PlayerStatus = player_status_list[self_player]
+
+	var skill_disable:bool = self_status.mp < self_status.mp_max
+	var catchphrase_disable:bool = battle_status_node.catchphrase_used[self_player]
+
 	action_selector_node.set_button_disable(skill_disable,catchphrase_disable)
 
 ## フェーズが切り替わったときに両者で呼ばれる
@@ -154,18 +141,24 @@ func end_turn() -> void:
 		BattleEnum.Player.JOIN:turn_end_mp_up
 	})
 	
-	if host_hp <= 0 and join_hp <= 0:
+	var host_dead:bool = player_status_list[BattleEnum.Player.HOST].hp <= 0
+	var join_dead:bool = player_status_list[BattleEnum.Player.JOIN].hp <= 0
+
+	if host_dead and join_dead:
 		finish_battle(BattleEnum.Winner.DRAW)
-	elif host_hp <= 0:
+	elif host_dead:
 		finish_battle(BattleEnum.Winner.JOIN)
-	elif join_hp <= 0:
+	elif join_dead:
 		finish_battle(BattleEnum.Winner.HOST)
 	else:
 		start_turn()
 
 ## ダメージの演出
 func play_damage_effect(damage:int,target:BattleEnum.Player) -> void:
-	status_display_manager_node.set_hp(host_hp,join_hp)
+	status_display_manager_node.set_hp(
+		player_status_list[BattleEnum.Player.HOST].hp,
+		player_status_list[BattleEnum.Player.JOIN].hp
+	)
 	status_display_manager_node.play_damage(target)
 	chara_manager_node.play_damage(target)
 	
@@ -306,7 +299,7 @@ func resolve_attack(attacker:BattleEnum.Player,defender:BattleEnum.Player) -> vo
 	if not multiplayer.is_server():
 		return
 
-	var attacker_data:CharaData = host_chara_data if attacker == BattleEnum.Player.HOST else join_chara_data
+	var attacker_data:CharaData = player_status_list[attacker].chara
 	if attacker_data == null:
 		push_warning("攻撃側のキャラが不明なため、ダメージを計算できません")
 		return
@@ -314,16 +307,16 @@ func resolve_attack(attacker:BattleEnum.Player,defender:BattleEnum.Player) -> vo
 	var damage:int = attacker_data.attack
 
 	var recent_hp:Dictionary[BattleEnum.Player,int] = {
-		BattleEnum.Player.HOST: host_hp,
-		BattleEnum.Player.JOIN: join_hp,
+		BattleEnum.Player.HOST: player_status_list[BattleEnum.Player.HOST].hp,
+		BattleEnum.Player.JOIN: player_status_list[BattleEnum.Player.JOIN].hp,
 	}
 	recent_hp[defender] = maxi(0, recent_hp[defender] - damage)
 
 	GameSession.apply_damage(defender, recent_hp, damage)
 
 func _on_damage_applied(defender:BattleEnum.Player, hp:Dictionary[BattleEnum.Player,int], damage:int) -> void:
-	host_hp = hp[BattleEnum.Player.HOST]
-	join_hp = hp[BattleEnum.Player.JOIN]
+	for player:BattleEnum.Player in player_status_list:
+		player_status_list[player].hp = hp[player]
 
 	play_damage_effect(damage,defender)
 
@@ -340,33 +333,29 @@ func change_mp(changes:Dictionary[BattleEnum.Player,int]) -> void:
 		return
 
 	var recent_mp:Dictionary[BattleEnum.Player,int] = {
-		BattleEnum.Player.HOST: host_mp,
-		BattleEnum.Player.JOIN: join_mp,
+		BattleEnum.Player.HOST: player_status_list[BattleEnum.Player.HOST].mp,
+		BattleEnum.Player.JOIN: player_status_list[BattleEnum.Player.JOIN].mp,
 	}
 	for player:BattleEnum.Player in changes:
 		recent_mp[player] = _mp_after(player, changes[player])
-	
+
 	GameSession.apply_mp(recent_mp)
-
-## 指定プレイヤーの現在MPを返す
-func get_mp(player:BattleEnum.Player) -> int:
-	return host_mp if player == BattleEnum.Player.HOST else join_mp
-
-## 指定プレイヤーの最大MPを返す
-func get_mp_max(player:BattleEnum.Player) -> int:
-	return host_mp_max if player == BattleEnum.Player.HOST else join_mp_max
 
 ## 指定プレイヤーのMPをamountだけ動かした結果を、0〜最大値に収めて返す。
 ## 上限・下限のチェックはここだけで行う
 func _mp_after(player:BattleEnum.Player, amount:int) -> int:
-	return clampi(get_mp(player) + amount, 0, get_mp_max(player))
+	var status:PlayerStatus = player_status_list[player]
+	return clampi(status.mp + amount, 0, status.mp_max)
 
 ## MPが確定したときに両者で呼ばれる
 func _on_mp_changed(mp:Dictionary[BattleEnum.Player,int]) -> void:
-	host_mp = mp[BattleEnum.Player.HOST]
-	join_mp = mp[BattleEnum.Player.JOIN]
-	
-	status_display_manager_node.set_mp(host_mp,join_mp)
+	for player:BattleEnum.Player in player_status_list:
+		player_status_list[player].mp = mp[player]
+
+	status_display_manager_node.set_mp(
+		player_status_list[BattleEnum.Player.HOST].mp,
+		player_status_list[BattleEnum.Player.JOIN].mp
+	)
 
 #endregion
 
@@ -383,11 +372,7 @@ func handle_catchphrase(user:BattleEnum.Player, chara:CharaData) -> void:
 	
 
 func resolve_catchphrase(target:BattleEnum.Player, is_success:bool) -> void:
-	var charas:Dictionary[BattleEnum.Player, CharaData] = {
-		BattleEnum.Player.HOST:host_chara_data,
-		BattleEnum.Player.JOIN:join_chara_data
-	}
-	match charas[target].id:
+	match player_status_list[target].chara.id:
 		&"fire_man":
 			if is_success:
 				battle_status_node.add_turn_flag(target,BattleEnum.TurnFlag.FIRE_IGNORE_GUARD)
@@ -399,17 +384,14 @@ func resolve_catchphrase(target:BattleEnum.Player, is_success:bool) -> void:
 			else:
 				battle_status_node.add_permanence_flag(target,BattleEnum.PermanenceFlag.GUARD_CP_WEEK)
 		&"logic_woman":
-			var opponent:BattleEnum.Player = (
-				BattleEnum.Player.JOIN if target == BattleEnum.Player.HOST
-				else BattleEnum.Player.HOST
-			)
+			var opponent:BattleEnum.Player = GameSession.get_other_player(target)
 			if is_success:
 				# 相手のMPを全て奪う
-				var drain:int = get_mp(opponent)
+				var drain:int = player_status_list[opponent].mp
 				change_mp({target:drain, opponent:-drain})
 			else:
 				# 逆に相手のMPを満タンにする
-				change_mp({opponent:get_mp_max(opponent)})
+				change_mp({opponent:player_status_list[opponent].mp_max})
 
 func check_catchphrase(result:BattleEnum.JankenResult) -> void:
 	for target:BattleEnum.Player in [BattleEnum.Player.HOST,BattleEnum.Player.JOIN]:
@@ -426,10 +408,9 @@ func _on_select_mode_completed(mode: BattleEnum.SelectMode, values: Dictionary) 
 			if GameSession.get_action(BattleEnum.Player.JOIN) == BattleEnum.Action.SKILL:
 				pass
 			
-			if GameSession.get_action(BattleEnum.Player.HOST) == BattleEnum.Action.CATCHPHRASE:
-				await handle_catchphrase(BattleEnum.Player.HOST,host_chara_data)
-			if GameSession.get_action(BattleEnum.Player.JOIN) == BattleEnum.Action.CATCHPHRASE:
-				await handle_catchphrase(BattleEnum.Player.JOIN,join_chara_data)
+			for player:BattleEnum.Player in [BattleEnum.Player.HOST,BattleEnum.Player.JOIN]:
+				if GameSession.get_action(player) == BattleEnum.Action.CATCHPHRASE:
+					await handle_catchphrase(player,player_status_list[player].chara)
 
 			hand_direction_selector_node.start_janken();
 		BattleEnum.SelectMode.HAND:
@@ -447,9 +428,12 @@ func _on_select_mode_restarted(mode: BattleEnum.SelectMode) -> void:
 	
 ## 残ターンが0になったときに呼ばれる処理
 func turn_limit_reached() -> void:
+	var host_status:PlayerStatus = player_status_list[BattleEnum.Player.HOST]
+	var join_status:PlayerStatus = player_status_list[BattleEnum.Player.JOIN]
+
 	# ゼロ除算を防ぎつつHP割合（0.0 〜 1.0）を計算
-	var host_ratio: float = float(host_hp) / float(host_hp_max) if host_hp_max > 0 else 0.0
-	var join_ratio: float = float(join_hp) / float(join_hp_max) if join_hp_max > 0 else 0.0
+	var host_ratio: float = float(host_status.hp) / float(host_status.hp_max) if host_status.hp_max > 0 else 0.0
+	var join_ratio: float = float(join_status.hp) / float(join_status.hp_max) if join_status.hp_max > 0 else 0.0
 
 	var winner: BattleEnum.Winner
 
