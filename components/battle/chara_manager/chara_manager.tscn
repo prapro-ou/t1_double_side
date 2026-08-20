@@ -11,5 +11,5 @@ position = Vector2(201, 374)
 is_player = true
 
 [node name="OpponentChara" parent="." unique_id=828052574 instance=ExtResource("2_sr1jg")]
-position = Vector2(986, 113)
-scale = Vector2(0.5, 0.5)
+position = Vector2(830, 158)
+scale = Vector2(0.75, 0.75)

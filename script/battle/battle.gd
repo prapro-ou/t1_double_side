@@ -50,6 +50,9 @@ var aiko_count:int = 0
 ## このターンに残っている攻撃回数
 var remaining_attack_count:int = 0
 
+## このターン、防御側が向ける方向の数
+var guard_direction_count:int = 1
+
 var current_janken_result:BattleEnum.JankenResult
 
 @onready var battle_status_node:BattleStatus = $BattleStatus
@@ -143,8 +146,7 @@ func start_turn() -> void:
 	GameSession.advance_phase(BattleEnum.Phase.SELECT_ACTION)
 	
 
-## このターンの攻撃回数を決める。じゃんけんの勝敗が決まった直後に呼ぶこと。
-## 「次にじゃんけんに勝ったとき」の効果なので、攻撃側になれたときだけフラグを消費する
+## このターンの攻撃回数を決める。
 func setup_attack_count() -> void:
 	var attacker:BattleEnum.Player = get_attacker()
 
@@ -154,13 +156,31 @@ func setup_attack_count() -> void:
 		var fd:FireManData = player_status_list[attacker].chara as FireManData
 		remaining_attack_count = fd.skill_attack_count
 
+## このターン、防御側が向ける方向の数を決めて返す。
+func setup_guard_direction_count() -> void:
+	guard_direction_count = 1
+	# ガードの成否がすでに確定しているターンは、スキルを空振りさせない
+	if is_skip_select_direction():
+		return
+
+	var defender:BattleEnum.Player = get_defender()
+
+	if not battle_status_node.consume_pending_flag(defender,BattleEnum.PendingFlag.GUARD_SK_DUAL_BLOCK):
+		return
+
+	var gd:GuardManData = player_status_list[defender].chara as GuardManData
+	guard_direction_count = gd.skill_guard_direction_count
+
 ## 攻撃1回分を始める。
 ## ガードの成否が確定しているときは方向選択を飛ばし、そのまま攻撃を通す
 func start_attack_step() -> void:
 	if is_skip_select_direction():
 		resolve_attack(get_attacker(),get_defender())
-	else:
-		hand_direction_selector_node.start_direction()
+		return
+
+	#ガード側はguard_direction_countに合わせて
+	var count:int = guard_direction_count if GameSession.is_self(get_defender()) else 1
+	hand_direction_selector_node.start_direction(count)
 
 ## 攻撃1回分が終わったときに呼ぶ。
 ## 攻撃が残っていればあっち向いてホイからやり直し、残っていなければターンを終える
@@ -257,6 +277,7 @@ func handle_janken() -> void:
 	check_catchphrase(result)
 
 	setup_attack_count()
+	setup_guard_direction_count()
 	start_attack_step()
 
 ## あいこだったときの処理。結果を見せてから、じゃんけんをやり直させる
@@ -305,31 +326,26 @@ func is_skip_select_direction() -> bool:
 ## 両者が指す方向を選んだあとに実行される。
 ## 方向を開示して、結果を表示する
 func handle_hoi() -> void:
-	var host_direction:BattleEnum.Direction = GameSession.get_direction(BattleEnum.Player.HOST)
-	var join_direction:BattleEnum.Direction = GameSession.get_direction(BattleEnum.Player.JOIN)
+	if current_janken_result == BattleEnum.JankenResult.DRAW:
+		push_error("誤って引き分けの状態であっち向いてホイに移行しています")
+		return
 
 	## じゃんけん勝者が攻撃側になる
 	var attacker:BattleEnum.Player = get_attacker()
 	var defender:BattleEnum.Player = get_defender()
 
-	var pointed:BattleEnum.Direction
-	var faced:BattleEnum.Direction
-
-	match current_janken_result:
-		BattleEnum.JankenResult.HOST_WIN:
-			pointed = host_direction;
-			faced = join_direction
-		BattleEnum.JankenResult.JOIN_WIN:
-			pointed = join_direction;
-			faced = host_direction
-		BattleEnum.JankenResult.DRAW:
-			push_error("誤って引き分けの状態であっち向いてホイに移行しています")
-			return
+	## 攻撃側が指差した方向。攻撃側は常に1つしか選べない
+	var pointed:BattleEnum.Direction = GameSession.get_direction(attacker)
+	## 防御側が向いた方向。デュアルガード中は複数入る
+	var faced:Array[BattleEnum.Direction] = GameSession.get_multi_directions(defender)
 
 	## ガードに成功したか
 	var is_guard_success:bool = BattleJudge.judge_hoi(pointed,faced)
-	
-	effect_manager_node.show_hoi(host_direction,join_direction)
+
+	effect_manager_node.show_hoi(
+		GameSession.get_multi_directions(BattleEnum.Player.HOST),
+		GameSession.get_multi_directions(BattleEnum.Player.JOIN)
+	)
 
 	await get_tree().create_timer(HOI_RESULT_DISPLAY_TIME).timeout
 
@@ -350,7 +366,10 @@ func guard(defender:BattleEnum.Player) -> void:
 	change_mp({
 		defender:guard_mp_up
 	})
-
+	
+	if battle_status_node.consume_pending_flag(defender,BattleEnum.PendingFlag.LOGIC_SK_COUNTER):
+		pass
+	
 	advance_attack_step()
 
 ## じゃんけん勝者の攻撃を確定させる。
@@ -555,8 +574,8 @@ func _on_action_selector_catchphrase_selected() -> void:
 	GameSession.submit(BattleEnum.SelectMode.ACTION, BattleEnum.Action.CATCHPHRASE)
 	action_selector_node.visible = false
 
-func _on_hand_direction_selector_direction_selected(direction: BattleEnum.Direction) -> void:
-	GameSession.submit(BattleEnum.SelectMode.DIRECTION, direction)
+func _on_hand_direction_selector_direction_selected(directions: Array[BattleEnum.Direction]) -> void:
+	GameSession.submit_multi_value(BattleEnum.SelectMode.DIRECTION, directions)
 
 
 func _on_hand_direction_selector_hands_selected(hand: BattleEnum.Hand) -> void:

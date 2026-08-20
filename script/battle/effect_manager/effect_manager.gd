@@ -25,7 +25,7 @@ func hide_janken() -> void:
 	janken_result_node.hide_hand()
 
 
-func show_hoi(host_direction:BattleEnum.Direction,join_direction:BattleEnum.Direction) -> void:
+func show_hoi(host_direction:Array[BattleEnum.Direction],join_direction:Array[BattleEnum.Direction]) -> void:
 	if GameSession.is_self(BattleEnum.Player.HOST):
 		hoi_result_node.show_hoi(host_direction,join_direction)
 	else:

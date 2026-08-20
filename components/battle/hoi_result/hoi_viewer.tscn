@@ -7,4 +7,5 @@
 script = ExtResource("1_w6oxu")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=352284134]
+visible = false
 texture = ExtResource("1_7isms")

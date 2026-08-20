@@ -194,7 +194,7 @@ func submit(mode:BattleEnum.SelectMode, value:int) -> void:
 	_notify_selected.rpc(mode)
 	_mark_selected(mode, multiplayer.get_unique_id())
 
-func submit_multi_value(mode:BattleEnum.SelectMode, values:Array[int]) -> void:
+func submit_multi_value(mode:BattleEnum.SelectMode, values:Array) -> void:
 	if _pending.has(mode):
 		return
 	_pending[mode] = values
@@ -230,7 +230,7 @@ func _send_reveal(mode:BattleEnum.SelectMode) -> void:
 ## 相手に自身の手を通知
 ## @rpc("any_peer","call_remote","reliable")
 @rpc("any_peer","call_remote","reliable")
-func _reveal(mode:BattleEnum.SelectMode, values:Array[int]) -> void:
+func _reveal(mode:BattleEnum.SelectMode, values:Array) -> void:
 	_apply_reveal(mode, multiplayer.get_remote_sender_id(), values)
 
 ## 通知された手を伝える
@@ -253,10 +253,11 @@ func get_action(player:BattleEnum.Player) -> BattleEnum.Action:
 func get_hand(player:BattleEnum.Player) -> BattleEnum.Hand:
 	return _get_value(BattleEnum.SelectMode.HAND, player) as BattleEnum.Hand
 
-## 指定プレイヤーが選んだホイの方向を返す
+## 指定プレイヤーが選んだホイの方向を返す。複数向いているときは最初の1つ
 func get_direction(player:BattleEnum.Player) -> BattleEnum.Direction:
 	return _get_value(BattleEnum.SelectMode.DIRECTION, player) as BattleEnum.Direction
 
+## 指定プレイヤーが向いた方向をすべて返す。
 func get_multi_directions(player:BattleEnum.Player) -> Array[BattleEnum.Direction]:
 	var directions:Array[BattleEnum.Direction] = []
 	directions.assign(_get_multi_values(BattleEnum.SelectMode.DIRECTION, player))
@@ -266,7 +267,8 @@ func get_multi_directions(player:BattleEnum.Player) -> Array[BattleEnum.Directio
 func _get_value(mode:BattleEnum.SelectMode, player:BattleEnum.Player) -> int:
 	return _revealed[mode][player][0]
 
-func _get_multi_values(mode:BattleEnum.SelectMode, player:BattleEnum.Player) -> Array[int]:
+## 複数の値を選ぶSelectMode用。get_multi_directions()などから呼ぶこと。
+func _get_multi_values(mode:BattleEnum.SelectMode, player:BattleEnum.Player) -> Array:
 	return _revealed[mode][player]
 
 #endregion
