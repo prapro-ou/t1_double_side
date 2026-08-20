@@ -141,6 +141,8 @@ func end_turn() -> void:
 		BattleEnum.Player.JOIN:turn_end_mp_up
 	})
 	
+	battle_status_node.clear_turn_flag()
+	
 	if host_hp <= 0 and join_hp <= 0:
 		finish_battle(BattleEnum.Winner.DRAW)
 	elif host_hp <= 0:
