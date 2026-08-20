@@ -45,6 +45,8 @@ var aiko_count:int = 0
 
 var current_janken_result:BattleEnum.JankenResult
 
+@onready var battle_status_node:BattleStatus = $BattleStatus
+
 @onready var chara_manager_node:CharaManager = $CharaManager
 
 @onready var hand_direction_selector_node:HandDirectionSelector = $SelectorLayer/HandDirectionSelector
@@ -359,6 +361,9 @@ func _on_action_selector_skill_selected() -> void:
 	GameSession.submit(BattleEnum.SelectMode.ACTION, BattleEnum.Action.SKILL)
 	action_selector_node.visible = false
 
+func _on_action_selector_catchphrae_selected() -> void:
+	GameSession.submit(BattleEnum.SelectMode.ACTION, BattleEnum.Action.CATCHPHRASE)
+	action_selector_node.visible = false
 
 func _on_hand_direction_selector_direction_selected(direction: BattleEnum.Direction) -> void:
 	GameSession.submit(BattleEnum.SelectMode.DIRECTION, direction)

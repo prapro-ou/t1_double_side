@@ -1,7 +1,8 @@
 extends Control
 
-signal attack_selected
-signal skill_selected
+signal attack_selected()
+signal skill_selected()
+signal catchphrae_selected()
 
 # 各ノードへの参照
 @onready var skill_button: Button = $HBoxContainer/SkillButton
@@ -79,4 +80,4 @@ func _on_skill_button_pressed() -> void:
 	skill_selected.emit()
 
 func _on_catchphrase_button_pressed() -> void:
-	pass 
+	catchphrae_selected.emit()

@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://yjbqns23xdmf" path="res://script/battle/effect_manager/effect_manager.gd" id="7_p56j5"]
 [ext_resource type="PackedScene" uid="uid://dl62rd8ura4ux" path="res://components/battle/hoi_result/hoi_result.tscn" id="10_bdn7b"]
 [ext_resource type="PackedScene" uid="uid://0u74phe0vex0" path="res://components/battle/effect/cutin_effect.tscn" id="11_yyook"]
+[ext_resource type="Script" uid="uid://df16skosat303" path="res://script/battle/battle_status.gd" id="12_5mh2w"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_0okv5"]
 
@@ -60,10 +61,14 @@ visible = false
 [node name="CutinEffect" parent="EffectManager" unique_id=839558847 instance=ExtResource("11_yyook")]
 visible = false
 
+[node name="BattleStatus" type="Node" parent="." unique_id=1341326645]
+script = ExtResource("12_5mh2w")
+
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=2044321510]
 replication_config = SubResource("SceneReplicationConfig_0okv5")
 
 [connection signal="direction_selected" from="SelectorLayer/HandDirectionSelector" to="." method="_on_hand_direction_selector_direction_selected"]
 [connection signal="hands_selected" from="SelectorLayer/HandDirectionSelector" to="." method="_on_hand_direction_selector_hands_selected"]
 [connection signal="attack_selected" from="SelectorLayer/ActionSelector" to="." method="_on_action_selector_attack_selected"]
+[connection signal="catchphrae_selected" from="SelectorLayer/ActionSelector" to="." method="_on_action_selector_catchphrae_selected"]
 [connection signal="skill_selected" from="SelectorLayer/ActionSelector" to="." method="_on_action_selector_skill_selected"]
