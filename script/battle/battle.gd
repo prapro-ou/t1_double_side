@@ -113,11 +113,7 @@ func setup_usernames() -> void:
 
 #endregion
 
-## ターンを開始する。ホストが呼ぶと両者のフェーズが進む
-func start_turn() -> void:
-	set_aiko_count(0)
-	GameSession.advance_phase(BattleEnum.Phase.SELECT_ACTION)
-	
+func set_select_button_disable() -> void:
 	var skill_disable:bool
 	var catchphrase_disable:bool
 	
@@ -130,9 +126,28 @@ func start_turn() -> void:
 	
 	action_selector_node.set_button_disable(skill_disable,catchphrase_disable)
 
+## フェーズが切り替わったときに両者で呼ばれる
+func _on_changed_phase(phase: BattleEnum.Phase) -> void:
+	match phase:
+		BattleEnum.Phase.SELECT_ACTION:
+			action_selector_node.visible = true
+			set_select_button_disable()
+
+func refresh_step() -> void:
+	battle_status_node.clear_turn_flag()
+	end_turn()
+
+## ターンを開始する。ホストが呼ぶと両者のフェーズが進む
+func start_turn() -> void:
+	set_aiko_count(0)
+	GameSession.advance_phase(BattleEnum.Phase.SELECT_ACTION)
+	
+
 
 ## ターンの終わりに関する処理
 func end_turn() -> void:
+	battle_status_node.clear_turn_flag()
+	
 	if not multiplayer.is_server():
 		return
 	
@@ -140,8 +155,6 @@ func end_turn() -> void:
 		BattleEnum.Player.HOST:turn_end_mp_up,
 		BattleEnum.Player.JOIN:turn_end_mp_up
 	})
-	
-	battle_status_node.clear_turn_flag()
 	
 	if host_hp <= 0 and join_hp <= 0:
 		finish_battle(BattleEnum.Winner.DRAW)
@@ -160,7 +173,7 @@ func play_damage_effect(damage:int,target:BattleEnum.Player) -> void:
 	
 	await get_tree().create_timer(AFTER_DAMAGE_EFFECT_TIME).timeout
 	
-	end_turn()
+	refresh_step()
 
 
 ## じゃんけんに関する関数群
@@ -205,12 +218,6 @@ func handle_aiko() -> void:
 func set_aiko_count(count:int) -> void:
 	aiko_count = count
 	aiko_counter_node.set_count(aiko_count)
-
-## フェーズが切り替わったときに両者で呼ばれる
-func _on_changed_phase(phase: BattleEnum.Phase) -> void:
-	match phase:
-		BattleEnum.Phase.SELECT_ACTION:
-			action_selector_node.visible = true
 
 #endregion
 
@@ -267,7 +274,7 @@ func guard(defender:BattleEnum.Player) -> void:
 		defender:guard_mp_up
 	})
 	
-	end_turn()
+	refresh_step()
 
 ## じゃんけん勝者の攻撃を確定させる。
 ## 両者でHPがズレないよう、計算はホストだけが行い、確定後のHPをGameSessionが両者に配る
