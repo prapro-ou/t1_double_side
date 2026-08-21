@@ -20,6 +20,7 @@ script = ExtResource("1_soyo5")
 _debug_mp_max = true
 turn_end_mp_up = 10
 guard_mp_up = 10
+aiko_damage_bonus = 0.5
 
 [node name="StatusLayer" type="CanvasLayer" parent="." unique_id=635536237]
 
@@ -32,7 +33,6 @@ offset_left = 6.0
 offset_top = 104.0
 offset_right = 6.0
 offset_bottom = 104.0
-is_debug = false
 
 [node name="StatusDisplayManager" parent="StatusLayer" unique_id=347625047 instance=ExtResource("4_bdn7b")]
 
