@@ -41,3 +41,6 @@ func play_cutin(chara:CharaData) -> void:
 
 func play_attack(attacker:BattleEnum.Player) -> void:
 	await attack_effect_node.play_attack(attacker == GameSession.get_self_player())
+
+func play_guard(attacker:BattleEnum.Player) -> void:
+	await attack_effect_node.play_guard(attacker == GameSession.get_self_player())

@@ -381,6 +381,9 @@ func handle_hoi() -> void:
 
 ## ガード成功時
 func guard(attacker:BattleEnum.Player,defender:BattleEnum.Player) -> void:
+	
+	await effect_manager_node.play_guard(attacker)
+	
 	change_mp({
 		defender:guard_mp_up
 	})

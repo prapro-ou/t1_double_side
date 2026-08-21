@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b8xe0pxlwb0e6" path="res://script/battle/attack_effect/attack_effect.gd" id="1_b38pj"]
 [ext_resource type="Texture2D" uid="uid://yg4xux7fe133" path="res://assets/img/battle/effect/damage/attack_ball.png" id="2_do3cn"]
+[ext_resource type="Texture2D" uid="uid://cv81kctal2mt0" path="res://assets/img/battle/effect/damage/guard_shield.png" id="3_srwft"]
 
 [sub_resource type="Animation" id="Animation_srwft"]
 length = 0.001
@@ -27,7 +28,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true]
+"values": [false]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -44,7 +45,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_c03fg"]
 resource_name = "opponent_attack"
-length = 0.25
+length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -52,10 +53,10 @@ tracks/0/path = NodePath("DamageBall:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.25),
+"times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(830, 158), Vector2(201, 374)]
+"values": [Vector2(830, 158), Vector2(312, 438)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -64,7 +65,7 @@ tracks/1/path = NodePath("DamageBall:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.25),
+"times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -96,7 +97,7 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id="Animation_do3cn"]
 resource_name = "player_attack"
-length = 0.25
+length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -104,10 +105,10 @@ tracks/0/path = NodePath("DamageBall:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.25),
+"times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(201, 374), Vector2(830, 158)]
+"values": [Vector2(312, 438), Vector2(830, 158)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -116,7 +117,7 @@ tracks/1/path = NodePath("DamageBall:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.25),
+"times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -145,9 +146,16 @@ _data = {
 script = ExtResource("1_b38pj")
 
 [node name="DamageBall" type="Sprite2D" parent="." unique_id=813227246]
+visible = false
 position = Vector2(238, 459)
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("2_do3cn")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=353501486]
 libraries/ = SubResource("AnimationLibrary_srwft")
+
+[node name="GuardShield" type="Sprite2D" parent="." unique_id=2060216153]
+visible = false
+position = Vector2(312, 430.00003)
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("3_srwft")
