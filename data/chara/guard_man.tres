@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="GuardManData" format=3 uid="uid://cvfct6j2tulgd"]
 
-[ext_resource type="Texture2D" uid="uid://5jtw0llkg8a3" path="res://assets/img/battle/effect/cutin_guard_dot.png" id="1_khsfy"]
+[ext_resource type="Texture2D" uid="uid://5jtw0llkg8a3" path="res://assets/img/battle/effect/cutin/cutin_guard_dot.png" id="1_khsfy"]
 [ext_resource type="Script" uid="uid://b7eig45q8s15x" path="res://data/chara/guard_man_data.gd" id="1_lrfbf"]
 [ext_resource type="Texture2D" uid="uid://crtdygiectfd3" path="res://assets/img/chara/guard_man/guard_man.png" id="2_lrfbf"]
 

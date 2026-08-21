@@ -30,6 +30,8 @@ class PlayerStatus:
 ## 試合の長さ
 @export var turn_limit:int = 20
 
+@export var init_mp:int = 30
+
 ## ターン終了時に両者に与えられるMP
 @export var turn_end_mp_up:int
 ## ガードに成功したときに貰えるMP
@@ -88,6 +90,11 @@ func _ready() -> void:
 			BattleEnum.Player.HOST:player_status_list[BattleEnum.Player.HOST].mp_max,
 			BattleEnum.Player.JOIN:player_status_list[BattleEnum.Player.JOIN].mp_max
 		})
+	
+	change_mp({
+		BattleEnum.Player.HOST:init_mp,
+		BattleEnum.Player.JOIN:init_mp
+	})
 	
 	set_aiko_count(0)
 	
