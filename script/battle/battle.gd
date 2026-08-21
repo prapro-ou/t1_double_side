@@ -24,6 +24,7 @@ class PlayerStatus:
 		mp_max = chara_data.max_mp if chara_data != null else 0
 		mp = 0
 
+## デバッグモードとして、MP満タンでゲームを開始する
 @export var _debug_mp_max:bool = false
 
 ## 試合の長さ
@@ -33,6 +34,9 @@ class PlayerStatus:
 @export var turn_end_mp_up:int
 ## ガードに成功したときに貰えるMP
 @export var guard_mp_up:int
+
+## あいこによるダメージの増加
+@export var aiko_damage_bonus:float
 
 ## じゃんけんの結果を見せてから次に進むまでの待ち時間（秒）
 const JANKEN_RESULT_DISPLAY_TIME:float = 1.5
@@ -75,7 +79,7 @@ func _ready() -> void:
 	GameSession.changed_phase.connect(_on_changed_phase)
 	GameSession.damage_applied.connect(_on_damage_applied)
 	GameSession.mp_changed.connect(_on_mp_changed)
-
+	
 	setup_charas()
 	setup_usernames()
 	
@@ -84,7 +88,9 @@ func _ready() -> void:
 			BattleEnum.Player.HOST:player_status_list[BattleEnum.Player.HOST].mp_max,
 			BattleEnum.Player.JOIN:player_status_list[BattleEnum.Player.JOIN].mp_max
 		})
-
+	
+	set_aiko_count(0)
+	
 	if multiplayer.is_server():
 		start_turn()
 
@@ -141,8 +147,8 @@ func _on_changed_phase(phase: BattleEnum.Phase) -> void:
 #region
 
 ## ターンを開始する。ホストが呼ぶと両者のフェーズが進む
+## ホスト側でしか呼ばれない点に注意
 func start_turn() -> void:
-	set_aiko_count(0)
 	GameSession.advance_phase(BattleEnum.Phase.SELECT_ACTION)
 	
 
@@ -205,12 +211,15 @@ func refresh_step() -> void:
 	turn_limit -= 1;
 	left_turn_timer_node.update_turn_display(turn_limit)
 	battle_status_node.clear_turn_flag()
+	set_aiko_count(0)
 	end_turn()
 
 ## ターンの終わりに関する処理
 func end_turn() -> void:
 	if not multiplayer.is_server():
 		return
+	
+	# 以降はホスト側でしか呼ばれない点に注意
 	
 	change_mp({
 		BattleEnum.Player.HOST:turn_end_mp_up,
@@ -265,8 +274,6 @@ func handle_janken() -> void:
 		await handle_aiko()
 		return
 	
-	set_aiko_count(0)
-	
 	current_janken_result = result
 	
 	await get_tree().create_timer(JANKEN_RESULT_DISPLAY_TIME).timeout
@@ -275,7 +282,7 @@ func handle_janken() -> void:
 	effect_manager_node.hide_janken()
 	
 	check_catchphrase(result)
-
+	
 	setup_attack_count()
 	setup_guard_direction_count()
 	start_attack_step()
@@ -292,10 +299,15 @@ func handle_aiko() -> void:
 	GameSession.restart_select_mode(BattleEnum.SelectMode.HAND)
 	
 
+func calc_aiko_rate(count:int) -> float:
+	return (1 + aiko_damage_bonus * count)
+
 ## あいこの回数を更新し、表示に反映する
 func set_aiko_count(count:int) -> void:
 	aiko_count = count
-	aiko_counter_node.set_count(aiko_count)
+	var rate:float = calc_aiko_rate(count)
+	
+	aiko_counter_node.set_count(aiko_count,rate)
 
 #endregion
 
@@ -394,6 +406,8 @@ func calc_damage(attacker:BattleEnum.Player,defender:BattleEnum.Player,base_dama
 	if battle_status_node.get_permanence_flag(defender, BattleEnum.PermanenceFlag.GUARD_CP_WEAK):
 		var gd:GuardManData = player_status_list[defender].chara as GuardManData
 		damage = ceili(damage * gd.catchphrase_fail_damage_taken_rate)
+	
+	damage = ceili(damage * calc_aiko_rate(aiko_count) )
 	
 	return damage
 
