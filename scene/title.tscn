@@ -42,5 +42,11 @@ anchor_bottom = 0.75
 theme_override_font_sizes/font_size = 32
 text = "部屋に入る"
 
+[node name="Control" type="Control" parent="." unique_id=1893006792]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
 [connection signal="pressed" from="UILayer/Control/HostButton" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="UILayer/Control/JoinButton" to="." method="_on_join_button_pressed"]
