@@ -230,11 +230,11 @@ func end_turn() -> void:
 	var join_dead:bool = player_status_list[BattleEnum.Player.JOIN].hp <= 0
 
 	if host_dead and join_dead:
-		finish_battle(BattleEnum.Winner.DRAW)
+		GameSession.finish_battle(BattleEnum.Winner.DRAW)
 	elif host_dead:
-		finish_battle(BattleEnum.Winner.JOIN)
+		GameSession.finish_battle(BattleEnum.Winner.JOIN)
 	elif join_dead:
-		finish_battle(BattleEnum.Winner.HOST)
+		GameSession.finish_battle(BattleEnum.Winner.HOST)
 	else:
 		
 		if turn_limit <= 0:
@@ -598,10 +598,8 @@ func turn_limit_reached() -> void:
 	else:
 		winner = BattleEnum.Winner.DRAW
 
-	finish_battle(winner)
+	GameSession.finish_battle(winner)
 
-func finish_battle(winner:BattleEnum.Winner) -> void:
-	pass
 
 func _on_action_selector_attack_selected() -> void:
 	GameSession.submit(BattleEnum.SelectMode.ACTION, BattleEnum.Action.ATTACK)

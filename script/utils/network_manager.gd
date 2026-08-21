@@ -92,11 +92,15 @@ func _connect_ws() -> void:
 func _on_multiplayer_peer_disconnected(_id:int) -> void:
 	if in_game:
 		_notify_connection_lost()
+	else:
+		SceneManager.change_scene("network_end")
 
 ## ゲーム中にホストとの接続が切れた（参加者側）
 func _on_multiplayer_server_disconnected() -> void:
 	if in_game:
 		_notify_connection_lost()
+	else:
+		SceneManager.change_scene("network_end")
 
 ## 通信が切断されたことを一度だけ通知する
 func _notify_connection_lost() -> void:
