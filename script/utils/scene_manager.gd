@@ -7,6 +7,7 @@ const scene_dictionary:Dictionary[String,PackedScene] = {
 	"webrtc_test":preload("res://scene/webrtc_test.tscn"),
 	"battle":preload("res://scene/battle.tscn"),
 	"result":preload("res://scene/result.tscn"),
+	"network_end":preload("res://components/network_end.tscn"),
 	"network_error":preload("res://components/network_error.tscn")
 }
 

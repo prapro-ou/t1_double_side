@@ -6,6 +6,7 @@ func start_game() -> void:
 	NetworkManager.disconnect_signaling()
 	NetworkManager.begin_game()
 	reset_chara_selections()
+	reset_rematch_requests()
 	reset_usernames()
 	announce_username()
 	SceneManager.change_scene("chara_select")
@@ -321,5 +322,114 @@ func apply_mp(mp:Dictionary[BattleEnum.Player,int]) -> void:
 @rpc("authority","call_local","reliable")
 func _apply_mp(mp:Dictionary) -> void:
 	mp_changed.emit(mp)
+
+#endregion
+
+#--------------------------------------------
+# 勝敗について
+#--------------------------------------------
+#region
+signal battle_finished(winner:BattleEnum.Winner)
+
+var battle_winner:BattleEnum.Winner = BattleEnum.Winner.DRAW
+
+func finish_battle(winner:BattleEnum.Winner) -> void:
+	if not multiplayer.is_server():
+		return
+	
+	_finish_battle.rpc(winner)
+
+@rpc("authority","call_local","reliable")
+func _finish_battle(winner:BattleEnum.Winner) -> void:
+	battle_winner = winner
+	# リザルト画面に入る前に、前回の再戦の希望を消しておく
+	reset_rematch_requests()
+	battle_finished.emit(winner)
+	SceneManager.change_scene("result")
+
+
+#endregion
+
+#--------------------------------------------
+# 再戦について
+#--------------------------------------------
+#region
+
+## 誰かが「もう1戦」を希望したときに両者で発火する
+signal rematch_requested(player:BattleEnum.Player)
+
+## もう1戦を希望したpeer_id
+var rematch_requests:Dictionary[int,bool] = {}
+
+## もう1戦を希望していることを伝える。両者そろえばホストがキャラ選択へ進める
+func request_rematch() -> void:
+	if multiplayer.is_server():
+		receive_rematch_request(multiplayer.get_unique_id())
+	else:
+		rematch_submit.rpc_id(1)
+
+## 直接呼ばずrequest_rematch()を使うこと。ホストに希望を届ける
+@rpc("any_peer", "reliable")
+func rematch_submit() -> void:
+	receive_rematch_request(multiplayer.get_remote_sender_id())
+
+## 希望を受け付ける。進行権はホストのみが持つので、クライアントから呼んでも無視される
+func receive_rematch_request(peer_id:int) -> void:
+	if not multiplayer.is_server():
+		return
+	if rematch_requests.has(peer_id):
+		return
+
+	_rematch_apply.rpc(peer_id)
+
+	if rematch_requests.size() == multiplayer.get_peers().size() + 1:
+		start_rematch.rpc()
+
+## 直接呼ばずreceive_rematch_request()を使うこと。call_localなので両者で同じ順序で走る
+@rpc("authority", "call_local", "reliable")
+func _rematch_apply(peer_id:int) -> void:
+	rematch_requests[peer_id] = true
+	rematch_requested.emit(to_player(peer_id))
+
+## 指定プレイヤーがもう1戦を希望しているか
+func is_rematch_requested(player:BattleEnum.Player) -> bool:
+	for peer_id:int in rematch_requests:
+		if to_player(peer_id) == player:
+			return true
+	return false
+
+## 両者がそろったのでキャラ選択からやり直す
+@rpc("authority", "call_local", "reliable")
+func start_rematch() -> void:
+	NetworkManager.begin_game()
+	reset_chara_selections()
+	reset_rematch_requests()
+	SceneManager.change_scene("chara_select")
+
+## 再戦の希望を受け付ける前の状態に戻す
+func reset_rematch_requests() -> void:
+	rematch_requests.clear()
+
+#endregion
+
+#--------------------------------------------
+# 退出について
+#--------------------------------------------
+#region
+
+## タイトルに戻る。黙って切断すると相手が通信エラー扱いになるので、先に退出を伝える
+func leave_to_title() -> void:
+	_notify_left.rpc()
+	# 通知を送り切る前に接続を閉じないよう、1フレーム待ってから切断する
+	await get_tree().process_frame
+	NetworkManager.leave()
+	SceneManager.change_scene("title")
+
+## 直接呼ばずleave_to_title()を使うこと。相手が退出したことを受け取る
+@rpc("any_peer", "reliable")
+func _notify_left() -> void:
+	# 切断を検知して通信エラー画面へ飛ぶ前に、接続前の状態に戻しておく
+	NetworkManager.leave()
+	SceneManager.change_scene("network_end")
 
 #endregion
