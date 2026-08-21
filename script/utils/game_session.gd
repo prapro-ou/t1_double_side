@@ -282,20 +282,20 @@ func _get_multi_values(mode:BattleEnum.SelectMode, player:BattleEnum.Player) -> 
 
 ## ダメージが確定したときに両者で発火する。
 ## hp = { BattleEnum.Player.HOST: HostのHP, BattleEnum.Player.JOIN: JoinのHP }（減算後の値）
-signal damage_applied(defender:BattleEnum.Player, hp:Dictionary[BattleEnum.Player,int], damage:int)
+signal damage_applied(attacker:BattleEnum.Player,defender:BattleEnum.Player, hp:Dictionary[BattleEnum.Player,int], damage:int)
 
 ## 確定したダメージを両者に配る。HPの計算はホストのbattle.gdが行う。
 ## 進行権はホストのみが持つので、クライアントから呼んでも無視される
-func apply_damage(defender:BattleEnum.Player, hp:Dictionary[BattleEnum.Player,int], damage:int) -> void:
+func apply_damage(attacker:BattleEnum.Player,defender:BattleEnum.Player, hp:Dictionary[BattleEnum.Player,int], damage:int) -> void:
 	if not multiplayer.is_server():
 		return
 		
-	_apply_damage.rpc(defender, hp, damage)
+	_apply_damage.rpc(attacker,defender, hp, damage)
 
 ## 直接呼ばずapply_damage()を使うこと。
 @rpc("authority","call_local","reliable")
-func _apply_damage(defender:BattleEnum.Player, hp:Dictionary, damage:int) -> void:
-	damage_applied.emit(defender, hp, damage)
+func _apply_damage(attacker:BattleEnum.Player,defender:BattleEnum.Player, hp:Dictionary, damage:int) -> void:
+	damage_applied.emit(attacker,defender, hp, damage)
 
 #endregion
 

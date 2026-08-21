@@ -12,12 +12,12 @@
 [ext_resource type="PackedScene" uid="uid://dl62rd8ura4ux" path="res://components/battle/hoi_result/hoi_result.tscn" id="10_bdn7b"]
 [ext_resource type="PackedScene" uid="uid://0u74phe0vex0" path="res://components/battle/effect/cutin_effect.tscn" id="11_yyook"]
 [ext_resource type="Script" uid="uid://df16skosat303" path="res://script/battle/battle_status.gd" id="12_5mh2w"]
+[ext_resource type="PackedScene" uid="uid://dn0oa4g78angg" path="res://components/battle/effect/attack_effect.tscn" id="12_o18kk"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_0okv5"]
 
 [node name="Battle" type="Node2D" unique_id=2019355189]
 script = ExtResource("1_soyo5")
-_debug_mp_max = true
 turn_end_mp_up = 10
 guard_mp_up = 10
 aiko_damage_bonus = 0.5
@@ -62,6 +62,8 @@ visible = false
 
 [node name="CutinEffect" parent="EffectManager" unique_id=839558847 instance=ExtResource("11_yyook")]
 visible = false
+
+[node name="AttackEffect" parent="EffectManager" unique_id=712347959 instance=ExtResource("12_o18kk")]
 
 [node name="BattleStatus" type="Node" parent="." unique_id=1341326645]
 script = ExtResource("12_5mh2w")

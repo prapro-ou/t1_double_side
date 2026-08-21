@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="FireManData" format=3 uid="uid://bvaqlnkaqgs3i"]
 
-[ext_resource type="Texture2D" uid="uid://bl60wou40vyb7" path="res://assets/img/battle/effect/cutin_fire_dot.png" id="1_2mnqn"]
+[ext_resource type="Texture2D" uid="uid://bl60wou40vyb7" path="res://assets/img/battle/effect/cutin/cutin_fire_dot.png" id="1_2mnqn"]
 [ext_resource type="Script" uid="uid://cd8fcganebj5s" path="res://data/chara/fire_man_data.gd" id="1_gf4io"]
 [ext_resource type="Texture2D" uid="uid://bwyy1lg0olg4" path="res://assets/img/chara/fire_man/fire_man.png" id="2_gf4io"]
 

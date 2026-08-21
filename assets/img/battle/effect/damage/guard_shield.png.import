@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://5jtw0llkg8a3"
-path="res://.godot/imported/cutin_guard_dot.png-e2dd3a6576fb7c3aa318437c3e684231.ctex"
+uid="uid://cv81kctal2mt0"
+path="res://.godot/imported/guard_shield.png-549ac83bab2381f54b4a5958a5fefac7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/img/battle/effect/cutin_guard_dot.png"
-dest_files=["res://.godot/imported/cutin_guard_dot.png-e2dd3a6576fb7c3aa318437c3e684231.ctex"]
+source_file="res://assets/img/battle/effect/damage/guard_shield.png"
+dest_files=["res://.godot/imported/guard_shield.png-549ac83bab2381f54b4a5958a5fefac7.ctex"]
 
 [params]
 

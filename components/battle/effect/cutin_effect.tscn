@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://0u74phe0vex0"]
 
 [ext_resource type="Script" uid="uid://dgmu4uoxrs3bo" path="res://script/battle/effect_manager/cutin_effect.gd" id="1_b11d6"]
-[ext_resource type="Texture2D" uid="uid://bl60wou40vyb7" path="res://assets/img/battle/effect/cutin_fire_dot.png" id="2_sb8bx"]
-[ext_resource type="Texture2D" uid="uid://y2solwb3a2le" path="res://assets/img/battle/effect/cutin_label_back.png" id="3_b11d6"]
+[ext_resource type="Texture2D" uid="uid://bl60wou40vyb7" path="res://assets/img/battle/effect/cutin/cutin_fire_dot.png" id="2_sb8bx"]
+[ext_resource type="Texture2D" uid="uid://y2solwb3a2le" path="res://assets/img/battle/effect/cutin/cutin_label_back.png" id="3_b11d6"]
 
 [sub_resource type="Animation" id="Animation_67ilw"]
 length = 3.0

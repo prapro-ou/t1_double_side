@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bl60wou40vyb7"
-path="res://.godot/imported/cutin_fire_dot.png-8b44f6a7f53a5189ff0cdd64d3ed4d00.ctex"
+uid="uid://yg4xux7fe133"
+path="res://.godot/imported/attack_ball.png-fa8e98d9ad336dd1fed9bb2138ddb146.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/img/battle/effect/cutin_fire_dot.png"
-dest_files=["res://.godot/imported/cutin_fire_dot.png-8b44f6a7f53a5189ff0cdd64d3ed4d00.ctex"]
+source_file="res://assets/img/battle/effect/damage/attack_ball.png"
+dest_files=["res://.godot/imported/attack_ball.png-fa8e98d9ad336dd1fed9bb2138ddb146.ctex"]
 
 [params]
 

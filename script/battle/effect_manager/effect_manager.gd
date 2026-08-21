@@ -3,10 +3,12 @@ extends CanvasLayer
 const JankenResult = preload("res://script/battle/janken_result/janken_result.gd")
 const HoiResult = preload("res://script/battle/hoi_result/hoi_result.gd")
 const CutinEffect = preload("res://script/battle/effect_manager/cutin_effect.gd")
+const AttackEffect = preload("res://script/battle/attack_effect/attack_effect.gd")
 
 @onready var janken_result_node:JankenResult = $JankenResult
 @onready var hoi_result_node:HoiResult = $HoiResult
 @onready var cutin_effect_node:CutinEffect = $CutinEffect
+@onready var attack_effect_node:AttackEffect = $AttackEffect
 
 func show_janken(host_hand:BattleEnum.Hand,join_hand:BattleEnum.Hand) ->void:
 	if GameSession.is_self(BattleEnum.Player.HOST):
@@ -36,3 +38,9 @@ func hide_hoi() -> void:
 
 func play_cutin(chara:CharaData) -> void:
 	await cutin_effect_node.play_cutin(chara)
+
+func play_attack(attacker:BattleEnum.Player) -> void:
+	await attack_effect_node.play_attack(attacker == GameSession.get_self_player())
+
+func play_guard(attacker:BattleEnum.Player) -> void:
+	await attack_effect_node.play_guard(attacker == GameSession.get_self_player())

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dtod6vps85ylk"
-path="res://.godot/imported/cutin_logic_dot.png-68954cc56a412cefd2686fda849732c5.ctex"
+uid="uid://dlilmx5iituca"
+path="res://.godot/imported/cutin.png-7b5f51c0c7900cc0842d8641a3057238.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/img/battle/effect/cutin_logic_dot.png"
-dest_files=["res://.godot/imported/cutin_logic_dot.png-68954cc56a412cefd2686fda849732c5.ctex"]
+source_file="res://assets/img/battle/effect/cutin/cutin.png"
+dest_files=["res://.godot/imported/cutin.png-7b5f51c0c7900cc0842d8641a3057238.ctex"]
 
 [params]
 
