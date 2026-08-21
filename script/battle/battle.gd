@@ -24,8 +24,8 @@ class PlayerStatus:
 		mp_max = chara_data.max_mp if chara_data != null else 0
 		mp = 0
 
-## デバッグモードとして、MP満タンでゲームを開始する
-@export var _debug_mp_max:bool = false
+
+@export var is_debug_mode:bool = false
 
 ## 試合の長さ
 @export var turn_limit:int = 20
@@ -84,12 +84,7 @@ func _ready() -> void:
 	
 	setup_charas()
 	setup_usernames()
-	
-	if _debug_mp_max:
-		change_mp({
-			BattleEnum.Player.HOST:player_status_list[BattleEnum.Player.HOST].mp_max,
-			BattleEnum.Player.JOIN:player_status_list[BattleEnum.Player.JOIN].mp_max
-		})
+
 	
 	change_mp({
 		BattleEnum.Player.HOST:init_mp,
@@ -252,11 +247,14 @@ func end_turn() -> void:
 #endregion
 
 ## ダメージの演出
-func play_damage_effect(damage:int,target:BattleEnum.Player) -> void:
+func play_damage_effect(damage:int,attacker:BattleEnum.Player,target:BattleEnum.Player) -> void:
 	status_display_manager_node.set_hp(
 		player_status_list[BattleEnum.Player.HOST].hp,
 		player_status_list[BattleEnum.Player.JOIN].hp
 	)
+	
+	await effect_manager_node.play_attack(attacker)
+	
 	status_display_manager_node.play_damage(target)
 	chara_manager_node.play_damage(target)
 	
@@ -439,7 +437,7 @@ func resolve_attack(attacker:BattleEnum.Player,defender:BattleEnum.Player) -> vo
 	
 	recent_hp[defender] = maxi(0, recent_hp[defender] - damage)
 
-	GameSession.apply_damage(defender, recent_hp, damage)
+	GameSession.apply_damage(attacker,defender, recent_hp, damage)
 
 ## カウンターを確定させる。ガードに成功した側が、じゃんけん勝者に反撃する。
 ## 反撃の威力は発動元のスキルごとに決めてbase_damageで渡すこと。
@@ -457,13 +455,13 @@ func resolve_counter(counter_user:BattleEnum.Player,target:BattleEnum.Player,bas
 
 	recent_hp[target] = maxi(0, recent_hp[target] - damage)
 
-	GameSession.apply_damage(target, recent_hp, damage)
+	GameSession.apply_damage(counter_user,target, recent_hp, damage)
 
-func _on_damage_applied(defender:BattleEnum.Player, hp:Dictionary[BattleEnum.Player,int], damage:int) -> void:
+func _on_damage_applied(attacker:BattleEnum.Player,defender:BattleEnum.Player, hp:Dictionary[BattleEnum.Player,int], damage:int) -> void:
 	for player:BattleEnum.Player in player_status_list:
 		player_status_list[player].hp = hp[player]
 
-	play_damage_effect(damage,defender)
+	play_damage_effect(damage,attacker,defender)
 
 #endregion
 

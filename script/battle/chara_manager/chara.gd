@@ -9,6 +9,8 @@ extends Node2D
 
 @onready var anim_player_node:AnimationPlayer = $AnimationPlayer
 
+@onready var damage_particles_node:GPUParticles2D = $DamageParticles2D
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	animated_sprite2d.flip_h = not is_player
@@ -19,4 +21,5 @@ func set_chara(chara:CharaData) -> void:
 	
 
 func play_damage() -> void:
+	damage_particles_node.restart()
 	anim_player_node.play("damage")
