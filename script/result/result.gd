@@ -3,7 +3,11 @@ extends Node2D
 @onready var result_en = $CanvasLayer/Control/Result_English
 @onready var result_jp = $CanvasLayer/Control/Result_Japanese
 @onready var re_match = $CanvasLayer/Control/Re_match
+@onready var go_title = $CanvasLayer/Control/Go_title
 @onready var rematch_status = $CanvasLayer/Control/Rematch_Status
+
+## タイトルに戻ることを選んだかどうか。再戦の状況表示と混ざらないようにする
+var _leaving:bool = false
 
 enum Result{
 	WIN,
@@ -52,6 +56,8 @@ func _on_rematch_requested(_player: BattleEnum.Player) -> void:
 	_update_rematch_status()
 
 func _update_rematch_status() -> void:
+	if _leaving:
+		return
 	# 自分の希望はホストに届くまで反映されないので、ボタンの状態で判定する
 	if re_match.disabled:
 		rematch_status.text = "相手を待っています..."
@@ -60,5 +66,12 @@ func _update_rematch_status() -> void:
 	else:
 		rematch_status.text = ""
 
+## タイトルに戻る。相手には退出したことが伝わる
 func _on_go_title_pressed() -> void:
-	SceneManager.change_scene("title")
+	# 切断するまでの間に押し直せないようにする
+	_leaving = true
+	re_match.disabled = true
+	go_title.disabled = true
+	rematch_status.text = "タイトルに戻ります..."
+
+	GameSession.leave_to_title()

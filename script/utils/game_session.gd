@@ -411,3 +411,25 @@ func reset_rematch_requests() -> void:
 	rematch_requests.clear()
 
 #endregion
+
+#--------------------------------------------
+# 退出について
+#--------------------------------------------
+#region
+
+## タイトルに戻る。黙って切断すると相手が通信エラー扱いになるので、先に退出を伝える
+func leave_to_title() -> void:
+	_notify_left.rpc()
+	# 通知を送り切る前に接続を閉じないよう、1フレーム待ってから切断する
+	await get_tree().process_frame
+	NetworkManager.leave()
+	SceneManager.change_scene("title")
+
+## 直接呼ばずleave_to_title()を使うこと。相手が退出したことを受け取る
+@rpc("any_peer", "reliable")
+func _notify_left() -> void:
+	# 切断を検知して通信エラー画面へ飛ぶ前に、接続前の状態に戻しておく
+	NetworkManager.leave()
+	SceneManager.change_scene("network_end")
+
+#endregion
