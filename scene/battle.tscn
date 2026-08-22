@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://cd75b48elqqwh" path="res://assets/img/battle/battle_back.png" id="2_i5dg4"]
 [ext_resource type="PackedScene" uid="uid://bf1ue0skklj1g" path="res://components/battle/UI/status_display/status_display_manager.tscn" id="4_bdn7b"]
 [ext_resource type="PackedScene" uid="uid://cy4rgcqbyc4ge" path="res://components/battle/UI/hand_direction_selector.tscn" id="4_ebedk"]
+[ext_resource type="Theme" uid="uid://dypnltbwc3th8" path="res://style/main_theme.tres" id="4_ef046"]
 [ext_resource type="PackedScene" uid="uid://cdxnpgagyoseg" path="res://components/battle/UI/aiko_countor.tscn" id="4_ougy3"]
 [ext_resource type="PackedScene" uid="uid://c60a272ko1nji" path="res://components/battle/UI/action_selector.tscn" id="5_q27o7"]
 [ext_resource type="PackedScene" uid="uid://d4iuywgjlx57e" path="res://components/battle/janken_result/janken_result.tscn" id="7_6qw66"]
@@ -34,14 +35,17 @@ texture = ExtResource("2_i5dg4")
 [node name="LeftTurnTimer" parent="StatusLayer" unique_id=875117996 instance=ExtResource("1_afp2b")]
 offset_right = 0.0
 offset_bottom = 0.0
+theme = ExtResource("4_ef046")
 
 [node name="AikoCountor" parent="StatusLayer" unique_id=2109178687 instance=ExtResource("4_ougy3")]
 offset_left = 6.0
 offset_top = 104.0
 offset_right = 6.0
 offset_bottom = 104.0
+theme = ExtResource("4_ef046")
 
 [node name="StatusDisplayManager" parent="StatusLayer" unique_id=347625047 instance=ExtResource("4_bdn7b")]
+theme = ExtResource("4_ef046")
 
 [node name="SelectorLayer" type="CanvasLayer" parent="." unique_id=1361772322]
 
@@ -54,6 +58,7 @@ offset_left = 505.0
 offset_top = 437.0
 offset_right = 545.0
 offset_bottom = 477.0
+theme = ExtResource("4_ef046")
 
 [node name="CharaManager" parent="." unique_id=753385096 instance=ExtResource("7_bdn7b")]
 

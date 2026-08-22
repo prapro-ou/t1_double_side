@@ -1,0 +1,6 @@
+[gd_resource type="Theme" format=3 uid="uid://dypnltbwc3th8"]
+
+[ext_resource type="FontFile" uid="uid://bhjt6e43lwibs" path="res://assets/font/BestTen/BestTen-CRT.otf" id="1_epe5a"]
+
+[resource]
+default_font = ExtResource("1_epe5a")

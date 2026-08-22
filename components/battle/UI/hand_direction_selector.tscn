@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://cweg6b12gyu3r" path="res://script/battle/battle_ui_layer/label_manager.gd" id="2_7nlhr"]
 [ext_resource type="Script" uid="uid://ckmc1nhvv74fd" path="res://script/battle/battle_ui_layer/hands.gd" id="2_grkbq"]
 [ext_resource type="Texture2D" uid="uid://dpv462q1g51u8" path="res://assets/img/battle/janken/zyanken_gu.png" id="3_7nlhr"]
+[ext_resource type="Theme" uid="uid://dypnltbwc3th8" path="res://style/main_theme.tres" id="3_xq10k"]
 [ext_resource type="Texture2D" uid="uid://bciowm6nc3gxs" path="res://assets/img/battle/janken/zyanken_choki.png" id="4_xq10k"]
 [ext_resource type="Texture2D" uid="uid://b88anjwtqorla" path="res://assets/img/battle/janken/zyanken_pa.png" id="5_ksw2j"]
 [ext_resource type="PackedScene" uid="uid://brcer8xgg1l7k" path="res://components/battle/arrow.tscn" id="6_qms7f"]
@@ -43,6 +44,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("3_xq10k")
 theme_override_font_sizes/font_size = 40
 text = "じゃんけんの手をドラッグで選べ！"
 horizontal_alignment = 1

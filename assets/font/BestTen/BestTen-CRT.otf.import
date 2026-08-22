@@ -30,7 +30,14 @@ Fallbacks=null
 fallbacks=[]
 Compress=null
 compress=true
-preload=[]
+preload=[{
+"chars": [],
+"glyphs": [],
+"name": "新しい構成",
+"size": Vector2i(16, 0)
+}]
 language_support={}
 script_support={}
-opentype_features={}
+opentype_features={
+1818847073: 0
+}
