@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://5jtw0llkg8a3" path="res://assets/img/battle/effect/cutin/cutin_guard_dot.png" id="1_khsfy"]
 [ext_resource type="Script" uid="uid://b7eig45q8s15x" path="res://data/chara/guard_man_data.gd" id="1_lrfbf"]
+[ext_resource type="Texture2D" uid="uid://54ixcu8mqac2" path="res://assets/img/chara_select/button/guardman_button.png" id="2_0xvwr"]
 [ext_resource type="Texture2D" uid="uid://crtdygiectfd3" path="res://assets/img/chara/guard_man/guard_man.png" id="2_lrfbf"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_iy8go"]
@@ -22,6 +23,7 @@ catchphrase_fail_damage_taken_rate = 1.5
 id = &"guard_man"
 sprite_frames = SubResource("SpriteFrames_iy8go")
 cutin = ExtResource("1_khsfy")
+icon = ExtResource("2_0xvwr")
 display_name = "guard_man"
 max_hp = 120
 max_mp = 50

@@ -21,6 +21,7 @@ border_width_bottom = 3
 script = ExtResource("1_xf7mx")
 
 [node name="LabelManager" type="Control" parent="." unique_id=595193116]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1152.0

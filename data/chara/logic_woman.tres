@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dtod6vps85ylk" path="res://assets/img/battle/effect/cutin/cutin_logic_dot.png" id="1_dwjlo"]
 [ext_resource type="Script" uid="uid://fbmos72hbvj" path="res://data/chara/logic_woman_data.gd" id="1_nd3lw"]
+[ext_resource type="Texture2D" uid="uid://c246as2if25df" path="res://assets/img/chara_select/button/logicwoman_button.png" id="2_05tna"]
 [ext_resource type="Texture2D" uid="uid://cod0vb27mbncq" path="res://assets/img/chara/logic_woman/logic_woman.png" id="2_nd3lw"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_850mp"]
@@ -21,6 +22,7 @@ skill_counter_damage_rate = 1.5
 id = &"logic_woman"
 sprite_frames = SubResource("SpriteFrames_850mp")
 cutin = ExtResource("1_dwjlo")
+icon = ExtResource("2_05tna")
 display_name = "logic_woman"
 max_hp = 100
 max_mp = 50
