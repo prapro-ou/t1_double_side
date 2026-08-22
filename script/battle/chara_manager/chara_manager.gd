@@ -16,6 +16,6 @@ func set_chara(host_chara:CharaData, join_chara:CharaData) -> void:
 func play_damage(target:BattleEnum.Player,damage:int) -> void:
 	_chara_of(target).play_damage(damage)
 
-## MPが増えた側のキャラに数字を出す。演出の終わりはbattle.gdのwait_mp_effect()で待つ
+## MPが増えた側のキャラに数字を出す
 func play_mp(target:BattleEnum.Player,mp:int) -> void:
 	_chara_of(target).play_mp(mp)
