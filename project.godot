@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 NetworkManager="*uid://cg4bfr1587pao"
 SceneManager="*uid://b7ntcfjs3qn3l"
 GameSession="*uid://d2rxnfbic8eo5"
+DecidedSePlayer="*uid://b3e51wf478eav"
 
 [display]
 

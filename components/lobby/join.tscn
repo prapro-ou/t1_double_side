@@ -5,6 +5,7 @@
 [ext_resource type="Theme" uid="uid://d1vexbsw5gkt7" path="res://style/matching_theme.tres" id="1_lquhe"]
 [ext_resource type="Script" uid="uid://il4o8ggudrtl" path="res://script/lobby/join/matching_join.gd" id="4_ihvfl"]
 [ext_resource type="Texture2D" uid="uid://kbbikhw2wmg0" path="res://assets/img/chara_select/window.png" id="5_qv3md"]
+[ext_resource type="AudioStream" uid="uid://b340kimf5bvq6" path="res://assets/sound/SE/UI/beep4.mp3" id="6_w33iv"]
 
 [node name="Join" type="Control" unique_id=1036284993]
 layout_mode = 3
@@ -74,6 +75,9 @@ anchor_right = 0.15
 anchor_bottom = 0.1
 theme = ExtResource("1_lquhe")
 text = "タイトルに戻る"
+
+[node name="ErrorSE" type="AudioStreamPlayer" parent="JoinRoom" unique_id=332209312]
+stream = ExtResource("6_w33iv")
 
 [node name="Matching" type="Control" parent="." unique_id=671739575]
 layout_mode = 1

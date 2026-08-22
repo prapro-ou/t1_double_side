@@ -5,9 +5,11 @@ extends Node2D
 
 func _on_host_button_pressed() -> void:
 	NetworkManager.is_host = true;
+	DecidedSePlayer.play()
 	SceneManager.change_scene("lobby")
 
 
 func _on_join_button_pressed() -> void:
 	NetworkManager.is_host = false;
+	DecidedSePlayer.play()
 	SceneManager.change_scene("lobby")

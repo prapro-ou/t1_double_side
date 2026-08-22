@@ -6,6 +6,8 @@ signal success_build(roomname:String)
 @onready var room_edit_node:LineEdit = $RoomEdit
 @onready var button_node:Button = $Button
 
+@onready var error_se_node:AudioStreamPlayer = $ErrorSE
+
 var _roomname:String = ""
 
 func signal_disconnect() -> void:
@@ -32,10 +34,12 @@ func _on_room_created() -> void:
 
 func _on_signaling_error(message:String) -> void:
 	print(message)
+	error_se_node.play()
 	signal_disconnect()
 
 
 func _on_back_button_pressed() -> void:
 	signal_disconnect()
+	DecidedSePlayer.play()
 	NetworkManager.leave()
 	SceneManager.change_scene("title")
