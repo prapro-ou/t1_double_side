@@ -1,9 +1,11 @@
 [gd_scene format=3 uid="uid://dc2os171cno2i"]
 
 [ext_resource type="Script" uid="uid://b8cwgcpixbhux" path="res://script/chara_select/chara_select.gd" id="1_sthoc"]
-[ext_resource type="Texture2D" uid="uid://bbhkgt1u5ywan" path="res://assets/img/chara_select/button/sampleA_button.png" id="2_e55c8"]
-[ext_resource type="Texture2D" uid="uid://b1uijsfavq51d" path="res://assets/img/chara_select/button/sampleB_button.png" id="3_dfqo2"]
-[ext_resource type="Texture2D" uid="uid://lyg8knh2dhia" path="res://assets/img/chara_select/button/sampleC_button.png" id="4_gpwxx"]
+[ext_resource type="Texture2D" uid="uid://be57us3u3ghqo" path="res://assets/img/chara_select/button/fireman_button.png" id="2_e55c8"]
+[ext_resource type="Texture2D" uid="uid://hphbpo3yhq3y" path="res://assets/img/chara_select/chara_select_back.png" id="2_gpwxx"]
+[ext_resource type="Texture2D" uid="uid://54ixcu8mqac2" path="res://assets/img/chara_select/button/guardman_button.png" id="3_e55c8"]
+[ext_resource type="Texture2D" uid="uid://c246as2if25df" path="res://assets/img/chara_select/button/logicwoman_button.png" id="4_e55c8"]
+[ext_resource type="Texture2D" uid="uid://kbbikhw2wmg0" path="res://assets/img/chara_select/window.png" id="5_dfqo2"]
 
 [node name="CharaSelect" type="Node2D" unique_id=472852071]
 script = ExtResource("1_sthoc")
@@ -18,57 +20,93 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="Back" type="TextureRect" parent="CanvasLayer/Control" unique_id=1129786126]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_gpwxx")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="CharaA" type="TextureButton" parent="CanvasLayer/Control" unique_id=1747418117]
 layout_mode = 0
 offset_left = 200.0
-offset_top = 400.0
+offset_top = 463.0
 offset_right = 500.0
-offset_bottom = 700.0
+offset_bottom = 763.0
 scale = Vector2(0.5, 0.5)
 texture_normal = ExtResource("2_e55c8")
+stretch_mode = 5
 
 [node name="CharaB" type="TextureButton" parent="CanvasLayer/Control" unique_id=1156883824]
 layout_mode = 0
 offset_left = 500.0
-offset_top = 400.0
+offset_top = 463.0
 offset_right = 800.0
-offset_bottom = 700.0
+offset_bottom = 763.0
 scale = Vector2(0.5, 0.5)
-texture_normal = ExtResource("3_dfqo2")
+texture_normal = ExtResource("3_e55c8")
+stretch_mode = 5
 
 [node name="CharaC" type="TextureButton" parent="CanvasLayer/Control" unique_id=1615954830]
 layout_mode = 0
 offset_left = 800.0
-offset_top = 400.0
+offset_top = 463.0
 offset_right = 1100.0
-offset_bottom = 700.0
+offset_bottom = 763.0
 scale = Vector2(0.5, 0.5)
-texture_normal = ExtResource("4_gpwxx")
+texture_normal = ExtResource("4_e55c8")
+stretch_mode = 5
 
 [node name="Preview" type="TextureRect" parent="CanvasLayer/Control" unique_id=746959523]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="NameLabel" type="Label" parent="CanvasLayer/Control" unique_id=255962709]
-layout_mode = 0
-offset_left = 300.0
-offset_top = 50.0
-offset_right = 340.0
-offset_bottom = 73.0
-theme_override_font_sizes/font_size = 50
+[node name="NameBack" type="TextureRect" parent="CanvasLayer/Control" unique_id=1193446771]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.3
+anchor_top = 0.05
+anchor_right = 0.9
+anchor_bottom = 0.6
+texture = ExtResource("5_dfqo2")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="DecisionLabel" type="Label" parent="CanvasLayer/Control" unique_id=164115708]
-layout_mode = 0
-offset_left = 300.0
-offset_top = 50.0
-offset_right = 340.0
-offset_bottom = 73.0
-theme_override_font_sizes/font_size = 50
+[node name="NameLabel" type="Label" parent="CanvasLayer/Control/NameBack" unique_id=255962709]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.15
+anchor_top = 0.3
+anchor_right = 0.85
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 45
+
+[node name="DecisionLabel" type="Label" parent="CanvasLayer/Control/NameBack" unique_id=164115708]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.25
+anchor_right = 0.8
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 45
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="mouse_entered" from="CanvasLayer/Control/CharaA" to="." method="_on_chara_a_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/Control/CharaA" to="." method="_on_chara_a_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/Control/CharaA" to="." method="_on_chara_a_pressed"]
 [connection signal="mouse_entered" from="CanvasLayer/Control/CharaB" to="." method="_on_chara_b_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/Control/CharaB" to="." method="_on_chara_b_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/Control/CharaB" to="." method="_on_chara_b_pressed"]
 [connection signal="mouse_entered" from="CanvasLayer/Control/CharaC" to="." method="_on_chara_c_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/Control/CharaC" to="." method="_on_chara_c_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/Control/CharaC" to="." method="_on_chara_c_pressed"]
