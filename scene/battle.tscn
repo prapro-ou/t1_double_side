@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://0u74phe0vex0" path="res://components/battle/effect/cutin_effect.tscn" id="11_yyook"]
 [ext_resource type="Script" uid="uid://df16skosat303" path="res://script/battle/battle_status.gd" id="12_5mh2w"]
 [ext_resource type="PackedScene" uid="uid://dn0oa4g78angg" path="res://components/battle/effect/attack_effect.tscn" id="12_o18kk"]
+[ext_resource type="PackedScene" uid="uid://dng3ctjwp5o2r" path="res://components/battle/effect/skill_effect.tscn" id="15_x478g"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_0okv5"]
 
@@ -75,6 +76,10 @@ visible = false
 visible = false
 
 [node name="AttackEffect" parent="EffectManager" unique_id=712347959 instance=ExtResource("12_o18kk")]
+
+[node name="SkillEffect" parent="EffectManager" unique_id=738127386 instance=ExtResource("15_x478g")]
+visible = false
+position = Vector2(-20, 325)
 
 [node name="BattleStatus" type="Node" parent="." unique_id=1341326645]
 script = ExtResource("12_5mh2w")

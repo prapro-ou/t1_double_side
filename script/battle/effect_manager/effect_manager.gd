@@ -4,11 +4,13 @@ const JankenResult = preload("res://script/battle/janken_result/janken_result.gd
 const HoiResult = preload("res://script/battle/hoi_result/hoi_result.gd")
 const CutinEffect = preload("res://script/battle/effect_manager/cutin_effect.gd")
 const AttackEffect = preload("res://script/battle/attack_effect/attack_effect.gd")
+const SkillEffect = preload("res://script/battle/skill_effect/skill_effect.gd")
 
 @onready var janken_result_node:JankenResult = $JankenResult
 @onready var hoi_result_node:HoiResult = $HoiResult
 @onready var cutin_effect_node:CutinEffect = $CutinEffect
 @onready var attack_effect_node:AttackEffect = $AttackEffect
+@onready var skill_effect_node:SkillEffect = $SkillEffect
 
 func show_janken(host_hand:BattleEnum.Hand,join_hand:BattleEnum.Hand) ->void:
 	if GameSession.is_self(BattleEnum.Player.HOST):
@@ -44,3 +46,7 @@ func play_attack(attacker:BattleEnum.Player) -> void:
 
 func play_guard(attacker:BattleEnum.Player) -> void:
 	await attack_effect_node.play_guard(attacker == GameSession.get_self_player())
+
+func play_skill_effect(user:BattleEnum.Player,chara:CharaData) -> void:
+	var user_is_player:bool = (user == GameSession.get_self_player())
+	await skill_effect_node.play_skill_effect(user_is_player,chara)

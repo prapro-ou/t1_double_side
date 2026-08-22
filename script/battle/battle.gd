@@ -541,6 +541,8 @@ func handle_skill(user:BattleEnum.Player, chara:CharaData) -> void:
 		&"logic_woman":
 			battle_status_node.add_pending_flag(user,BattleEnum.PendingFlag.LOGIC_SK_COUNTER)
 
+	await effect_manager_node.play_skill_effect(user,chara)
+
 
 ## 決め台詞に関する処理
 func handle_catchphrase(user:BattleEnum.Player, chara:CharaData) -> void:

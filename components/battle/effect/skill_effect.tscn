@@ -1,0 +1,83 @@
+[gd_scene format=3 uid="uid://dng3ctjwp5o2r"]
+
+[ext_resource type="Script" uid="uid://yw7hikfwyule" path="res://script/battle/skill_effect/skill_effect.gd" id="1_ok01a"]
+[ext_resource type="Texture2D" uid="uid://y2solwb3a2le" path="res://assets/img/battle/effect/cutin/cutin_label_back.png" id="1_tay10"]
+[ext_resource type="Texture2D" uid="uid://be57us3u3ghqo" path="res://assets/img/chara_select/button/fireman_button.png" id="2_05kpy"]
+[ext_resource type="Theme" uid="uid://dypnltbwc3th8" path="res://style/main_theme.tres" id="2_t4gsi"]
+
+[sub_resource type="Animation" id="Animation_t4gsi"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Back:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ok01a"]
+resource_name = "slide_in"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Back:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-1000, 0), Vector2(75, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_t4gsi"]
+_data = {
+&"RESET": SubResource("Animation_t4gsi"),
+&"slide_in": SubResource("Animation_ok01a")
+}
+
+[node name="SkillEffect" type="Node2D" unique_id=738127386]
+script = ExtResource("1_ok01a")
+
+[node name="Back" type="TextureRect" parent="." unique_id=47452071]
+offset_right = 1000.0
+offset_bottom = 250.0
+theme = ExtResource("2_t4gsi")
+texture = ExtResource("1_tay10")
+
+[node name="Label" type="Label" parent="Back" unique_id=1863192165]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.25
+anchor_top = 0.2
+anchor_right = 0.9
+anchor_bottom = 0.8
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = "あなたのスキル発動！
+次にじゃんけん勝ったとき2回あっち向いてホイを行う"
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Icon" type="TextureRect" parent="Back" unique_id=2146723062]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.2
+anchor_right = 0.2
+anchor_bottom = 0.6
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_05kpy")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1299095070]
+libraries/ = SubResource("AnimationLibrary_t4gsi")
