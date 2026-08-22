@@ -30,6 +30,7 @@ anchor_left = 0.4
 anchor_top = 0.35
 anchor_right = 0.6
 anchor_bottom = 0.45
+theme = ExtResource("2_d32vm")
 placeholder_text = "あなたの名前"
 
 [node name="RoomEdit" type="LineEdit" parent="BuildRoom" unique_id=1533495068]
@@ -39,6 +40,7 @@ anchor_left = 0.4
 anchor_top = 0.5
 anchor_right = 0.6
 anchor_bottom = 0.6
+theme = ExtResource("2_d32vm")
 placeholder_text = "キーワード"
 
 [node name="Button" type="Button" parent="BuildRoom" unique_id=395361187]
