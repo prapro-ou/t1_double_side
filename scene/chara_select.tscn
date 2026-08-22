@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://dc2os171cno2i"]
 
 [ext_resource type="Script" uid="uid://b8cwgcpixbhux" path="res://script/chara_select/chara_select.gd" id="1_sthoc"]
-[ext_resource type="Texture2D" uid="uid://bbhkgt1u5ywan" path="res://assets/img/chara_select/button/sampleA_button.png" id="2_e55c8"]
-[ext_resource type="Texture2D" uid="uid://b1uijsfavq51d" path="res://assets/img/chara_select/button/sampleB_button.png" id="3_dfqo2"]
-[ext_resource type="Texture2D" uid="uid://lyg8knh2dhia" path="res://assets/img/chara_select/button/sampleC_button.png" id="4_gpwxx"]
+[ext_resource type="Texture2D" uid="uid://be57us3u3ghqo" path="res://assets/img/chara_select/button/fireman_button.png" id="2_e55c8"]
+[ext_resource type="Texture2D" uid="uid://54ixcu8mqac2" path="res://assets/img/chara_select/button/guardman_button.png" id="3_e55c8"]
+[ext_resource type="Texture2D" uid="uid://c246as2if25df" path="res://assets/img/chara_select/button/logicwoman_button.png" id="4_e55c8"]
 
 [node name="CharaSelect" type="Node2D" unique_id=472852071]
 script = ExtResource("1_sthoc")
@@ -26,6 +26,7 @@ offset_right = 500.0
 offset_bottom = 700.0
 scale = Vector2(0.5, 0.5)
 texture_normal = ExtResource("2_e55c8")
+stretch_mode = 5
 
 [node name="CharaB" type="TextureButton" parent="CanvasLayer/Control" unique_id=1156883824]
 layout_mode = 0
@@ -34,7 +35,8 @@ offset_top = 400.0
 offset_right = 800.0
 offset_bottom = 700.0
 scale = Vector2(0.5, 0.5)
-texture_normal = ExtResource("3_dfqo2")
+texture_normal = ExtResource("3_e55c8")
+stretch_mode = 5
 
 [node name="CharaC" type="TextureButton" parent="CanvasLayer/Control" unique_id=1615954830]
 layout_mode = 0
@@ -43,7 +45,8 @@ offset_top = 400.0
 offset_right = 1100.0
 offset_bottom = 700.0
 scale = Vector2(0.5, 0.5)
-texture_normal = ExtResource("4_gpwxx")
+texture_normal = ExtResource("4_e55c8")
+stretch_mode = 5
 
 [node name="Preview" type="TextureRect" parent="CanvasLayer/Control" unique_id=746959523]
 layout_mode = 0

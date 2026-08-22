@@ -10,6 +10,12 @@ extends Node2D
 
 var selected = false
 
+var preview_list:Dictionary[String,Texture2D] = {
+	"fire_man":preload("res://assets/img/chara/fire_man/fire_man.png"),
+	"guard_man":preload("res://assets/img/chara/guard_man/guard_man.png"),
+	"logic_woman":preload("res://assets/img/chara/logic_woman/logic_woman.png")
+}
+
 func _ready() -> void:
 	name_label.text = ""
 	decision_label.text = ""
@@ -18,7 +24,7 @@ func show_chara(button: TextureButton, name: String) -> void:
 	if selected:
 		return
 
-	preview.texture = button.texture_normal
+	preview.texture = preview_list[name]
 	name_label.text = name
 
 func submit_selection(chara_id) -> void:
@@ -49,13 +55,13 @@ func clear_preview() -> void:
 # -------------------
 
 func _on_chara_a_mouse_entered() -> void:
-	show_chara(chara_a, "sampleA")
+	show_chara(chara_a, "fire_man")
 
 func _on_chara_b_mouse_entered() -> void:
-	show_chara(chara_b, "sampleB")
+	show_chara(chara_b, "guard_man")
 
 func _on_chara_c_mouse_entered() -> void:
-	show_chara(chara_c, "sampleC")
+	show_chara(chara_c, "logic_woman")
 
 # -------------------
 # マウスが離れたとき
