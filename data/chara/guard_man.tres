@@ -33,4 +33,5 @@ skill_description = "次にじゃんけん負けたとき、2方向をガード�
 catchphrase = "「君の攻撃...生っちょろくて防ぐ気にもならんな」"
 catchphrase_description = "成功時　永続で防御力が上がる
 失敗時　永続で防御力が下がる"
+winner_text = "「次はもっと強い武器でも持ってくるんだな」"
 metadata/_custom_type_script = "uid://cm6i8gc0va1ic"

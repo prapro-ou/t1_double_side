@@ -84,8 +84,8 @@ _data = {
 
 [node name="CutinEffect" type="Node2D" unique_id=839558847]
 script = ExtResource("1_b11d6")
-catchphrase_fontsize = 55
-description_fontsize = 40
+catchphrase_fontsize = 50
+description_fontsize = 35
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=368483692]
 offset_left = -82.0
@@ -120,7 +120,7 @@ anchor_bottom = 0.75
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("4_jbfr3")
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 40
 text = "テストメッセージ"
 vertical_alignment = 1
 autowrap_mode = 1

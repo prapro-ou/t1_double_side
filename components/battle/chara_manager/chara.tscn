@@ -333,3 +333,4 @@ libraries/ = SubResource("AnimationLibrary_1wcdj")
 
 [node name="DeadSE" type="AudioStreamPlayer" parent="." unique_id=1300711414]
 stream = ExtResource("7_g05hg")
+volume_db = -10.0
