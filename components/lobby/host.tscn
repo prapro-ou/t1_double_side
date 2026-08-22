@@ -37,9 +37,9 @@ script = ExtResource("2_pre1e")
 [node name="NameEdit" type="LineEdit" parent="BuildRoom" unique_id=1656386690]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.4
+anchor_left = 0.3
 anchor_top = 0.35
-anchor_right = 0.6
+anchor_right = 0.7
 anchor_bottom = 0.45
 theme = ExtResource("2_d32vm")
 placeholder_text = "あなたの名前"
@@ -47,9 +47,9 @@ placeholder_text = "あなたの名前"
 [node name="RoomEdit" type="LineEdit" parent="BuildRoom" unique_id=1533495068]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.4
+anchor_left = 0.3
 anchor_top = 0.5
-anchor_right = 0.6
+anchor_right = 0.7
 anchor_bottom = 0.6
 theme = ExtResource("2_d32vm")
 placeholder_text = "キーワード"
