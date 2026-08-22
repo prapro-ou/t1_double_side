@@ -1,5 +1,8 @@
 [gd_resource type="Theme" format=3 uid="uid://d1vexbsw5gkt7"]
 
+[ext_resource type="FontFile" uid="uid://bhjt6e43lwibs" path="res://assets/font/BestTen/BestTen-CRT.otf" id="1_0kxee"]
+
 [resource]
+default_font = ExtResource("1_0kxee")
 LobbyLabel/base_type = &"Label"
 LobbyLabel/font_sizes/font_size = 30

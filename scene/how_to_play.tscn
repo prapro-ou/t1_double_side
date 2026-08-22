@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://ddx487vab2bnl"]
 
+[ext_resource type="Theme" uid="uid://d1vexbsw5gkt7" path="res://style/matching_theme.tres" id="1_buh0k"]
 [ext_resource type="Script" uid="uid://bx0v2f2grd1ry" path="res://script/how_to_play/how_to_play.gd" id="1_uvb5p"]
 [ext_resource type="Texture2D" uid="uid://c085ce2x84cwb" path="res://assets/img/how_to_play/how_to_play1.png" id="2_s68b3"]
 [ext_resource type="Texture2D" uid="uid://cbrb7gui0i4ro" path="res://assets/img/how_to_play/how_to_play2.png" id="3_v1860"]
@@ -20,6 +21,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_buh0k")
 script = ExtResource("1_uvb5p")
 pages = Array[Texture2D]([ExtResource("2_s68b3"), ExtResource("3_v1860"), ExtResource("4_wuiup"), ExtResource("5_yqjcd"), ExtResource("6_dxfv5")])
 title_scene_path = "res://scene/title.tscn"
