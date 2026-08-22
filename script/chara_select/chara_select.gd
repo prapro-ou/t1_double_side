@@ -9,6 +9,8 @@ extends Node2D
 @onready var chara_b = $CanvasLayer/Control/CharaB
 @onready var chara_c = $CanvasLayer/Control/CharaC
 
+@onready var se_player_node:AudioStreamPlayer = $SEPlayer
+
 var selected = false
 
 var preview_list:Dictionary[StringName,Texture2D] = {
@@ -60,6 +62,8 @@ func decide_chara(button: TextureButton, chara_id: StringName) -> void:
 	name_label.text = ""
 	
 	decision_label.text = CharaDB.get_data(chara_id).display_name + "に決定！" + "\n対戦相手の選択を待機中..."
+	
+	se_player_node.play()
 	
 	await get_tree().create_timer(1).timeout
 	

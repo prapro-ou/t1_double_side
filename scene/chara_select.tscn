@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://c246as2if25df" path="res://assets/img/chara_select/button/logicwoman_button.png" id="4_e55c8"]
 [ext_resource type="Texture2D" uid="uid://kbbikhw2wmg0" path="res://assets/img/chara_select/window.png" id="5_dfqo2"]
 [ext_resource type="Theme" uid="uid://dypnltbwc3th8" path="res://style/main_theme.tres" id="7_u6pft"]
+[ext_resource type="AudioStream" uid="uid://qk4tqui8quck" path="res://assets/sound/SE/UI/button31.mp3" id="8_0o6lo"]
 
 [node name="CharaSelect" type="Node2D" unique_id=472852071]
 script = ExtResource("1_sthoc")
@@ -103,6 +104,9 @@ theme = ExtResource("7_u6pft")
 theme_override_font_sizes/font_size = 42
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="SEPlayer" type="AudioStreamPlayer" parent="." unique_id=1025830003]
+stream = ExtResource("8_0o6lo")
 
 [connection signal="mouse_entered" from="CanvasLayer/Control/CharaA" to="." method="_on_chara_a_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/Control/CharaA" to="." method="_on_chara_a_mouse_exited"]

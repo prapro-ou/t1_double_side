@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://0bvilmphoo1m" path="res://script/lobby/host/build_room.gd" id="2_pre1e"]
 [ext_resource type="Script" uid="uid://p7lt84om2k36" path="res://script/lobby/host/matching_host.gd" id="4_3xxnu"]
 [ext_resource type="Texture2D" uid="uid://kbbikhw2wmg0" path="res://assets/img/chara_select/window.png" id="5_6o8wj"]
+[ext_resource type="AudioStream" uid="uid://b340kimf5bvq6" path="res://assets/sound/SE/UI/beep4.mp3" id="5_v1h2n"]
 
 [node name="Host" type="Control" unique_id=572982460]
 layout_mode = 3
@@ -74,6 +75,9 @@ anchor_right = 0.15
 anchor_bottom = 0.1
 theme = ExtResource("2_d32vm")
 text = "タイトルに戻る"
+
+[node name="ErrorSE" type="AudioStreamPlayer" parent="BuildRoom" unique_id=1829571957]
+stream = ExtResource("5_v1h2n")
 
 [node name="Matching" type="Control" parent="." unique_id=1048745695]
 layout_mode = 1

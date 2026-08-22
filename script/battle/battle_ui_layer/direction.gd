@@ -8,6 +8,9 @@ const INDEX_TO_DIRECTION := [BattleEnum.Direction.UP, BattleEnum.Direction.LEFT,
 
 @onready var arrow_node:SelectArrow = $DirectionArrow
 
+@onready var se_player_node:AudioStreamPlayer = $SEPlayer
+@onready var error_se_node:AudioStreamPlayer = $ErrorSE
+
 ## 今回の選択で選ぶ方向の数
 var required_count:int = 1
 
@@ -25,8 +28,10 @@ func start_select(count:int) -> void:
 func _on_direction_arrow_selected(index: int) -> void:
 	var direction:BattleEnum.Direction = INDEX_TO_DIRECTION[index]
 	if selected_directions.has(direction):
+		error_se_node.play()
 		return
 	
+	se_player_node.play()
 	selected_directions.append(direction)
 	
 	if selected_directions.size() < required_count:

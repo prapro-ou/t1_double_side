@@ -60,4 +60,5 @@ func _on_start_button_pressed() -> void:
 		_reset_to_waiting()
 		return
 	_set_start_enabled(false)
+	DecidedSePlayer.play()
 	GameSession.start_game.rpc()

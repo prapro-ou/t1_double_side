@@ -15,6 +15,8 @@ signal catchphrase_selected()
 @onready var catchphrase_name_label: Label = $VBoxContainer/CatchphraseNameLabel
 @onready var catchphrase_description_label: Label = $VBoxContainer/CatchphraseDescriptionLabel
 
+@onready var se_play:AudioStreamPlayer = $AudioStreamPlayer
+
 func _ready() -> void:
 	# 最初は親コンテナを隠しておく
 	skill_info_container.hide()
@@ -78,10 +80,13 @@ func _on_catchphrase_button_unhover() -> void:
 
 # --- ボタン押下時 ---
 func _on_attack_button_pressed() -> void:
+	se_play.play()
 	attack_selected.emit()
 
 func _on_skill_button_pressed() -> void:
+	se_play.play()
 	skill_selected.emit()
 
 func _on_catchphrase_button_pressed() -> void:
+	se_play.play()
 	catchphrase_selected.emit()

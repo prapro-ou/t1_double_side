@@ -5,6 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://ci80mr1mmgh8r" path="res://assets/img/chara/sampleB/sampleB.png" id="3_in8mb"]
 [ext_resource type="Texture2D" uid="uid://b7m4u1m1wtghn" path="res://assets/img/chara/sampleC/sampleC.png" id="4_u7gxe"]
 [ext_resource type="Theme" uid="uid://dypnltbwc3th8" path="res://style/main_theme.tres" id="5_45trt"]
+[ext_resource type="AudioStream" uid="uid://b43j2jm5fu655" path="res://assets/sound/SE/battle/attack2.mp3" id="6_1wcdj"]
+[ext_resource type="AudioStream" uid="uid://b7jxv1hd6of3t" path="res://assets/sound/SE/battle/gong.mp3" id="7_g05hg"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ftf0i"]
 animations = [{
@@ -47,6 +49,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [0.0]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_7hnsl"]
 resource_name = "damage"
@@ -63,11 +77,71 @@ tracks/0/keys = {
 "update": 1,
 "values": [0.0, 50.0, -50.0, 50.0, -50.0, 0.0]
 }
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DamageSE")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("6_1wcdj")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/1/use_blend = true
+
+[sub_resource type="Animation" id="Animation_v1okc"]
+resource_name = "dead"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.50163877, 0.6, 0.7, 0.8, 0.9, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0.0, 50.0, -50.0, 50.0, -50.0, 0.0, 0.0, 50.0, -50.0, 50.0, -50.0, 50.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DamageParticles2D")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.13333334, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [false],
+"method": &"restart"
+}, {
+"args": [false],
+"method": &"restart"
+}]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_in8mb"]
 _data = {
 &"RESET": SubResource("Animation_in8mb"),
-&"damage": SubResource("Animation_7hnsl")
+&"damage": SubResource("Animation_7hnsl"),
+&"dead": SubResource("Animation_v1okc")
 }
 
 [sub_resource type="Gradient" id="Gradient_qt2lj"]
@@ -254,3 +328,8 @@ vertical_alignment = 1
 
 [node name="LabelAnim" type="AnimationPlayer" parent="." unique_id=714831946]
 libraries/ = SubResource("AnimationLibrary_1wcdj")
+
+[node name="DamageSE" type="AudioStreamPlayer" parent="." unique_id=861170268]
+
+[node name="DeadSE" type="AudioStreamPlayer" parent="." unique_id=1300711414]
+stream = ExtResource("7_g05hg")

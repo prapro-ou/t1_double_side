@@ -4,6 +4,8 @@ extends Node2D
 
 @onready var guard_shield_node:Sprite2D = $GuardShield
 
+@onready var guard_se_node:AudioStreamPlayer = $GuardSE
+
 enum Side{
 	PLAYER,
 	OPPONENT
@@ -31,6 +33,7 @@ func play_guard(player_is_attacker:bool) -> void:
 	guard_shield_node.visible = true
 	
 	await play_attack(player_is_attacker)
+	guard_se_node.play()
 	await get_tree().create_timer(1).timeout
 	
 	guard_shield_node.visible = false

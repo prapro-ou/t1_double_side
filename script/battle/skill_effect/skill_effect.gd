@@ -7,6 +7,8 @@ extends Node2D
 @onready var icon_node:TextureRect = $Back/Icon
 @onready var anim_node:AnimationPlayer = $AnimationPlayer
 
+@onready var cutin_se:AudioStreamPlayer = $CutinSE
+
 func generate_skill_text(is_player:bool) -> String:
 	if is_player:
 		return "あなたのスキル発動！"
@@ -23,6 +25,7 @@ func play_skill_effect(user_is_player:bool,chara:CharaData) -> void:
 	label_node.text = generate_skill_text(user_is_player)
 	icon_node.texture = chara.icon
 	
+	cutin_se.play()
 	anim_node.play("slide_in")
 	await  anim_node.animation_finished
 	

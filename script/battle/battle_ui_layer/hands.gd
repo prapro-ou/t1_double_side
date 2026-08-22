@@ -17,6 +17,8 @@ const INDEX_TO_HAND := [BattleEnum.Hand.GU, BattleEnum.Hand.CHOKI, BattleEnum.Ha
 
 @onready var arrow_node:SelectArrow = $JankenArrow
 
+@onready var se_player_node:AudioStreamPlayer = $SEPlayer
+
 ## 各手の元のスケール（拡大の基準）
 var _base_scales: Array[Vector2] = []
 
@@ -36,4 +38,5 @@ func _on_janken_arrow_charge_max_changed(index: int) -> void:
 
 
 func _on_janken_arrow_selected(index: int) -> void:
+	se_player_node.play()
 	hands_selected.emit(INDEX_TO_HAND[index])

@@ -267,6 +267,11 @@ func play_damage_effect(damage:int,attacker:BattleEnum.Player,target:BattleEnum.
 	
 	await get_tree().create_timer(AFTER_DAMAGE_EFFECT_TIME).timeout
 
+	# 倒れる演出はリザルトに移る前に見せきる。
+	# ホストもここで待つので、finish_battle()による画面遷移が演出を打ち切ることはない
+	if player_status_list[target].hp <= 0:
+		await chara_manager_node.play_dead(target)
+
 	advance_attack_step()
 
 

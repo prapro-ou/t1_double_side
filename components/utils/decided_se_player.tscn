@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://b3e51wf478eav"]
+
+[ext_resource type="AudioStream" uid="uid://qk4tqui8quck" path="res://assets/sound/SE/UI/button31.mp3" id="1_anscu"]
+
+[node name="DecidedSePlayer" type="AudioStreamPlayer" unique_id=798166086]
+stream = ExtResource("1_anscu")
