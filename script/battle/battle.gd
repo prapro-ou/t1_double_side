@@ -187,8 +187,9 @@ func start_attack_step() -> void:
 		return
 
 	#ガード側はguard_direction_countに合わせて
-	var count:int = guard_direction_count if GameSession.is_self(get_defender()) else 1
-	hand_direction_selector_node.start_direction(count)
+	var is_attacker:bool = GameSession.is_self(get_attacker())
+	var count:int = 1 if is_attacker else guard_direction_count
+	hand_direction_selector_node.start_direction(is_attacker,count)
 
 ## 攻撃1回分が終わったときに呼ぶ。
 ## 攻撃が残っていればあっち向いてホイからやり直し、残っていなければターンを終える
@@ -573,8 +574,11 @@ func _on_select_mode_completed(mode: BattleEnum.SelectMode, values: Dictionary) 
 			
 			hand_direction_selector_node.start_janken();
 		BattleEnum.SelectMode.HAND:
+			# 相手も選び終わったので「待機中」の表示を消す
+			hand_direction_selector_node.hide_label()
 			handle_janken()
 		BattleEnum.SelectMode.DIRECTION:
+			hand_direction_selector_node.hide_label()
 			handle_hoi()
 
 
