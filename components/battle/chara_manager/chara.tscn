@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bwyy1lg0olg4" path="res://assets/img/chara/fire_man/fire_man.png" id="2_qt2lj"]
 [ext_resource type="Texture2D" uid="uid://ci80mr1mmgh8r" path="res://assets/img/chara/sampleB/sampleB.png" id="3_in8mb"]
 [ext_resource type="Texture2D" uid="uid://b7m4u1m1wtghn" path="res://assets/img/chara/sampleC/sampleC.png" id="4_u7gxe"]
+[ext_resource type="Theme" uid="uid://dypnltbwc3th8" path="res://style/main_theme.tres" id="5_45trt"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ftf0i"]
 animations = [{
@@ -88,6 +89,120 @@ scale_max = 30.0
 color = Color(1, 1, 0, 1)
 color_ramp = SubResource("GradientTexture1D_45trt")
 
+[sub_resource type="Animation" id="Animation_1wcdj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DamageNum:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-102, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DamageNum:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MpNum:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("MpNum:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-102, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_45trt"]
+resource_name = "damage"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DamageNum:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-102, 0), Vector2(-102, -100), Vector2(-102, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DamageNum:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_g05hg"]
+resource_name = "mp"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MpNum:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-102, 0), Vector2(-102, -100), Vector2(-102, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MpNum:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1wcdj"]
+_data = {
+&"RESET": SubResource("Animation_1wcdj"),
+&"damage": SubResource("Animation_45trt"),
+&"mp": SubResource("Animation_g05hg")
+}
+
 [node name="CharaBase" type="Node2D" unique_id=1411314231]
 script = ExtResource("1_a6hc1")
 
@@ -106,3 +221,36 @@ lifetime = 0.5
 one_shot = true
 explosiveness = 0.8
 process_material = SubResource("ParticleProcessMaterial_qt2lj")
+
+[node name="DamageNum" type="Label" parent="." unique_id=939481024]
+visible = false
+anchors_preset = -1
+offset_left = -102.0
+offset_right = 104.0
+offset_bottom = 81.0
+theme = ExtResource("5_45trt")
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 40
+theme_override_font_sizes/font_size = 80
+text = "10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MpNum" type="Label" parent="." unique_id=36627762]
+visible = false
+anchors_preset = -1
+offset_left = -102.0
+offset_right = 130.0
+offset_bottom = 94.0
+theme = ExtResource("5_45trt")
+theme_override_colors/font_color = Color(2.3102762e-06, 0.71852314, 0.922845, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 30
+theme_override_font_sizes/font_size = 80
+text = "MP+10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LabelAnim" type="AnimationPlayer" parent="." unique_id=714831946]
+libraries/ = SubResource("AnimationLibrary_1wcdj")

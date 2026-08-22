@@ -35,7 +35,6 @@ texture = ExtResource("2_i5dg4")
 [node name="LeftTurnTimer" parent="StatusLayer" unique_id=875117996 instance=ExtResource("1_afp2b")]
 offset_right = 0.0
 offset_bottom = 0.0
-theme = ExtResource("4_ef046")
 
 [node name="AikoCountor" parent="StatusLayer" unique_id=2109178687 instance=ExtResource("4_ougy3")]
 offset_left = 6.0
