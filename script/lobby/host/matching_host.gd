@@ -6,6 +6,7 @@ const CONNECTING_TEXT:String = "接続中..."
 @onready var join_label_node:Label = $JoinLabel
 @onready var password_label_node:Label = $PasswordLabel
 @onready var start_button_node:Button = $StartButton
+@onready var back_button_node:Button = $BackButton
 
 ## シグナリングサーバーから通知されたピア名（WebRTC接続の確立前から入る）
 var peer_names:Dictionary[int,String] = {}
@@ -62,3 +63,11 @@ func _on_start_button_pressed() -> void:
 	_set_start_enabled(false)
 	DecidedSePlayer.play()
 	GameSession.start_game.rpc()
+
+func _on_back_button_pressed() -> void:
+	# 連打で退出処理が二重に走らないようにする
+	back_button_node.disabled = true
+	_set_start_enabled(false)
+	DecidedSePlayer.play()
+	# 黙って切断すると相手が通信エラー扱いになるので、退出を伝えてからタイトルに戻る
+	GameSession.leave_to_title()

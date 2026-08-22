@@ -73,8 +73,13 @@ anchor_left = 0.025
 anchor_top = 0.025
 anchor_right = 0.15
 anchor_bottom = 0.1
+offset_left = 893.2
+offset_top = 12.799999
+offset_right = 861.2
+offset_bottom = 45.199997
 theme = ExtResource("2_d32vm")
-text = "タイトルに戻る"
+text = "タイトルに
+戻る"
 
 [node name="ErrorSE" type="AudioStreamPlayer" parent="BuildRoom" unique_id=1829571957]
 stream = ExtResource("5_v1h2n")
@@ -139,7 +144,23 @@ theme = ExtResource("2_d32vm")
 theme_override_font_sizes/font_size = 25
 text = "ゲームを開始する"
 
+[node name="BackButton" type="Button" parent="Matching" unique_id=2013992182]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.025
+anchor_top = 0.025
+anchor_right = 0.15
+anchor_bottom = 0.1
+offset_left = 893.2
+offset_top = 12.799999
+offset_right = 861.2
+offset_bottom = 45.199997
+theme = ExtResource("2_d32vm")
+text = "タイトルに
+戻る"
+
 [connection signal="success_build" from="BuildRoom" to="." method="_on_build_room_success_build"]
 [connection signal="pressed" from="BuildRoom/Button" to="BuildRoom" method="_on_button_pressed"]
 [connection signal="pressed" from="BuildRoom/BackButton" to="BuildRoom" method="_on_back_button_pressed"]
 [connection signal="pressed" from="Matching/StartButton" to="Matching" method="_on_start_button_pressed"]
+[connection signal="pressed" from="Matching/BackButton" to="Matching" method="_on_back_button_pressed"]

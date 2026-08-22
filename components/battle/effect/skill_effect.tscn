@@ -61,11 +61,11 @@ anchor_right = 0.9
 anchor_bottom = 0.8
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 35
 text = "あなたのスキル発動！
 次にじゃんけん勝ったとき2回あっち向いてホイを行う"
 vertical_alignment = 1
-autowrap_mode = 2
+autowrap_mode = 1
 
 [node name="Icon" type="TextureRect" parent="Back" unique_id=2146723062]
 layout_mode = 1

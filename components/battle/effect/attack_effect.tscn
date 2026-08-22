@@ -163,3 +163,4 @@ texture = ExtResource("3_srwft")
 
 [node name="GuardSE" type="AudioStreamPlayer" parent="." unique_id=707633721]
 stream = ExtResource("4_c03fg")
+volume_db = -10.0

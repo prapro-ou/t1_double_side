@@ -73,8 +73,13 @@ anchor_left = 0.025
 anchor_top = 0.025
 anchor_right = 0.15
 anchor_bottom = 0.1
+offset_left = 895.2
+offset_top = 16.8
+offset_right = 862.2
+offset_bottom = 45.199997
 theme = ExtResource("1_lquhe")
-text = "タイトルに戻る"
+text = "タイトルに
+戻る"
 
 [node name="ErrorSE" type="AudioStreamPlayer" parent="JoinRoom" unique_id=332209312]
 stream = ExtResource("6_w33iv")
@@ -128,6 +133,22 @@ theme_override_font_sizes/font_size = 40
 text = "テスト"
 vertical_alignment = 1
 
+[node name="BackButton" type="Button" parent="Matching" unique_id=1623494760]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.025
+anchor_top = 0.025
+anchor_right = 0.15
+anchor_bottom = 0.1
+offset_left = 895.2
+offset_top = 16.8
+offset_right = 862.2
+offset_bottom = 45.199997
+theme = ExtResource("1_lquhe")
+text = "タイトルに
+戻る"
+
 [connection signal="success_join" from="JoinRoom" to="." method="_on_join_room_success_join"]
 [connection signal="pressed" from="JoinRoom/Button" to="JoinRoom" method="_on_button_pressed"]
 [connection signal="pressed" from="JoinRoom/BackButton" to="JoinRoom" method="_on_back_button_pressed"]
+[connection signal="pressed" from="Matching/BackButton" to="Matching" method="_on_back_button_pressed"]

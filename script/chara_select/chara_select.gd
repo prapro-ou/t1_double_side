@@ -20,7 +20,8 @@ var preview_list:Dictionary[StringName,Texture2D] = {
 }
 
 func _ready() -> void:
-	name_label.text = ""
+	name_back.show()
+	name_label.text = "アイコンをクリックして\nキャラを選択！"
 	decision_label.text = ""
 
 func show_chara(name: StringName) -> void:
@@ -73,9 +74,8 @@ func clear_preview() -> void:
 	if selected:
 		return
 
-	name_back.hide()
 	preview.texture = null
-	name_label.text = ""
+	name_label.text = "アイコンをクリックして\nキャラを選択！"
 
 # -------------------
 # マウスを乗せたとき
