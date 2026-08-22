@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cy4rgcqbyc4ge"]
 
 [ext_resource type="Script" uid="uid://b2sjkoxcqyr4t" path="res://script/battle/battle_ui_layer/hand_direction_selector.gd" id="1_xf7mx"]
+[ext_resource type="Script" uid="uid://cweg6b12gyu3r" path="res://script/battle/battle_ui_layer/label_manager.gd" id="2_7nlhr"]
 [ext_resource type="Script" uid="uid://ckmc1nhvv74fd" path="res://script/battle/battle_ui_layer/hands.gd" id="2_grkbq"]
 [ext_resource type="Texture2D" uid="uid://dpv462q1g51u8" path="res://assets/img/battle/janken/zyanken_gu.png" id="3_7nlhr"]
 [ext_resource type="Texture2D" uid="uid://bciowm6nc3gxs" path="res://assets/img/battle/janken/zyanken_choki.png" id="4_xq10k"]
@@ -8,8 +9,44 @@
 [ext_resource type="PackedScene" uid="uid://brcer8xgg1l7k" path="res://components/battle/arrow.tscn" id="6_qms7f"]
 [ext_resource type="Script" uid="uid://wbv5a06ryp3k" path="res://script/battle/battle_ui_layer/direction.gd" id="7_by5e4"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xf7mx"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+
 [node name="HandDirectionSelector" type="Node2D" unique_id=818577010]
 script = ExtResource("1_xf7mx")
+
+[node name="LabelManager" type="Control" parent="." unique_id=595193116]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+script = ExtResource("2_7nlhr")
+
+[node name="Panel" type="Panel" parent="LabelManager" unique_id=1639275246]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.4
+anchor_right = 0.8
+anchor_bottom = 0.6
+theme_override_styles/panel = SubResource("StyleBoxFlat_xf7mx")
+
+[node name="Label" type="Label" parent="LabelManager/Panel" unique_id=1891928985]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = "じゃんけんの手をドラッグで選べ！"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Hands" type="Node2D" parent="." unique_id=26319739]
 visible = false
@@ -46,4 +83,5 @@ snap_angles_deg = Array[float]([0.0, -90.0, 180.0, 90.0])
 [connection signal="charge_max_changed" from="Hands/JankenArrow" to="Hands" method="_on_janken_arrow_charge_max_changed"]
 [connection signal="selected" from="Hands/JankenArrow" to="Hands" method="_on_janken_arrow_selected"]
 [connection signal="direction_selected" from="Direction" to="." method="_on_direction_direction_selected"]
+[connection signal="progress_changed" from="Direction" to="." method="_on_direction_progress_changed"]
 [connection signal="selected" from="Direction/DirectionArrow" to="Direction" method="_on_direction_arrow_selected"]
