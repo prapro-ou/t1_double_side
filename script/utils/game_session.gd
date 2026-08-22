@@ -112,7 +112,6 @@ func chara_submit(chara_id: StringName) -> void:
 @rpc("authority", "call_local", "reliable")
 func _chara_apply(peer_id: int, chara_id: StringName) -> void:
 	chara_selections[peer_id] = chara_id
-	print(chara_selections)
 
 
 
