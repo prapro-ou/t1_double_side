@@ -19,3 +19,7 @@ func play_damage(target:BattleEnum.Player,damage:int) -> void:
 ## MPが増えた側のキャラに数字を出す
 func play_mp(target:BattleEnum.Player,mp:int) -> void:
 	_chara_of(target).play_mp(mp)
+
+## HPが0になった側のキャラを倒れさせる。演出が終わるまで待てる
+func play_dead(target:BattleEnum.Player) -> void:
+	await _chara_of(target).play_dead()

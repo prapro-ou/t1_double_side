@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://b8xe0pxlwb0e6" path="res://script/battle/attack_effect/attack_effect.gd" id="1_b38pj"]
 [ext_resource type="Texture2D" uid="uid://yg4xux7fe133" path="res://assets/img/battle/effect/damage/attack_ball.png" id="2_do3cn"]
 [ext_resource type="Texture2D" uid="uid://cv81kctal2mt0" path="res://assets/img/battle/effect/damage/guard_shield.png" id="3_srwft"]
+[ext_resource type="AudioStream" uid="uid://dlad480233ioi" path="res://assets/sound/SE/battle/guard.mp3" id="4_c03fg"]
 
 [sub_resource type="Animation" id="Animation_srwft"]
 length = 0.001
@@ -159,3 +160,6 @@ visible = false
 position = Vector2(312, 430.00003)
 scale = Vector2(2.5, 2.5)
 texture = ExtResource("3_srwft")
+
+[node name="GuardSE" type="AudioStreamPlayer" parent="." unique_id=707633721]
+stream = ExtResource("4_c03fg")

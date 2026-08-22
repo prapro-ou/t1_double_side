@@ -9,6 +9,8 @@ extends Node2D
 @onready var label_node:Label = $LabelBack/Label
 @onready var sprite2d_node:Sprite2D = $Sprite2D
 
+@onready var cutin_se_node:AudioStreamPlayer = $CutinSE
+
 func play_cutin(chara:CharaData) -> void:
 	sprite2d_node.position = Vector2(-600,207)
 	label_back_node.hide()

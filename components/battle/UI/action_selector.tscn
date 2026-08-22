@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c60a272ko1nji"]
 
 [ext_resource type="Script" uid="uid://4ysjou7ldsdc" path="res://script/battle/UI/action_selector.gd" id="1_cw4gn"]
+[ext_resource type="AudioStream" uid="uid://qk4tqui8quck" path="res://assets/sound/SE/UI/button31.mp3" id="2_fev7j"]
 
 [node name="ActionSelector" type="Control" unique_id=1567129468]
 layout_mode = 3
@@ -69,6 +70,9 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 5.22
 text = "決め台詞"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=495188761]
+stream = ExtResource("2_fev7j")
 
 [connection signal="pressed" from="HBoxContainer/AttackButton" to="." method="_on_attack_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/SkillButton" to="." method="_on_skill_button_pressed"]
