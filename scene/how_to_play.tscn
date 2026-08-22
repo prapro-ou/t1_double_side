@@ -1,6 +1,86 @@
-[gd_scene format=3 uid="uid://mlgg0cauip3p"]
+[gd_scene format=3 uid="uid://ddx487vab2bnl"]
 
-[ext_resource type="Script" uid="uid://cwpbelapettr" path="res://script/how_to_play/how_to_play.gd" id="1_y3e0y"]
+[ext_resource type="Script" uid="uid://bx0v2f2grd1ry" path="res://script/how_to_play/how_to_play.gd" id="1_uvb5p"]
+[ext_resource type="Texture2D" uid="uid://c085ce2x84cwb" path="res://assets/img/how_to_play/how_to_play1.png" id="2_s68b3"]
+[ext_resource type="Texture2D" uid="uid://cbrb7gui0i4ro" path="res://assets/img/how_to_play/how_to_play2.png" id="3_v1860"]
+[ext_resource type="Texture2D" uid="uid://dl5k2nbekiywj" path="res://assets/img/how_to_play/how_to_play3.png" id="4_wuiup"]
+[ext_resource type="Texture2D" uid="uid://b6lh6quwq0ngw" path="res://assets/img/how_to_play/how_to_play4.png" id="5_yqjcd"]
+[ext_resource type="Texture2D" uid="uid://bcoqk0ygsucwo" path="res://assets/img/how_to_play/how_to_play5.png" id="6_dxfv5"]
+[ext_resource type="Texture2D" uid="uid://dvtrm4linrbu3" path="res://assets/img/how_to_play/page_back.png" id="7_s68b3"]
+[ext_resource type="Texture2D" uid="uid://cceks08c576t8" path="res://assets/img/how_to_play/page_forward.png" id="8_v1860"]
 
-[node name="HowToPlay" type="Node2D" unique_id=1216605734]
-script = ExtResource("1_y3e0y")
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_s68b3"]
+load_path = "res://.godot/imported/how_to_play1.png-3d9fa49c8bff99c8c13131b9098ff1f1.ctex"
+
+[node name="HowToPlay" type="Control" unique_id=1263611249 node_paths=PackedStringArray("how_to_play_ima")]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_uvb5p")
+pages = Array[Texture2D]([ExtResource("2_s68b3"), ExtResource("3_v1860"), ExtResource("4_wuiup"), ExtResource("5_yqjcd"), ExtResource("6_dxfv5")])
+title_scene_path = "res://scene/title.tscn"
+how_to_play_ima = NodePath("HowToPlayImage")
+
+[node name="HowToPlayImage" type="TextureRect" parent="." unique_id=1859374331]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CompressedTexture2D_s68b3")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TitleButton" type="Button" parent="." unique_id=745686121]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.3
+anchor_top = 0.85
+anchor_right = 0.7
+anchor_bottom = 0.95
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 37
+text = "タイトルへ戻る　　
+"
+
+[node name="BackButton" type="TextureButton" parent="." unique_id=1878503605]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.08
+anchor_bottom = 1.0
+texture_normal = ExtResource("7_s68b3")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="ForwardButton" type="TextureButton" parent="." unique_id=1739835361]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.92
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("8_v1860")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="." unique_id=198582332]
+visible = false
+layout_mode = 0
+offset_left = 488.0
+offset_top = -24.0
+offset_right = 685.0
+offset_bottom = 113.0
+theme_override_colors/font_color = Color(0.96862745, 0.9647059, 1, 1)
+theme_override_font_sizes/font_size = 48
+text = "あそびかた
+"

@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://30gaeu0acs35" path="res://components/battle/UI/left_turn_timer.tscn" id="1_afp2b"]
 [ext_resource type="Script" uid="uid://c5v42uvlhqu65" path="res://script/battle/battle.gd" id="1_soyo5"]
+[ext_resource type="Texture2D" uid="uid://cd75b48elqqwh" path="res://assets/img/battle/battle_back.png" id="2_i5dg4"]
 [ext_resource type="PackedScene" uid="uid://bf1ue0skklj1g" path="res://components/battle/UI/status_display/status_display_manager.tscn" id="4_bdn7b"]
 [ext_resource type="PackedScene" uid="uid://cy4rgcqbyc4ge" path="res://components/battle/UI/hand_direction_selector.tscn" id="4_ebedk"]
 [ext_resource type="PackedScene" uid="uid://cdxnpgagyoseg" path="res://components/battle/UI/aiko_countor.tscn" id="4_ougy3"]
@@ -21,6 +22,12 @@ script = ExtResource("1_soyo5")
 turn_end_mp_up = 10
 guard_mp_up = 10
 aiko_damage_bonus = 0.5
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1300696496]
+anchors_preset = -1
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("2_i5dg4")
 
 [node name="StatusLayer" type="CanvasLayer" parent="." unique_id=635536237]
 
