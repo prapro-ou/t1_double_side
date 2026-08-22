@@ -21,7 +21,6 @@ border_width_bottom = 3
 script = ExtResource("1_xf7mx")
 
 [node name="LabelManager" type="Control" parent="." unique_id=595193116]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1152.0
@@ -39,13 +38,14 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_xf7mx")
 
 [node name="Label" type="Label" parent="LabelManager/Panel" unique_id=1891928985]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
+anchors_preset = -1
+anchor_left = 0.025
+anchor_right = 0.975
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_xq10k")
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 35
 text = "じゃんけんの手をドラッグで選べ！"
 horizontal_alignment = 1
 vertical_alignment = 1
