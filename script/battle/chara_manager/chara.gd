@@ -8,8 +8,12 @@ extends Node2D
 @onready var animated_sprite2d: AnimatedSprite2D = $AnimatedSprite2D
 
 @onready var anim_player_node:AnimationPlayer = $AnimationPlayer
+@onready var label_anim_node:AnimationPlayer = $LabelAnim
 
 @onready var damage_particles_node:GPUParticles2D = $DamageParticles2D
+
+@onready var damage_num_node:Label = $DamageNum
+@onready var mp_num_node:Label = $MpNum
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -20,6 +24,21 @@ func set_chara(chara:CharaData) -> void:
 	animated_sprite2d.sprite_frames = chara.sprite_frames
 	
 
-func play_damage() -> void:
+func play_damage(damage:int) -> void:
+	# LabelAnimは1つしかないので、MPの数字が出ている途中で割り込むと消し忘れる
+	mp_num_node.visible = false
+
+	damage_num_node.text = str(damage)
+	label_anim_node.play("damage")
+
 	damage_particles_node.restart()
 	anim_player_node.play("damage")
+
+
+
+## MPの増加量を数字で出す
+func play_mp(mp:int) -> void:
+	damage_num_node.visible = false
+
+	mp_num_node.text = "MP%+d" % mp
+	label_anim_node.play("mp")

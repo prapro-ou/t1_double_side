@@ -13,5 +13,9 @@ func set_chara(host_chara:CharaData, join_chara:CharaData) -> void:
 	_chara_of(BattleEnum.Player.JOIN).set_chara(join_chara)
 
 ## ダメージを受けた側のキャラを揺らす
-func play_damage(target:BattleEnum.Player) -> void:
-	_chara_of(target).play_damage()
+func play_damage(target:BattleEnum.Player,damage:int) -> void:
+	_chara_of(target).play_damage(damage)
+
+## MPが増えた側のキャラに数字を出す
+func play_mp(target:BattleEnum.Player,mp:int) -> void:
+	_chara_of(target).play_mp(mp)

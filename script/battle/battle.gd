@@ -47,6 +47,9 @@ const HOI_RESULT_DISPLAY_TIME:float = 1.5
 
 const AFTER_DAMAGE_EFFECT_TIME:float = 1.0
 
+## MPの数字が出てから消えるまでの時間（秒）。chara.tscnのLabelAnimの"mp"の長さに合わせること
+const MP_EFFECT_TIME:float = 0.5
+
 ## プレイヤーごとのキャラ・HP・MP。setup_charas()で入る。
 var player_status_list:Dictionary[BattleEnum.Player, PlayerStatus] = {}
 
@@ -60,6 +63,9 @@ var remaining_attack_count:int = 0
 var guard_direction_count:int = 1
 
 var current_janken_result:BattleEnum.JankenResult
+
+## 開幕の初期MP配布をまだ受け取っていないか。初回だけは数字の演出を出さない
+var is_first_mp_sync:bool = true
 
 @onready var battle_status_node:BattleStatus = $BattleStatus
 
@@ -228,7 +234,7 @@ func end_turn() -> void:
 		BattleEnum.Player.HOST:turn_end_mp_up,
 		BattleEnum.Player.JOIN:turn_end_mp_up
 	})
-	
+
 	var host_dead:bool = player_status_list[BattleEnum.Player.HOST].hp <= 0
 	var join_dead:bool = player_status_list[BattleEnum.Player.JOIN].hp <= 0
 
@@ -257,7 +263,7 @@ func play_damage_effect(damage:int,attacker:BattleEnum.Player,target:BattleEnum.
 	await effect_manager_node.play_attack(attacker)
 	
 	status_display_manager_node.play_damage(target)
-	chara_manager_node.play_damage(target)
+	chara_manager_node.play_damage(target,damage)
 	
 	await get_tree().create_timer(AFTER_DAMAGE_EFFECT_TIME).timeout
 
@@ -288,7 +294,7 @@ func handle_janken() -> void:
 	effect_manager_node.hide_janken()
 	
 	check_catchphrase(result)
-	
+
 	setup_attack_count()
 	setup_guard_direction_count()
 	start_attack_step()
@@ -388,7 +394,11 @@ func guard(attacker:BattleEnum.Player,defender:BattleEnum.Player) -> void:
 	change_mp({
 		defender:guard_mp_up
 	})
-	
+
+	# この直後のターン終了時のMP加算に上書きされないよう、ガードぶんの数字を見せきる。
+	# 数字を出すのは両者で走る_on_mp_changed()なので、ホストしか通らないchange_mp()の中では待てない
+	await get_tree().create_timer(MP_EFFECT_TIME).timeout
+
 	if battle_status_node.consume_pending_flag(defender,BattleEnum.PendingFlag.LOGIC_SK_COUNTER):
 		var ld:LogicWomanData = player_status_list[defender].chara as LogicWomanData
 		resolve_counter(defender,attacker,ceili(ld.attack * ld.skill_counter_damage_rate))
@@ -494,10 +504,20 @@ func _mp_after(player:BattleEnum.Player, amount:int) -> int:
 	var status:PlayerStatus = player_status_list[player]
 	return clampi(status.mp + amount, 0, status.mp_max)
 
-## MPが確定したときに両者で呼ばれる
+## MPが確定したときに両者で呼ばれる。
+## 配られるのは確定値なので、反映前の値との差からキャラ上に出す増減量を求める
 func _on_mp_changed(mp:Dictionary[BattleEnum.Player,int]) -> void:
 	for player:BattleEnum.Player in player_status_list:
+		var diff:int = mp[player] - player_status_list[player].mp
 		player_status_list[player].mp = mp[player]
+
+		# 開幕の初期MP配布と、スキル使用などによる消費は演出せず、静かに反映するだけにする
+		if is_first_mp_sync or diff <= 0:
+			continue
+
+		chara_manager_node.play_mp(player,diff)
+	
+	is_first_mp_sync = false
 
 	status_display_manager_node.set_mp(
 		player_status_list[BattleEnum.Player.HOST].mp,

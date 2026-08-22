@@ -2,7 +2,19 @@
 
 [ext_resource type="FontFile" uid="uid://bhjt6e43lwibs" path="res://assets/font/BestTen/BestTen-CRT.otf" id="1_0kxee"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0kxee"]
+bg_color = Color(0.23753911, 0.23753914, 0.23753908, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rn18l"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3atbo"]
+bg_color = Color(0.17283267, 0.17283267, 0.17283258, 1)
+
 [resource]
 default_font = ExtResource("1_0kxee")
+Button/styles/hover = SubResource("StyleBoxFlat_0kxee")
+Button/styles/normal = SubResource("StyleBoxFlat_rn18l")
+Button/styles/pressed = SubResource("StyleBoxFlat_3atbo")
 LobbyLabel/base_type = &"Label"
 LobbyLabel/font_sizes/font_size = 30
