@@ -33,3 +33,4 @@ skill_description = "次にじゃんけん勝ったとき2回あっち向いて�
 catchphrase = "「お前には俺の拳は破れない！」"
 catchphrase_description = "成功時　次の相手のガードを無視し、大ダメージ
 失敗時　このターンガードできず、防御力ダウン"
+winner_text = "「俺の燃える心はお前を超えた！」"

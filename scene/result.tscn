@@ -1,7 +1,25 @@
 [gd_scene format=3 uid="uid://y54gqmb11u7y"]
 
 [ext_resource type="Script" uid="uid://cwdjwob3xg5h7" path="res://script/result/result.gd" id="1_s5opp"]
-[ext_resource type="Theme" uid="uid://dypnltbwc3th8" path="res://style/main_theme.tres" id="2_g6ybv"]
+[ext_resource type="Theme" uid="uid://d1vexbsw5gkt7" path="res://style/matching_theme.tres" id="2_sld1i"]
+[ext_resource type="Texture2D" uid="uid://diqt6yhfchc3x" path="res://assets/img/result_back.png" id="3_qsw1a"]
+[ext_resource type="Texture2D" uid="uid://bwyy1lg0olg4" path="res://assets/img/chara/fire_man/fire_man.png" id="3_sld1i"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qsw1a"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sld1i"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 1)
 
 [node name="Result" type="Node2D" unique_id=1049565659]
 script = ExtResource("1_s5opp")
@@ -15,25 +33,61 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("2_g6ybv")
+theme = ExtResource("2_sld1i")
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control" unique_id=39704304]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_qsw1a")
+
+[node name="CharaImage" type="TextureRect" parent="CanvasLayer/Control" unique_id=893058825]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.3
+anchor_right = 0.3
+anchor_bottom = 1.0
+offset_left = -71.399994
+offset_top = -66.0
+offset_right = 432.06662
+offset_bottom = 406.0
+texture = ExtResource("3_sld1i")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Result_English" type="Label" parent="CanvasLayer/Control" unique_id=176782725]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 69.0
+anchors_preset = -1
+anchor_left = 0.45
+anchor_top = 0.05
+anchor_right = 0.9
+anchor_bottom = 0.2
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 100
-text = "Test"
+theme_override_font_sizes/font_size = 90
+text = "YouWin"
+horizontal_alignment = 2
+
+[node name="Result_Japanese" type="Label" parent="CanvasLayer/Control" unique_id=2068683320]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.45
+anchor_top = 0.25
+anchor_right = 0.9
+anchor_bottom = 0.4
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 80
+text = "あなたの勝利"
+horizontal_alignment = 2
 
 [node name="Re_match" type="Button" parent="CanvasLayer/Control" unique_id=1261831084]
-layout_mode = 0
-offset_left = 200.0
+layout_mode = 1
+offset_left = 143.0
 offset_top = 400.0
-offset_right = 431.0
+offset_right = 450.0
 offset_bottom = 477.0
 theme_override_font_sizes/font_size = 50
 text = "もう一戦！"
@@ -47,34 +101,49 @@ offset_bottom = 477.0
 theme_override_font_sizes/font_size = 50
 text = "タイトルに戻る"
 
-[node name="Result_Japanese" type="Label" parent="CanvasLayer/Control" unique_id=2068683320]
+[node name="TalkBack" type="Panel" parent="CanvasLayer/Control" unique_id=1558345832]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -11.5
-offset_right = 20.0
-offset_bottom = 11.5
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.45
+anchor_right = 0.9
+anchor_bottom = 0.57
+theme_override_styles/panel = SubResource("StyleBoxFlat_qsw1a")
+
+[node name="TalkLabel" type="Label" parent="CanvasLayer/Control/TalkBack" unique_id=1009939427]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.025
+anchor_right = 0.975
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 80
-text = "テスト"
-
-[node name="Rematch_Status" type="Label" parent="CanvasLayer/Control" unique_id=1049565660]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -300.0
-offset_top = 500.0
-offset_right = 300.0
-offset_bottom = 545.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 35
+theme_override_font_sizes/font_size = 30
+text = "データで分かってたんですよ。戦う前から私が勝つと"
 horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RematchBack" type="Panel" parent="CanvasLayer/Control" unique_id=1921391364]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.87
+anchor_right = 0.8
+anchor_bottom = 0.97
+theme_override_styles/panel = SubResource("StyleBoxFlat_sld1i")
+
+[node name="Rematch_Status" type="Label" parent="CanvasLayer/Control/RematchBack" unique_id=1049565660]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 35
+text = "相手はもう一戦を希望しています"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="pressed" from="CanvasLayer/Control/Re_match" to="." method="_on_re_match_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/Go_title" to="." method="_on_go_title_pressed"]

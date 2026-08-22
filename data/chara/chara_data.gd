@@ -16,3 +16,5 @@ extends Resource
 
 @export_multiline() var catchphrase:String
 @export_multiline() var catchphrase_description:String
+
+@export_multiline() var winner_text:String
