@@ -47,6 +47,9 @@ const HOI_RESULT_DISPLAY_TIME:float = 1.5
 
 const AFTER_DAMAGE_EFFECT_TIME:float = 1.0
 
+## MPの数字が出てから消えるまでの時間（秒）。chara.tscnのLabelAnimの"mp"の長さに合わせること
+const MP_EFFECT_TIME:float = 0.5
+
 ## プレイヤーごとのキャラ・HP・MP。setup_charas()で入る。
 var player_status_list:Dictionary[BattleEnum.Player, PlayerStatus] = {}
 
@@ -391,6 +394,10 @@ func guard(attacker:BattleEnum.Player,defender:BattleEnum.Player) -> void:
 	change_mp({
 		defender:guard_mp_up
 	})
+
+	# この直後のターン終了時のMP加算に上書きされないよう、ガードぶんの数字を見せきる。
+	# 数字を出すのは両者で走る_on_mp_changed()なので、ホストしか通らないchange_mp()の中では待てない
+	await get_tree().create_timer(MP_EFFECT_TIME).timeout
 
 	if battle_status_node.consume_pending_flag(defender,BattleEnum.PendingFlag.LOGIC_SK_COUNTER):
 		var ld:LogicWomanData = player_status_list[defender].chara as LogicWomanData
