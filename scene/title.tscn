@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://c244gu1xt5c62" path="res://script/title/title.gd" id="1_hr6ky"]
 [ext_resource type="Theme" uid="uid://d1vexbsw5gkt7" path="res://style/matching_theme.tres" id="2_0npwg"]
+[ext_resource type="Texture2D" uid="uid://cd75b48elqqwh" path="res://assets/img/battle/battle_back.png" id="2_qaeh8"]
+[ext_resource type="Texture2D" uid="uid://bg8jgqpwyqs7d" path="res://assets/img/title.png" id="3_qaeh8"]
 
 [node name="TItle" type="Node2D" unique_id=1358436081]
 script = ExtResource("1_hr6ky")
@@ -16,17 +18,31 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="UILayer/Control" unique_id=509874496]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="Back" type="TextureRect" parent="UILayer/Control" unique_id=1783801659]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_qaeh8")
+
+[node name="Logo" type="TextureRect" parent="UILayer/Control" unique_id=1642784868]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_right = 0.95
+anchor_bottom = 0.55
+texture = ExtResource("3_qaeh8")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="HostButton" type="Button" parent="UILayer/Control" unique_id=40373460]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.4
+anchor_left = 0.1
 anchor_top = 0.5
-anchor_right = 0.6
+anchor_right = 0.4
 anchor_bottom = 0.6
 theme = ExtResource("2_0npwg")
 theme_override_font_sizes/font_size = 32
@@ -35,19 +51,37 @@ text = "部屋を作る"
 [node name="JoinButton" type="Button" parent="UILayer/Control" unique_id=1378670168]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.4
-anchor_top = 0.65
-anchor_right = 0.6
-anchor_bottom = 0.75
+anchor_left = 0.6
+anchor_top = 0.5
+anchor_right = 0.9
+anchor_bottom = 0.6
 theme = ExtResource("2_0npwg")
 theme_override_font_sizes/font_size = 32
 text = "部屋に入る"
 
-[node name="Control" type="Control" parent="." unique_id=1893006792]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="HowToPlayButton" type="Button" parent="UILayer/Control" unique_id=1282565475]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.7
+anchor_right = 0.4
+anchor_bottom = 0.8
+theme = ExtResource("2_0npwg")
+theme_override_font_sizes/font_size = 32
+text = "遊び方"
+
+[node name="CreditButton" type="Button" parent="UILayer/Control" unique_id=989821496]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.6
+anchor_top = 0.7
+anchor_right = 0.9
+anchor_bottom = 0.8
+theme = ExtResource("2_0npwg")
+theme_override_font_sizes/font_size = 32
+text = "クレジット"
 
 [connection signal="pressed" from="UILayer/Control/HostButton" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="UILayer/Control/JoinButton" to="." method="_on_join_button_pressed"]
+[connection signal="pressed" from="UILayer/Control/HowToPlayButton" to="." method="_on_how_to_play_button_pressed"]
+[connection signal="pressed" from="UILayer/Control/CreditButton" to="." method="_on_credit_button_pressed"]
