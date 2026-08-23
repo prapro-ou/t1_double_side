@@ -27,5 +27,5 @@ offset_right = 175.0
 offset_bottom = 102.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 22
-text = "残りターン:10
+text = "残りターン:20
 "

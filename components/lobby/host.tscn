@@ -84,6 +84,18 @@ text = "タイトルに
 [node name="ErrorSE" type="AudioStreamPlayer" parent="BuildRoom" unique_id=1829571957]
 stream = ExtResource("5_v1h2n")
 
+[node name="ErrorLabel" type="Label" parent="BuildRoom" unique_id=693378450]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.2
+anchor_right = 0.8
+anchor_bottom = 0.3
+theme = ExtResource("2_d32vm")
+theme_override_font_sizes/font_size = 35
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Matching" type="Control" parent="." unique_id=1048745695]
 layout_mode = 1
 anchors_preset = 15

@@ -44,11 +44,14 @@ func generate_description(chara_id:StringName) -> String:
 	if data == null:
 		return ""
 
-	return "名前：%s\nHP：%d\n攻撃力：%d\nスキル：%s" % [
+	return "名前：%s  HP：%d  攻撃力：%d\n\nスキル：%s\n%s\n\n決め台詞:\n%s\n%s" % [
 		data.display_name,
 		data.max_hp,
 		data.attack,
-		data.skill_name
+		data.skill_name,
+		data.skill_description,
+		data.catchphrase,
+		data.catchphrase_description
 	]
 
 func decide_chara(button: TextureButton, chara_id: StringName) -> void:

@@ -18,7 +18,6 @@ animations = [{
 
 [resource]
 script = ExtResource("1_gf4io")
-catchphrase_success_damage_rate = 2.0
 catchphrase_fail_damage_taken_rate = 2.0
 id = &"fire_man"
 sprite_frames = SubResource("SpriteFrames_7r4sd")

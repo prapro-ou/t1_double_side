@@ -7,6 +7,7 @@ signal success_build(roomname:String)
 @onready var button_node:Button = $Button
 
 @onready var error_se_node:AudioStreamPlayer = $ErrorSE
+@onready var error_label_node:Label = $ErrorLabel
 
 var _roomname:String = ""
 
@@ -33,7 +34,7 @@ func _on_room_created() -> void:
 	signal_disconnect()
 
 func _on_signaling_error(message:String) -> void:
-	print(message)
+	error_label_node.text = message
 	error_se_node.play()
 	signal_disconnect()
 
