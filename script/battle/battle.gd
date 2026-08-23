@@ -255,15 +255,16 @@ func end_turn() -> void:
 
 ## ダメージの演出
 func play_damage_effect(damage:int,attacker:BattleEnum.Player,target:BattleEnum.Player) -> void:
-	status_display_manager_node.set_hp(
-		player_status_list[BattleEnum.Player.HOST].hp,
-		player_status_list[BattleEnum.Player.JOIN].hp
-	)
 	
 	await effect_manager_node.play_attack(attacker)
 	
 	status_display_manager_node.play_damage(target)
 	chara_manager_node.play_damage(target,damage)
+	
+	status_display_manager_node.set_hp(
+		player_status_list[BattleEnum.Player.HOST].hp,
+		player_status_list[BattleEnum.Player.JOIN].hp
+	)
 	
 	await get_tree().create_timer(AFTER_DAMAGE_EFFECT_TIME).timeout
 
