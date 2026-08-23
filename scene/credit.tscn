@@ -1,3 +1,81 @@
 [gd_scene format=3 uid="uid://chp0f2ks5dwns"]
 
+[ext_resource type="Script" uid="uid://1gntcmp3t3vh" path="res://script/credit.gd" id="1_hmpbm"]
+[ext_resource type="Theme" uid="uid://d1vexbsw5gkt7" path="res://style/matching_theme.tres" id="1_xknyl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xknyl"]
+bg_color = Color(0.13682577, 0.13682574, 0.13682571, 1)
+
 [node name="Credit" type="Node2D" unique_id=404168022]
+script = ExtResource("1_hmpbm")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2129268605]
+
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=529330811]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Control" unique_id=637546023]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Control" unique_id=512775598]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.05
+anchor_right = 0.95
+anchor_bottom = 0.9
+theme = ExtResource("1_xknyl")
+theme_override_font_sizes/normal_font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_xknyl")
+bbcode_enabled = true
+text = "制作：チーム両脇
+
+クリックすると各サイトやライセンス表記に移行します。
+
+ゲームエンジン
+[url=https://godotengine.org/]Godot[/url] 
+
+[url=https://github.com/godotengine/godot/blob/4.6/LICENSE.txt]MIT License[/url]
+
+
+[url=https://github.com/godotengine/godot/blob/4.6/thirdparty/README.md]Godotのサードパーティのライセンス[/url]
+
+[url=https://github.com/bitwes/Gut]GUT (MIT License)[/url]
+
+[url=https://github.com/godotengine/webrtc-native]GDNative WebRTC plugin for Godot  (MIT License)[/url]
+
+[url=https://github.com/godotengine/webrtc-native/blob/master/thirdparty/README.md]GDNative WebRTC plugin for Godotのサードパーティのライセンス[/url]
+
+フォント
+[url=https://booth.pm/ja/items/2747965]ベストテンFONT[/url]
+
+効果音
+[url=https://soundeffect-lab.info/]効果音ラボ[/url]
+
+BGM
+
+"
+
+[node name="Button" type="Button" parent="CanvasLayer/Control" unique_id=938491171]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_top = 0.85
+anchor_right = 0.6
+anchor_bottom = 0.95
+theme = ExtResource("1_xknyl")
+theme_override_font_sizes/font_size = 30
+text = "タイトルに戻る"
+
+[connection signal="meta_clicked" from="CanvasLayer/Control/RichTextLabel" to="." method="_on_rich_text_label_meta_clicked"]
+[connection signal="pressed" from="CanvasLayer/Control/Button" to="." method="_on_button_pressed"]

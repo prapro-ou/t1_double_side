@@ -2,6 +2,8 @@ extends Node
 
 const scene_dictionary:Dictionary[String,PackedScene] = {
 	"title":preload("res://scene/title.tscn"),
+	"how_to_play":preload("res://scene/how_to_play.tscn"),
+	"credit":preload("res://scene/credit.tscn"),
 	"lobby":preload("res://scene/lobby.tscn"),
 	"chara_select":preload("res://scene/chara_select.tscn"),
 	"webrtc_test":preload("res://scene/webrtc_test.tscn"),
