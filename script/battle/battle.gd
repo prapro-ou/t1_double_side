@@ -48,7 +48,7 @@ const HOI_RESULT_DISPLAY_TIME:float = 1.5
 const AFTER_DAMAGE_EFFECT_TIME:float = 1.0
 
 ## MPの数字が出てから消えるまでの時間（秒）。chara.tscnのLabelAnimの"mp"の長さに合わせること
-const MP_EFFECT_TIME:float = 0.5
+const MP_EFFECT_TIME:float = 0.7
 
 ## プレイヤーごとのキャラ・HP・MP。setup_charas()で入る。
 var player_status_list:Dictionary[BattleEnum.Player, PlayerStatus] = {}
