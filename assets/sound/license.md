@@ -6,3 +6,9 @@
 金属 guard.mp3
 超必殺技発動 cutin.mp3
 試合終了のゴング gong.mp3
+
+#BGM
+魔王魂 https://maou.audio/
+サイバー37 
+8bit08
+ジングル03

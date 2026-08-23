@@ -16,6 +16,7 @@
 [ext_resource type="Script" uid="uid://df16skosat303" path="res://script/battle/battle_status.gd" id="12_5mh2w"]
 [ext_resource type="PackedScene" uid="uid://dn0oa4g78angg" path="res://components/battle/effect/attack_effect.tscn" id="12_o18kk"]
 [ext_resource type="PackedScene" uid="uid://dng3ctjwp5o2r" path="res://components/battle/effect/skill_effect.tscn" id="15_x478g"]
+[ext_resource type="AudioStream" uid="uid://b3xfn4215ek7t" path="res://assets/sound/BGM/maou_bgm_8bit08.mp3" id="17_x478g"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_0okv5"]
 
@@ -86,6 +87,11 @@ script = ExtResource("12_5mh2w")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=2044321510]
 replication_config = SubResource("SceneReplicationConfig_0okv5")
+
+[node name="BGM" type="AudioStreamPlayer" parent="." unique_id=605933678]
+stream = ExtResource("17_x478g")
+volume_db = -15.0
+autoplay = true
 
 [connection signal="direction_selected" from="SelectorLayer/HandDirectionSelector" to="." method="_on_hand_direction_selector_direction_selected"]
 [connection signal="hands_selected" from="SelectorLayer/HandDirectionSelector" to="." method="_on_hand_direction_selector_hands_selected"]

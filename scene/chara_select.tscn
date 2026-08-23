@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://kbbikhw2wmg0" path="res://assets/img/chara_select/window.png" id="5_dfqo2"]
 [ext_resource type="Theme" uid="uid://dypnltbwc3th8" path="res://style/main_theme.tres" id="7_u6pft"]
 [ext_resource type="AudioStream" uid="uid://qk4tqui8quck" path="res://assets/sound/SE/UI/button31.mp3" id="8_0o6lo"]
+[ext_resource type="AudioStream" uid="uid://cxivshwkufdr5" path="res://assets/sound/BGM/maou_bgm_cyber37.mp3" id="9_sslgq"]
 
 [node name="CharaSelect" type="Node2D" unique_id=472852071]
 script = ExtResource("1_sthoc")
@@ -107,6 +108,11 @@ vertical_alignment = 1
 
 [node name="SEPlayer" type="AudioStreamPlayer" parent="." unique_id=1025830003]
 stream = ExtResource("8_0o6lo")
+
+[node name="BGM" type="AudioStreamPlayer" parent="." unique_id=1716954497]
+stream = ExtResource("9_sslgq")
+volume_db = -10.0
+autoplay = true
 
 [connection signal="mouse_entered" from="CanvasLayer/Control/CharaA" to="." method="_on_chara_a_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/Control/CharaA" to="." method="_on_chara_a_mouse_exited"]

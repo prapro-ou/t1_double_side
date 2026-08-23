@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bcoqk0ygsucwo" path="res://assets/img/how_to_play/how_to_play5.png" id="6_dxfv5"]
 [ext_resource type="Texture2D" uid="uid://dvtrm4linrbu3" path="res://assets/img/how_to_play/page_back.png" id="7_s68b3"]
 [ext_resource type="Texture2D" uid="uid://cceks08c576t8" path="res://assets/img/how_to_play/page_forward.png" id="8_v1860"]
+[ext_resource type="AudioStream" uid="uid://cxivshwkufdr5" path="res://assets/sound/BGM/maou_bgm_cyber37.mp3" id="10_g2ow7"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_s68b3"]
 load_path = "res://.godot/imported/how_to_play1.png-3d9fa49c8bff99c8c13131b9098ff1f1.ctex"
@@ -86,3 +87,8 @@ theme_override_colors/font_color = Color(0.96862745, 0.9647059, 1, 1)
 theme_override_font_sizes/font_size = 48
 text = "あそびかた
 "
+
+[node name="BGM" type="AudioStreamPlayer" parent="." unique_id=248556846]
+stream = ExtResource("10_g2ow7")
+volume_db = -10.0
+autoplay = true

@@ -4,6 +4,7 @@
 [ext_resource type="Theme" uid="uid://d1vexbsw5gkt7" path="res://style/matching_theme.tres" id="2_sld1i"]
 [ext_resource type="Texture2D" uid="uid://diqt6yhfchc3x" path="res://assets/img/result_back.png" id="3_qsw1a"]
 [ext_resource type="Texture2D" uid="uid://bwyy1lg0olg4" path="res://assets/img/chara/fire_man/fire_man.png" id="3_sld1i"]
+[ext_resource type="AudioStream" uid="uid://ctad8hsadn4iu" path="res://assets/sound/BGM/maou_game_jingle03.mp3" id="5_54vub"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qsw1a"]
 bg_color = Color(0, 0, 0, 1)
@@ -144,6 +145,11 @@ theme_override_font_sizes/font_size = 35
 text = "相手はもう一戦を希望しています"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="BGM" type="AudioStreamPlayer" parent="." unique_id=137276464]
+stream = ExtResource("5_54vub")
+volume_db = -15.0
+autoplay = true
 
 [connection signal="pressed" from="CanvasLayer/Control/Re_match" to="." method="_on_re_match_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/Go_title" to="." method="_on_go_title_pressed"]
