@@ -58,12 +58,13 @@ text = "制作：チーム両脇
 
 フォント
 [url=https://booth.pm/ja/items/2747965]ベストテンFONT[/url]
+[url=https://booth.pm/ja/items/7184668]パワフル書体『デラ・ゴリラ』[/url]
 
 効果音
 [url=https://soundeffect-lab.info/]効果音ラボ[/url]
 
 BGM
-
+[url=https://soundeffect-lab.info/]魔王魂[/url]
 "
 
 [node name="Button" type="Button" parent="CanvasLayer/Control" unique_id=938491171]
