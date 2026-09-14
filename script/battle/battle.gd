@@ -87,17 +87,20 @@ func _ready() -> void:
 	GameSession.changed_phase.connect(_on_changed_phase)
 	GameSession.damage_applied.connect(_on_damage_applied)
 	GameSession.mp_changed.connect(_on_mp_changed)
+	GameSession.battle_ready_completed.connect(_on_battle_ready_completed)
 	
 	setup_charas()
 	setup_usernames()
-
+	set_aiko_count(0)
 	
+	GameSession.notify_battle_ready()
+
+## 両者のシーン生成が終わったタイミングでGameSessionから呼ばれる
+func _on_battle_ready_completed() -> void:
 	change_mp({
 		BattleEnum.Player.HOST:init_mp,
 		BattleEnum.Player.JOIN:init_mp
 	})
-	
-	set_aiko_count(0)
 	
 	if multiplayer.is_server():
 		start_turn()
