@@ -13,6 +13,7 @@ func start_game() -> void:
 
 @rpc("authority", "call_local", "reliable")
 func start_battle() -> void:
+	reset_battle_ready()
 	SceneManager.change_scene("battle")
 
 
@@ -140,6 +141,45 @@ func get_chara_data(player:BattleEnum.Player) -> CharaData:
 ## キャラ選択をやり直せる状態に戻す。
 func reset_chara_selections() -> void:
 	chara_selections.clear()
+
+#endregion
+
+#--------------------------------------------
+# バトル開始時の同期について
+#--------------------------------------------
+#region
+## 両者のバトルシーンが生成されたらホストだけが発火
+signal battle_ready_completed();
+
+var battle_ready_peers:Dictionary[int, bool] = {}
+
+## 自分のバトルシーンの準備ができたことを伝える。battle.gdの_ready()の最後で呼ぶ
+func notify_battle_ready() -> void:
+	if multiplayer.is_server():
+		receive_battle_ready(multiplayer.get_unique_id())
+	else:
+		_battle_ready_submit.rpc_id(1)
+	
+
+## 直接呼ばずnotify_battle_readyを使うこと。
+## ホストに準備完了を通知する。
+@rpc("any_peer","reliable")
+func _battle_ready_submit() -> void:
+	receive_battle_ready(multiplayer.get_remote_sender_id())
+
+func receive_battle_ready(peer_id:int) -> void:
+	if not multiplayer.is_server():
+		return
+	if battle_ready_peers.has(peer_id):
+		return
+	
+	battle_ready_peers[peer_id] = true
+	
+	if battle_ready_peers.size() == multiplayer.get_peers().size() + 1:
+		battle_ready_completed.emit()
+
+func reset_battle_ready() -> void:
+	battle_ready_peers.clear()
 
 #endregion
 
