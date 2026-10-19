@@ -40,6 +40,9 @@ func _ready() -> void:
 	multiplayer.peer_disconnected.connect(_on_multiplayer_peer_disconnected)
 	multiplayer.server_disconnected.connect(_on_multiplayer_server_disconnected)
 
+func _get_version() -> String:
+	return ProjectSettings.get_setting("application/config/version", "")
+
 ## ゲーム本編の開始を通知する。以降、相手との切断は通信エラーとして扱われる
 func begin_game() -> void:
 	in_game = true
@@ -120,6 +123,11 @@ func _on_sdp_created(type:String,sdp:String,peer_id:int):
 func _on_ice_created(media: String, index: int, cand_name: String, peer_id: int) -> void:
 	_send({ "cmd": "IceCandidate", "target_id": peer_id,"media": media, "index": index, "name": cand_name })
 
+#Errorの処理
+func _on_error(message:String) -> void:
+	disconnect_signaling()
+	signaling_error.emit(message)
+
 ## WebRTCで接続
 func _create_connection(peer_id:int) -> WebRTCPeerConnection:
 	var conn:WebRTCPeerConnection = WebRTCPeerConnection.new()
@@ -145,7 +153,7 @@ func _handle_message(msg:Dictionary) -> void:
 		"Offer":_on_offer(int(msg["target_id"]),msg["sdp"])
 		"Answer":connection_list[int(msg["target_id"])].set_remote_description("answer",msg["sdp"])
 		"IceCandidate":connection_list[int(msg["target_id"])].add_ice_candidate(msg["media"],int(msg["index"]),msg["name"])
-		"Error":signaling_error.emit(msg.get("message", "原因不明のエラー"))
+		"Error":_on_error(msg.get("message", "原因不明のエラー"))
 
 ## IceServerメッセージ
 func _on_ice_servers(servers:Array) -> void:
@@ -185,14 +193,14 @@ func _on_offer(target_id:int,sdp:String):
 func host_game(username:String,password:String,max_player:int) -> void:
 	is_host = true;
 	self_username = username
-	pending_action =  { "cmd": "Host", "username": username, "password": password, "max_player": max_player }
+	pending_action =  { "cmd": "Host", "username": username, "password": password, "max_player": max_player ,"version": _get_version()}
 	_connect_ws()
 
 ## Joinとしてサーバーに接続
 func join_game(username:String,password:String) -> void:
 	is_host = false
 	self_username = username
-	pending_action =  { "cmd": "Join", "username": username, "password": password}
+	pending_action =  { "cmd": "Join", "username": username, "password": password, "version": _get_version()}
 	_connect_ws()
 
 #----------------------------------------------------------------------------------

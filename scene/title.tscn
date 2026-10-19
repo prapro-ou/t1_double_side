@@ -4,7 +4,15 @@
 [ext_resource type="Theme" uid="uid://d1vexbsw5gkt7" path="res://style/matching_theme.tres" id="2_0npwg"]
 [ext_resource type="Texture2D" uid="uid://cd75b48elqqwh" path="res://assets/img/battle/battle_back.png" id="2_qaeh8"]
 [ext_resource type="Texture2D" uid="uid://bg8jgqpwyqs7d" path="res://assets/img/title.png" id="3_qaeh8"]
+[ext_resource type="Theme" uid="uid://dypnltbwc3th8" path="res://style/main_theme.tres" id="5_th0ar"]
 [ext_resource type="AudioStream" uid="uid://cxivshwkufdr5" path="res://assets/sound/BGM/maou_bgm_cyber37.mp3" id="5_ycsd2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ycsd2"]
+bg_color = Color(0, 0, 0, 0.7529412)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
 
 [node name="TItle" type="Node2D" unique_id=1358436081]
 script = ExtResource("1_hr6ky")
@@ -81,6 +89,27 @@ anchor_bottom = 0.8
 theme = ExtResource("2_0npwg")
 theme_override_font_sizes/font_size = 32
 text = "クレジット"
+
+[node name="Version" type="Panel" parent="UILayer/Control" unique_id=1378266480]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.75
+anchor_top = 0.375
+anchor_right = 0.9
+anchor_bottom = 0.45
+theme_override_styles/panel = SubResource("StyleBoxFlat_ycsd2")
+
+[node name="Label" type="Label" parent="UILayer/Control/Version" unique_id=1336678183]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("5_th0ar")
+theme_override_font_sizes/font_size = 25
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="BGM" type="AudioStreamPlayer" parent="." unique_id=1721739106]
 stream = ExtResource("5_ycsd2")
