@@ -3,6 +3,11 @@ extends Node2D
 @onready var host_button = $UILayer/Control/HostButton
 @onready var join_button = $UILayer/Control/JoinButton
 
+@onready var version_lebel = $UILayer/Control/Version/Label
+
+func _ready() -> void:
+	version_lebel.text = "ver:" + ProjectSettings.get_setting("application/config/version", "")
+
 func _on_host_button_pressed() -> void:
 	NetworkManager.is_host = true;
 	DecidedSePlayer.play()
