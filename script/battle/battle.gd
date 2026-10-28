@@ -7,6 +7,7 @@ const LeftTurnTimer = preload("res://script/battle/UI/left_turn_timer.gd")
 const AikoCounter = preload("res://script/battle/UI/aiko_counter.gd")
 const StatusDisplayManager = preload("res://script/battle/UI/status_display/status_display_manager.gd")
 const CharaManager = preload("res://script/battle/chara_manager/chara_manager.gd")
+const IconContainer = preload("res://script/battle/UI/status_display/icon_container.gd")
 
 ## プレイヤー1人分のキャラ・HP・MPをまとめて持つ
 class PlayerStatus:
@@ -219,6 +220,21 @@ func advance_attack_step() -> void:
 
 	GameSession.restart_select_mode(BattleEnum.SelectMode.DIRECTION)
 
+## 今のフラグをステータス欄のアイコンに反映する。
+func refresh_status_icons(target:BattleEnum.Player) -> void:
+	# アイコンごとに、表示するかどうかを今のフラグから決める
+	var icon_states:Dictionary[IconContainer.IconKind,bool] = {
+		IconContainer.IconKind.COUNTER: battle_status_node.get_pending_flag(target, BattleEnum.PendingFlag.LOGIC_SK_COUNTER),
+		IconContainer.IconKind.GUARD_UP: battle_status_node.get_permanence_flag(target, BattleEnum.PermanenceFlag.GUARD_CP_ARMOR),
+		IconContainer.IconKind.GUARD_DOWN: battle_status_node.get_permanence_flag(target, BattleEnum.PermanenceFlag.GUARD_CP_WEAK),
+	}
+	assert(icon_states.size() == IconContainer.IconKind.size(), "IconKindの全種類をicon_statesに登録すること")
+
+	for kind:IconContainer.IconKind in icon_states:
+		status_display_manager_node.set_status_icon(target, kind, icon_states[kind])
+		
+
+
 func refresh_step() -> void:
 	turn_limit -= 1;
 	left_turn_timer_node.update_turn_display(turn_limit)
@@ -409,6 +425,8 @@ func guard(attacker:BattleEnum.Player,defender:BattleEnum.Player) -> void:
 	await get_tree().create_timer(MP_EFFECT_TIME).timeout
 
 	if battle_status_node.consume_pending_flag(defender,BattleEnum.PendingFlag.LOGIC_SK_COUNTER):
+		# resolve_counter()はホストでしか進まないので、両者で走るここでアイコンを消す
+		refresh_status_icons(defender)
 		var ld:LogicWomanData = player_status_list[defender].chara as LogicWomanData
 		resolve_counter(defender,attacker,ceili(ld.attack * ld.skill_counter_damage_rate))
 		return
@@ -551,6 +569,7 @@ func handle_skill(user:BattleEnum.Player, chara:CharaData) -> void:
 			battle_status_node.add_pending_flag(user,BattleEnum.PendingFlag.LOGIC_SK_COUNTER)
 
 	await effect_manager_node.play_skill_effect(user,chara)
+	refresh_status_icons(user)
 
 
 ## 決め台詞に関する処理
@@ -583,11 +602,12 @@ func resolve_catchphrase(target:BattleEnum.Player, is_success:bool) -> void:
 				# 逆に相手のMPを増やす
 				change_mp({opponent:int(player_status_list[opponent].mp_max * data.catchphrase_fail_mp_up_rate)})
 
+	refresh_status_icons(target)
+
 func check_catchphrase(result:BattleEnum.JankenResult) -> void:
 	for target:BattleEnum.Player in [BattleEnum.Player.HOST,BattleEnum.Player.JOIN]:
 		if battle_status_node.get_turn_flag(target,BattleEnum.TurnFlag.CATCHPHRASE):
 			resolve_catchphrase(target,BattleJudge.is_janken_winner(result,target))
-		
 
 ## 両者の選択が出揃ったときに呼ばれる。values = { BattleEnum.Player : 選んだ値 }
 func _on_select_mode_completed(mode: BattleEnum.SelectMode, values: Dictionary) -> void:

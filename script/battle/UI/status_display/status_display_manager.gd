@@ -1,6 +1,7 @@
 extends Control
 
 const StatusDisplay = preload("res://script/battle/UI/status_display/status_display.gd")
+const IconContainer = preload("res://script/battle/UI/status_display/icon_container.gd")
 
 @onready var player_status_node:StatusDisplay = $PlayerStatusDisplay
 @onready var opponent_status_node:StatusDisplay = $OpponentStatusDisplay
@@ -27,3 +28,6 @@ func set_chara(host_chara:CharaData, join_chara:CharaData) -> void:
 
 func play_damage(target:BattleEnum.Player) -> void:
 	_status_of(target).play_damage_animation()
+
+func set_status_icon(target:BattleEnum.Player, kind:IconContainer.IconKind, val:bool) -> void:
+	_status_of(target).set_icon(kind,val)
