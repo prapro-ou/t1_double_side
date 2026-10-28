@@ -134,24 +134,13 @@ anchor_right = 1.0
 alignment = 1
 
 [node name="GuardDown" type="TextureRect" parent="IconContainer" unique_id=1517896575]
-z_index = 1
 layout_mode = 2
 texture = ExtResource("3_4y4rf")
 
 [node name="GuardUp" type="TextureRect" parent="IconContainer" unique_id=1030480201]
-z_index = 1
 layout_mode = 2
 texture = ExtResource("4_4f7va")
 
 [node name="Counter" type="TextureRect" parent="IconContainer" unique_id=1242010674]
-z_index = 1
 layout_mode = 2
 texture = ExtResource("2_jy5tw")
-
-[node name="Panel" type="Panel" parent="IconContainer/Counter" unique_id=375195363]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
