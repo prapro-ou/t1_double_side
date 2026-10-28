@@ -1,6 +1,9 @@
 [gd_scene format=3 uid="uid://dix5hd5fyebwo"]
 
 [ext_resource type="Script" uid="uid://uvmnp6vywd56" path="res://script/battle/UI/status_display/status_display.gd" id="1_vryhe"]
+[ext_resource type="Texture2D" uid="uid://4w00udghko7k" path="res://assets/img/battle/UI/status_icon/counter.png" id="2_jy5tw"]
+[ext_resource type="Texture2D" uid="uid://b407k8tujo050" path="res://assets/img/battle/UI/status_icon/guard_down.png" id="3_4y4rf"]
+[ext_resource type="Texture2D" uid="uid://b8vh1b7522ws4" path="res://assets/img/battle/UI/status_icon/guard_up.png" id="4_4f7va"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2nf53"]
 bg_color = Color(0.13509169, 0.14671263, 0.14902386, 1)
@@ -129,3 +132,26 @@ anchors_preset = -1
 anchor_top = -0.3
 anchor_right = 1.0
 alignment = 1
+
+[node name="GuardDown" type="TextureRect" parent="IconContainer" unique_id=1517896575]
+z_index = 1
+layout_mode = 2
+texture = ExtResource("3_4y4rf")
+
+[node name="GuardUp" type="TextureRect" parent="IconContainer" unique_id=1030480201]
+z_index = 1
+layout_mode = 2
+texture = ExtResource("4_4f7va")
+
+[node name="Counter" type="TextureRect" parent="IconContainer" unique_id=1242010674]
+z_index = 1
+layout_mode = 2
+texture = ExtResource("2_jy5tw")
+
+[node name="Panel" type="Panel" parent="IconContainer/Counter" unique_id=375195363]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
