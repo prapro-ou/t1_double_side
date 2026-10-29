@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://dkrk0fx5f1kav"]
+
+[ext_resource type="Script" uid="uid://hsvms2anoool" path="res://script/battle/stamp/stamps.gd" id="1_2ohqp"]
+
+[node name="Stamps" type="Control" unique_id=1978762564]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_2ohqp")
+
+[node name="Control" type="Control" parent="." unique_id=573788130]
+anchors_preset = 0
+offset_right = 150.0
+offset_bottom = 150.0
+
+[node name="StampZone" type="Panel" parent="Control" unique_id=1098190092]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

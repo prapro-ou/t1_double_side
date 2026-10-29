@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://btg4ufqf5vcta"]
+
+[ext_resource type="PackedScene" uid="uid://dkrk0fx5f1kav" path="res://components/battle/stamp/stamps.tscn" id="1_osp10"]
+[ext_resource type="Script" uid="uid://bhvs8tuly563h" path="res://script/battle/stamp/stamp_manager.gd" id="1_ptruc"]
+
+[node name="StampManager" type="Control" unique_id=645193009]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ptruc")
+
+[node name="PlayerStamps" parent="." unique_id=1978762564 instance=ExtResource("1_osp10")]
+layout_mode = 0
+offset_left = 327.0
+offset_top = 300.0
+offset_right = 327.0
+offset_bottom = 300.0
+
+[node name="OpponentStamps" parent="." unique_id=1922937282 instance=ExtResource("1_osp10")]
+layout_mode = 0
+offset_left = 637.0
+offset_top = 115.0
+offset_right = 637.0
+offset_bottom = 115.0

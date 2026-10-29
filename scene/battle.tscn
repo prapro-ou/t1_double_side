@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://d4iuywgjlx57e" path="res://components/battle/janken_result/janken_result.tscn" id="7_6qw66"]
 [ext_resource type="PackedScene" uid="uid://b5tn1pcuo818l" path="res://components/battle/chara_manager/chara_manager.tscn" id="7_bdn7b"]
 [ext_resource type="Script" uid="uid://yjbqns23xdmf" path="res://script/battle/effect_manager/effect_manager.gd" id="7_p56j5"]
+[ext_resource type="PackedScene" uid="uid://btg4ufqf5vcta" path="res://components/battle/stamp/stamp_manager.tscn" id="9_twhda"]
 [ext_resource type="PackedScene" uid="uid://dl62rd8ura4ux" path="res://components/battle/hoi_result/hoi_result.tscn" id="10_bdn7b"]
 [ext_resource type="PackedScene" uid="uid://0u74phe0vex0" path="res://components/battle/effect/cutin_effect.tscn" id="11_yyook"]
 [ext_resource type="Script" uid="uid://df16skosat303" path="res://script/battle/battle_status.gd" id="12_5mh2w"]
@@ -60,6 +61,11 @@ offset_top = 437.0
 offset_right = 545.0
 offset_bottom = 477.0
 theme = ExtResource("4_ef046")
+
+[node name="StampLayer" type="CanvasLayer" parent="." unique_id=301668764]
+layer = 2
+
+[node name="StampManager" parent="StampLayer" unique_id=645193009 instance=ExtResource("9_twhda")]
 
 [node name="CharaManager" parent="." unique_id=753385096 instance=ExtResource("7_bdn7b")]
 
