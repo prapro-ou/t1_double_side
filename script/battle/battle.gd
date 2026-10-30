@@ -171,6 +171,7 @@ func setup_attack_count() -> void:
 	remaining_attack_count = 1
 
 	if battle_status_node.consume_pending_flag(attacker,BattleEnum.PendingFlag.FIRE_SK_DUAL_ATTACK):
+		refresh_status_icons(attacker)
 		var fd:FireManData = player_status_list[attacker].chara as FireManData
 		remaining_attack_count = fd.skill_attack_count
 
@@ -186,6 +187,7 @@ func setup_guard_direction_count() -> void:
 	if not battle_status_node.consume_pending_flag(defender,BattleEnum.PendingFlag.GUARD_SK_DUAL_BLOCK):
 		return
 
+	refresh_status_icons(defender)
 	var gd:GuardManData = player_status_list[defender].chara as GuardManData
 	guard_direction_count = gd.skill_guard_direction_count
 
@@ -227,6 +229,8 @@ func refresh_status_icons(target:BattleEnum.Player) -> void:
 		IconContainer.IconKind.COUNTER: battle_status_node.get_pending_flag(target, BattleEnum.PendingFlag.LOGIC_SK_COUNTER),
 		IconContainer.IconKind.GUARD_UP: battle_status_node.get_permanence_flag(target, BattleEnum.PermanenceFlag.GUARD_CP_ARMOR),
 		IconContainer.IconKind.GUARD_DOWN: battle_status_node.get_permanence_flag(target, BattleEnum.PermanenceFlag.GUARD_CP_WEAK),
+		IconContainer.IconKind.DUAL_ATTACK: battle_status_node.get_pending_flag(target, BattleEnum.PendingFlag.FIRE_SK_DUAL_ATTACK),
+		IconContainer.IconKind.DUAL_BLOCK: battle_status_node.get_pending_flag(target, BattleEnum.PendingFlag.GUARD_SK_DUAL_BLOCK),
 	}
 	assert(icon_states.size() == IconContainer.IconKind.size(), "IconKindの全種類をicon_statesに登録すること")
 
