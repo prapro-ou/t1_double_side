@@ -1,6 +1,12 @@
 [gd_scene format=3 uid="uid://dix5hd5fyebwo"]
 
 [ext_resource type="Script" uid="uid://uvmnp6vywd56" path="res://script/battle/UI/status_display/status_display.gd" id="1_vryhe"]
+[ext_resource type="Script" uid="uid://bx264035wj6x6" path="res://script/battle/UI/status_display/icon_container.gd" id="2_4y4rf"]
+[ext_resource type="Texture2D" uid="uid://4w00udghko7k" path="res://assets/img/battle/UI/status_icon/counter.png" id="2_jy5tw"]
+[ext_resource type="Texture2D" uid="uid://b407k8tujo050" path="res://assets/img/battle/UI/status_icon/guard_down.png" id="3_4y4rf"]
+[ext_resource type="Texture2D" uid="uid://b8vh1b7522ws4" path="res://assets/img/battle/UI/status_icon/guard_up.png" id="4_4f7va"]
+[ext_resource type="Texture2D" uid="uid://6mwdw7xd2tf0" path="res://assets/img/battle/UI/status_icon/dual_attack.png" id="6_4aeme"]
+[ext_resource type="Texture2D" uid="uid://d1pg52uenbmqa" path="res://assets/img/battle/UI/status_icon/dual_guard.png" id="7_32v65"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2nf53"]
 bg_color = Color(0.13509169, 0.14671263, 0.14902386, 1)
@@ -122,3 +128,51 @@ anchor_bottom = 0.367
 offset_top = -49.0
 offset_bottom = -25.999996
 text = "テスト"
+
+[node name="IconContainer" type="HBoxContainer" parent="." unique_id=1589015710]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.1
+anchor_top = -0.5
+anchor_right = 1.1
+script = ExtResource("2_4y4rf")
+
+[node name="GuardDown" type="TextureRect" parent="IconContainer" unique_id=1517896575]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("3_4y4rf")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="GuardUp" type="TextureRect" parent="IconContainer" unique_id=1030480201]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("4_4f7va")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Counter" type="TextureRect" parent="IconContainer" unique_id=1242010674]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("2_jy5tw")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DualAttack" type="TextureRect" parent="IconContainer" unique_id=135568977]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("6_4aeme")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DualBlock" type="TextureRect" parent="IconContainer" unique_id=1755489047]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("7_32v65")
+expand_mode = 1
+stretch_mode = 5

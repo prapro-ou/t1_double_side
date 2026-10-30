@@ -1,5 +1,7 @@
 extends Control
 
+const IconContainer = preload("res://script/battle/UI/status_display/icon_container.gd")
+
 # --- ノードの参照 ---
 @onready var user_name_label:Label = $UserName
 @onready var chara_name_label:Label = $CharaName
@@ -7,6 +9,7 @@ extends Control
 @onready var hp_label:Label = $HP/HpLabel
 @onready var mp_bar:ProgressBar = $MP
 @onready var mp_label:Label = $MP/MpLabel
+@onready var icon_container:IconContainer = $IconContainer
 
 func generate_label_text(current_value:float,max_value:float) -> String:
 	return str(current_value) + "/" + str(max_value)
@@ -51,3 +54,7 @@ func play_damage_animation() -> void:
 	tween.tween_property(self, "position", original_pos + Vector2(10, 0), 0.05)
 	tween.tween_property(self, "position", original_pos + Vector2(-5, 0), 0.05)
 	tween.tween_property(self, "position", original_pos + Vector2(0, 0), 0.05)
+
+
+func set_icon(kind:IconContainer.IconKind,val:bool) -> void:
+	icon_container.set_icon(kind,val)
