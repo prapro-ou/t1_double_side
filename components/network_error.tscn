@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://52yvchrq6mko"]
 
 [ext_resource type="Script" uid="uid://ch8201g4nwko7" path="res://script/utils/network_error.gd" id="1_tcret"]
+[ext_resource type="Theme" uid="uid://d1vexbsw5gkt7" path="res://style/matching_theme.tres" id="2_ud12o"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tcret"]
 content_margin_left = 20.0
@@ -58,6 +59,7 @@ theme_override_constants/separation = 20
 
 [node name="Error" type="Label" parent="Control/PanelContainer/VBoxContainer" unique_id=864343579]
 layout_mode = 2
+theme = ExtResource("2_ud12o")
 theme_override_font_sizes/font_size = 30
 text = "通信エラーが発生しました"
 horizontal_alignment = 1
@@ -65,6 +67,7 @@ vertical_alignment = 1
 
 [node name="Go_title" type="Button" parent="Control/PanelContainer/VBoxContainer" unique_id=1387561532]
 layout_mode = 2
+theme = ExtResource("2_ud12o")
 theme_override_font_sizes/font_size = 20
 text = "タイトルへ戻る"
 
