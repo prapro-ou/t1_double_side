@@ -7,6 +7,9 @@ signal selected(index: int)
 ## 最大まで伸びている候補が変わるたびに発火（最大の候補が無いときは -1）
 signal charge_max_changed(index: int)
 
+## 引っ張り具合が変わった時に
+signal change_dragged_level(level:int)
+
 ## この距離で最長(frame 2)になる
 @export var max_dist:float = 300.0
 ## これ未満は非表示
@@ -34,6 +37,9 @@ var aim_index:int = -1;
 ## 現在最大まで伸びている候補のインデックス（無ければ -1）
 var _max_index:int = -1;
 
+## 前回の更新時の矢印の長さ(非表示なら -1)
+var _old_arrow_length:int = -1;
+
 ## snap_angles_deg を変換したスナップ候補の単位ベクトル（キャッシュ）
 var _targets:Array[Vector2] = [];
 
@@ -55,12 +61,14 @@ func _input(event: InputEvent) -> void:
 					selected.emit(aim_index);
 				visible = false;
 				_set_max_index(-1);
+				_set_arrow_length(-1);
 		elif event is InputEventMouseMotion and is_dragging:
 			# 中央(根元)から現在のマウスへのベクトル
 			var dir:Vector2 = get_global_mouse_position() - global_position;
 			if dir.length() < min_dist:
 				visible = false;
 				_set_max_index(-1);
+				_set_arrow_length(-1);
 				return
 			visible = true;
 			# 候補方向の中から向きが一番近いものにスナップ
@@ -70,10 +78,21 @@ func _input(event: InputEvent) -> void:
 			rotation = aim_dir.angle() + PI / 2.0;
 			var count:int = anim_sprite_node.sprite_frames.get_frame_count("default");
 			var t:float = clampf(dir.length() / max_dist, 0.0, 1.0);
-			anim_sprite_node.frame = int(round(t * (count - 1)));
+			
+			var current_arrow_length:int = int(round(t * (count - 1)));
+			_set_arrow_length(current_arrow_length)
+			
 			# 最大まで伸びている間だけその候補を通知（そうでなければ -1）
 			_set_max_index(aim_index if anim_sprite_node.frame == count - 1 else -1);
 
+## 長さが変わったときだけ絵を更新して通知する（-1 = 非表示）
+func _set_arrow_length(length:int) -> void:
+	if length == _old_arrow_length:
+		return
+	_old_arrow_length = length
+	if length >= 0:
+		anim_sprite_node.frame = length
+	change_dragged_level.emit(length)
 
 ## 最大まで伸びている候補が変わったときだけ charge_max_changed を発火
 func _set_max_index(i: int) -> void:

@@ -11,6 +11,13 @@ const LabelManager = preload("res://script/battle/battle_ui_layer/label_manager.
 @onready var direction_node:Direction = $Direction
 @onready var label_manager_node:LabelManager = $LabelManager
 
+const HAND_TEXT:String = "じゃんけんの手をドラッグで選べ！"
+const ATTACK_TEXT:String = "攻撃する方向をドラッグで選べ！"
+const BLOCK_TEXT:String = "相手の攻撃方向をドラッグで予測せよ！"
+const WAIT_TEXT:String = "相手の選択を待機中…"
+
+
+
 func change_janken_activate(active:bool) -> void:
 	hands_node.visible = active
 	hands_node.set_activity(active)
@@ -21,16 +28,16 @@ func change_direction_activate(activate:bool) -> void:
 
 ## じゃんけんの手の選択を開始
 func start_janken() -> void:
-	label_manager_node.show_label("じゃんけんの手をドラッグで選べ！")
+	label_manager_node.show_label(HAND_TEXT)
 	change_janken_activate(true)
 	change_direction_activate(false)
 
 ## ホイする方向の選択を開始
 func start_direction(is_attacker:bool,count:int = 1) -> void:
 	if is_attacker:
-		label_manager_node.show_label("攻撃する方向をドラッグで選べ！")
+		label_manager_node.show_label(ATTACK_TEXT)
 	else:
-		label_manager_node.show_label("相手の攻撃方向をドラッグで予測せよ！")
+		label_manager_node.show_label(BLOCK_TEXT)
 	
 	change_janken_activate(false)
 	change_direction_activate(true)
@@ -39,7 +46,7 @@ func start_direction(is_attacker:bool,count:int = 1) -> void:
 
 ## 自分は選び終わったので、相手が選ぶまで待たせる
 func show_waiting() -> void:
-	label_manager_node.show_label("相手の選択を待機中…")
+	label_manager_node.show_label(WAIT_TEXT)
 
 ## 両者の選択が出揃ったときに呼ぶ
 func hide_label() -> void:
@@ -59,3 +66,16 @@ func _on_hands_hands_selected(hand: BattleEnum.Hand) -> void:
 	change_janken_activate(false)
 	show_waiting()
 	hands_selected.emit(hand)
+
+
+func _on_hands_dragged_level(level: int) -> void:
+	_show_drag_hint(level)
+
+
+func _on_direction_dragged_level(level: int) -> void:
+	_show_drag_hint(level)
+
+
+## 矢印の長さに応じて文字を切り替える（-1 = 非表示なら元の指示文に戻す）
+func _show_drag_hint(level: int) -> void:
+	label_manager_node.set_drag_level(level)
