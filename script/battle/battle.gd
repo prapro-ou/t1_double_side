@@ -9,6 +9,11 @@ const StatusDisplayManager = preload("res://script/battle/UI/status_display/stat
 const CharaManager = preload("res://script/battle/chara_manager/chara_manager.gd")
 const IconContainer = preload("res://script/battle/UI/status_display/icon_container.gd")
 
+const bgm_list:Dictionary[String,AudioStream] = {
+	"default":preload("res://assets/sound/BGM/maou_bgm_8bit08.mp3"),
+	"heart_beat":preload("res://assets/sound/BGM/heart_beat.mp3")
+}
+
 ## プレイヤー1人分のキャラ・HP・MPをまとめて持つ
 class PlayerStatus:
 	var chara:CharaData
@@ -81,8 +86,13 @@ var is_first_mp_sync:bool = true
 @onready var aiko_counter_node:AikoCounter = $StatusLayer/AikoCountor
 @onready var status_display_manager_node:StatusDisplayManager = $StatusLayer/StatusDisplayManager
 
+@onready var bgm_node:AudioStreamPlayer = $BGM
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	bgm_node.stream = bgm_list["default"]
+	bgm_node.play()
+	
 	GameSession.select_mode_completed.connect(_on_select_mode_completed)
 	GameSession.select_mode_restarted.connect(_on_select_mode_restarted)
 	GameSession.changed_phase.connect(_on_changed_phase)
@@ -105,6 +115,29 @@ func _on_battle_ready_completed() -> void:
 	
 	if multiplayer.is_server():
 		start_turn()
+
+func update_bgm() -> void:
+	var next:AudioStream
+	
+	if aiko_count > 0 or is_catchphrase_used_this_turn():
+		next = bgm_list["heart_beat"]
+		bgm_node.volume_db = -10
+	else:
+		next = bgm_list["default"]
+		bgm_node.volume_db = -15
+	
+	if bgm_node.stream == next:
+		return
+	
+	bgm_node.stream = next
+	bgm_node.play()
+
+## このターンにどちらかが決め台詞を使ったか
+func is_catchphrase_used_this_turn() -> bool:
+	for player:BattleEnum.Player in [BattleEnum.Player.HOST, BattleEnum.Player.JOIN]:
+		if battle_status_node.get_turn_flag(player, BattleEnum.TurnFlag.CATCHPHRASE):
+			return true
+	return false
 
 ##ゲームスタート時の互いの設定について
 #region
@@ -349,6 +382,7 @@ func set_aiko_count(count:int) -> void:
 	var rate:float = calc_aiko_rate(count)
 	
 	aiko_counter_node.set_count(aiko_count,rate)
+	update_bgm()
 
 #endregion
 
@@ -581,6 +615,7 @@ func handle_catchphrase(user:BattleEnum.Player, chara:CharaData) -> void:
 	battle_status_node.catchphrase_used[user] = true;
 	battle_status_node.add_turn_flag(user,BattleEnum.TurnFlag.CATCHPHRASE)
 	await effect_manager_node.play_cutin(chara)
+	update_bgm()
 	
 
 func resolve_catchphrase(target:BattleEnum.Player, is_success:bool) -> void:
