@@ -2,7 +2,8 @@ extends Control
 
 @onready var label_node:Label = $Panel/Label
 
-## ドラッグ中に指示文の代わりに出す文字。添字は矢印の長さ(frame)と同じ
+## ドラッグ中に指示文の代わりに出す文字。添字は「矢印の長さ(frame) - 1」
+## （frame 0 = 伸びていないときは元の指示文を出す）
 const DRAGGING_TEXT:Array[String] = [
 	"もっと引っ張れ",
 	"さらに引っ張れ",
@@ -26,10 +27,10 @@ func show_label(text:String) -> void:
 	show()
 
 func set_drag_level(level:int) -> void:
-	if (level == -1):
+	if level <= 0:
 		base_text = no_charge_text
 	else:
-		base_text = DRAGGING_TEXT[level]
+		base_text = DRAGGING_TEXT[level - 1]
 	_refresh()
 
 ## 今から何回目を選ぶかを表示する。1回だけのときは進捗を出さない

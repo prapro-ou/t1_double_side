@@ -25,6 +25,11 @@ offset_top = 68.0
 offset_right = 608.0
 offset_bottom = 178.0
 
+[node name="AttackLabel" type="Label" parent="VBoxContainer" unique_id=900995911]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "通常攻撃を仕掛ける"
+
 [node name="SkillNameLabel" type="Label" parent="VBoxContainer" unique_id=1181813800]
 layout_mode = 2
 theme_override_font_sizes/font_size = 25

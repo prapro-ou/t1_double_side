@@ -76,6 +76,6 @@ func _on_direction_dragged_level(level: int) -> void:
 	_show_drag_hint(level)
 
 
-## 矢印の長さに応じて文字を切り替える（-1 = 非表示なら元の指示文に戻す）
+## 矢印の長さに応じて文字を切り替える（0 = 伸びていないなら元の指示文に戻す）
 func _show_drag_hint(level: int) -> void:
 	label_manager_node.set_drag_level(level)
