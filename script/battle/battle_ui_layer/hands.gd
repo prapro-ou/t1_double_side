@@ -1,6 +1,7 @@
 extends Node2D
 
 signal hands_selected(hand:BattleEnum.Hand)
+signal dragged_level(level:int)
 
 ## 最大まで狙われている手の拡大倍率（元スケールに対する係数）
 const HIGHLIGHT_FACTOR := 1.5
@@ -40,3 +41,7 @@ func _on_janken_arrow_charge_max_changed(index: int) -> void:
 func _on_janken_arrow_selected(index: int) -> void:
 	se_player_node.play()
 	hands_selected.emit(INDEX_TO_HAND[index])
+
+
+func _on_janken_arrow_change_dragged_level(level: int) -> void:
+	dragged_level.emit(level)
